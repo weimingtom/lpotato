@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+#chkconfig: 2345 20 90
+#
+# description: Startup script for to stop/start
+# the automatic brightness sensor on ASUS notebooks
+#
+
+RETVAL=0
+
+start(){
+echo -n $”Starting the automatic brightness sensor”
+echo 1 > /sys/devices/platform/asus-laptop/ls_switch
+touch /sys/devices/platform/asus-laptop/ls_switch
+RETVAL=1
+echo ””
+return $RETVAL
+}
+
+stop(){
+echo -n $”Stopping the automatic brightness sensor”
+echo 0 > /sys/devices/platform/asus-laptop/ls_switch
+touch /sys/devices/platform/asus-laptop/ls_switch
+RETVAL=0
+echo ””
+return $RETVAL
+}
+
+restart(){
+stop
+start
+}
+
+case “$1” in
+start)
+start
+;;
+stop)
+stop
+;;
+restart)
+restart
+;;
+status)
+status brightness
+RETVAL=$?
+;;
+*)
+echo $”Usage: $0 {start|stop|status|restart}”
+RETVAL=3
+;;
+esac
+
+exit $RETVAL

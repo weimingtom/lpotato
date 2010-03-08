@@ -1,0 +1,39 @@
+windows下的回车符为 \r\n   而unix下的回车符是 \n
+
+9:去掉行首行尾空白字符
+sed -e 's/\s*$//;s/^\s*//' temp > temp1
+换行转为空格
+sed -i ':a;N;s/\n/ /;ba;' temp1
+
+1.去掉所有行的空格
+sed  -i 's/ //g'   df.txt
+
+2.去掉所有行的空格
+sed  -e 's/ //g'   df.txt  >cwm.txt
+ 
+3.将每一行拖尾的“空白字符”（空格，制表符）删除
+sed 's/ *$//'  df.txt   >cwm.txt
+ 
+4.将每一行中的前导和拖尾的空白字符删除
+sed 's/^ *//;s/ *$//'  df.txt   >cwm.txt
+
+ 4
+合并所有行
+ sed ':a;N;s/\n/\t/;ba;' test1
+ 
+5.去掉空行
+sed    '/^$/d' df.txt  >cwm.txt
+sed -e '/^$/d' df.txt  >cwm.txt
+sed -i '/^$/d' df.txt 
+这三个是等价的 但第三个会改变原文件
+ 
+6.去掉windows下的回车符 （注意^M 在linux 下写法 按^M 是回车换行符,输入方法是按住CTRL+v,松开v,按m)
+sed  -i 's/^M//g'  df.txt  
+ 
+
+7.去掉windows下的回车符 （注意^M 在linux 下写法 按^M 是回车换行符,输入方法是按住CTRL+v,松开v,按m)
+sed  -e 's/^M//g'  df.txt  >cwm.txt
+8.sed 用正则表达式  8个字符一组换行
+  
+http://www.diybl.com/course/6_system/linux/Linuxjs/20090317/162335.html
+  

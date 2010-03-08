@@ -1,0 +1,12 @@
+find   data   -type   f   -name   "ca20061101*"   -exec   rm   {}   \;   
+
+find   -type   f   -name   "ca2006110[1-3]*"   -exec   rm   {}   \;   
+
+find   -type   f   -name   "ca2006110[1-3]*"   |xargs   -I   $   rm   -rf   $
+
+find . -name '*.css' -exec rm {} \;
+
+
+查找指定目录下非隐藏目录:
+find . -path '*/.*' -prune -o -type d -print
+查找某一确定文件，-name等选项加在-o 之后
