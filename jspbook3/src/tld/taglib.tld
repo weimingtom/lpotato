@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+    http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+
+  <description>
+    A tag library for the examples in the O'Reilly JSP book, 3rd edition
+  </description>
+  <tlib-version>3.0</tlib-version>
+  <short-name>ora</short-name>
+  <uri>orataglib</uri>
+
+  <tag>
+    <description>
+	Adds a cookie to the response.
+    </description>
+    <name>addCookie</name>
+    <tag-class>com.ora.jsp.tags.AddCookieTag</tag-class>
+    <body-content>empty</body-content>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>maxAge</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>
+       Processes the patterns specified as attributes to render a
+       calendar for the specified month.
+    </description>
+    <name>calendar</name>
+    <tag-class>com.ora.jsp.tags.MonthCalendarTag</tag-class>
+    <body-content>empty</body-content>
+
+    <attribute>
+      <name>date</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>padPattern</name>
+      <required>false</required>
+      <fragment>true</fragment>
+    </attribute>
+
+    <attribute>
+      <name>beforePattern</name>
+      <required>false</required>
+      <fragment>true</fragment>
+    </attribute>
+
+    <attribute>
+      <name>afterPattern</name>
+      <required>false</required>
+      <fragment>true</fragment>
+    </attribute>
+
+    <attribute>
+      <name>dayNamePattern</name>
+      <required>false</required>
+      <fragment>true</fragment>
+    </attribute>
+
+    <attribute>
+      <name>weekdayPattern</name>
+      <required>true</required>
+      <fragment>true</fragment>
+    </attribute>
+
+    <attribute>
+      <name>weekendPattern</name>
+      <required>false</required>
+      <fragment>true</fragment>
+    </attribute>
+
+  </tag>
+
+  <tag>
+    <description>
+       Writes the specified debug info to the response, System.out or
+       the application log file based on the value of the debug
+       request parameter
+    </description>
+    <name>debug</name>
+    <tag-class>com.ora.jsp.tags.DebugTag</tag-class>
+    <body-content>empty</body-content>
+
+    <attribute>
+      <name>type</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>
+       Writes its body content to the specified file
+    </description>
+    <name>fileWrite</name>
+    <tag-class>com.ora.jsp.tags.FileWriteTag</tag-class>
+    <body-content>scriptless</body-content>
+
+    <attribute>
+      <name>fileName</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>
+      Evaluates its body if the current, authenticated, user belongs to
+      the specified security role, and optionally saves the result
+      of the test as a Boolean in a variable specified by the var and 
+      scope attributes.
+    </description>
+    <name>ifUserInRole</name>
+    <tag-class>com.ora.jsp.tags.IfUserInRoleTag</tag-class>
+    <body-content>JSP</body-content>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+    </attribute>
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>
+      Evaluates its body if the specified value is in the format of
+      a valid SMTP email address, and optionally saves the result
+      of the validation as a Boolean in a variable specified by the
+      var and scope attributes.
+    </description>
+    <name>ifValidEmailAddr</name>
+    <tag-class>com.ora.jsp.tags.IfValidEmailAddrTag</tag-class>
+    <body-content>JSP</body-content>
+
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+    </attribute>
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>
+      Invalidates the session, causing all session scope variables to
+      be removed and the session to be terminated (marked as invalid).
+    </description>
+    <name>invalidateSession</name>
+    <tag-class>com.ora.jsp.tags.InvalidateSessionTag</tag-class>
+    <body-content>empty</body-content>
+  </tag>
+
+  <tag>
+    <description>
+	Inserts HTML in the body, as an HTML reference if "page" is not
+        the current page, otherwise as is.
+    </description>
+    <name>menuItem</name>
+    <tag-class>com.ora.jsp.tags.MenuItemTag</tag-class>
+    <body-content>scriptless</body-content>
+
+    <attribute>
+      <name>page</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>
+      Sets response headers to prevent caching.
+    </description>
+    <name>noCache</name>
+    <tag-class>com.ora.jsp.tags.NoCacheTag</tag-class>
+    <body-content>empty</body-content>
+  </tag>
+
+  <tag>
+    <description>
+      Set the specified response header to the specified value.
+    </description>
+    <name>setHeader</name>
+    <tag-class>com.ora.jsp.tags.SetHeaderTag</tag-class>
+    <body-content>empty</body-content>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- 
+    Tag handlers for example actions, not intended for general use,
+    but hey, use them if you want.
+  -->
+  <tag>
+    <description>
+       Adds a message to the page
+    </description>
+    <name>motd</name>
+    <tag-class>com.ora.jsp.tags.xmp.MixedMessageTag</tag-class>
+    <body-content>empty</body-content>
+
+    <attribute>
+      <name>category</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>if</name>
+    <tag-class>com.ora.jsp.tags.xmp.IfTag</tag-class>
+    <body-content>scriptless</body-content>
+
+    <attribute>
+      <name>test</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+
+  <tag>
+    <name>loop</name>
+    <tag-class>com.ora.jsp.tags.xmp.SimpleLoopTag</tag-class>
+    <body-content>scriptless</body-content>
+
+    <attribute>
+      <name>items</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>var</name>
+      <required>true</required>
+    </attribute>
+
+  </tag>
+
+  <tag>
+    <description>
+       Loops through a Map with option texts and values and exposes
+       a bean with "text", "value" and "selected" properties.
+    </description>
+    <name>forEachOption</name>
+    <tag-class>com.ora.jsp.tags.xmp.ForEachOptionTag</tag-class>
+    <body-content>JSP</body-content>
+
+    <attribute>
+      <name>options</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>selections</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>var</name>
+      <required>true</required>
+    </attribute>
+  </tag>
+
+  <tag>
+    <description>
+      Builds a checkbox element and adds it to the response.
+    </description>
+    <name>buildCheckbox</name>
+    <tag-class>com.ora.jsp.tags.xmp.BuildCheckboxTag</tag-class>
+    <body-content>empty</body-content>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>selections</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <function>
+    <description>
+      Converts Fahrenheit to Celsius
+    </description>
+    <name>toCelsius</name>
+    <function-class>com.ora.jsp.util.TempConverter</function-class>
+    <function-signature>double toCelsius(double)</function-signature>
+  </function>
+
+  <function>
+    <description>
+      Converts Celsius to Fahrenheit
+    </description>
+    <name>toFahrenheit</name>
+    <function-class>com.ora.jsp.util.TempConverter</function-class>
+    <function-signature>double toFahrenheit(double)</function-signature>
+  </function>
+
+</taglib>

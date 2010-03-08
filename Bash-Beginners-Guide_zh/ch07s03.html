@@ -1,0 +1,170 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>7.3.&nbsp;使用case语句</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch07.html" title="第&nbsp;7&nbsp;章&nbsp;条件语句">
+      <link rel="prev" href="ch07s02.html" title="7.2.&nbsp;更多if的高级使用方法">
+      <link rel="next" href="ch07s04.html" title="7.4.&nbsp;总结">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">7.3.&nbsp;使用case语句</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch07s02.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;7&nbsp;章&nbsp;条件语句</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch07s04.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_07_03"></a>7.3.&nbsp;使用case语句
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_07_03_01"></a>7.3.1.&nbsp;简单的条件
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>嵌套 <span><strong class="command">if</strong></span> 语句可能比较美观，但是只要你面临可能采取的一系列的不同动作时，你可能会迷惑。要处理复杂条件时，使用 <span><strong class="command">case</strong></span> 语法：
+            </p>
+            <div class="cmdsynopsis">
+               <p><code class="command">case <code class="function">EXPRESSION</code> in <code class="function">CASE1</code>) COMMAND-LIST;; <code class="function">CASE2</code>) COMMAND-LIST;; ... <code class="function">CASEN</code>) COMMAND-LIST;; esac</code> 
+               </p>
+            </div>
+            <p>每个分支是一个符合pattern的表达式。在 <span><strong class="command">COMMAND-LIST</strong></span> 中首先符合的的命令就执行。 “<span class="quote">|</span>” 符号用来分割多个pattern， “<span class="quote">)</span>” 操作符中断一个pattern。每个分支加上他们的后继命令称作一个 <span class="emphasis"><em>子句</em></span> 。每个 <span class="emphasis"><em>子句</em></span> 必须以 “<span class="quote">;;</span>” 结尾。每个 <span><strong class="command">case</strong></span> 语句以 <span><strong class="command">esac</strong></span> 语句结束。
+            </p>
+            <p>在这个例子中，我们使用 <code class="filename">disktest.sh</code> 脚本的分支来发送一个更有选择性的警告信息：
+            </p><pre class="screen">
+<code class="prompt">anny ~/testdir&gt;</code> <span><strong class="command">cat <code class="filename">disktest.sh</code></strong></span>
+#!/bin/bash
+
+# This script does a very simple test for checking disk space.
+
+space=`df -h | awk '{print $5}' | grep % | grep -v Use | sort -n | tail -1 | cut -d "%" -f1 -`
+
+case $space in
+[1-6]*)
+  Message="All is quiet."
+  ;;
+[7-8]*)
+  Message="Start thinking about cleaning out some stuff.  There's a partition that is $space % full."
+  ;;
+9[1-8])
+  Message="Better hurry with that new disk...  One partition is $space % full."
+  ;;
+99)
+  Message="I'm drowning here!  There's a partition at $space %!"
+  ;;
+*)
+  Message="I seem to be running with an nonexitent amount of disk space..."
+  ;;
+esac
+
+echo $Message | mail -s "disk report `date`" anny
+
+<code class="prompt">anny ~/testdir&gt;</code>
+You have new mail.
+
+<code class="prompt">anny ~/testdir&gt;</code> <span><strong class="command">tail <em class="parameter"><code>-16</code></em> <code class="filename">/var/spool/mail/anny</code></strong></span>
+From anny@octarine Tue Jan 14 22:10:47 2003
+Return-Path: &lt;anny@octarine&gt;
+Received: from octarine (localhost [127.0.0.1])
+        by octarine (8.12.5/8.12.5) with ESMTP id h0ELAlBG020414
+        for &lt;anny@octarine&gt;; Tue, 14 Jan 2003 22:10:47 +0100
+Received: (from anny@localhost)
+        by octarine (8.12.5/8.12.5/Submit) id h0ELAltn020413
+        for anny; Tue, 14 Jan 2003 22:10:47 +0100
+Date: Tue, 14 Jan 2003 22:10:47 +0100
+From: Anny &lt;anny@octarine&gt;
+Message-Id: &lt;200301142110.h0ELAltn020413@octarine&gt;
+To: anny@octarine
+Subject: disk report Tue Jan 14 22:10:47 CET 2003
+
+Start thinking about cleaning out some stuff.  There's a partition that is 87 % full.
+
+<code class="prompt">anny ~/testdir&gt;</code>
+</pre><p>当然你可以打开你的邮件程序来检查结果；这只是为了证明脚本发送一个包含 “<span class="quote">To:</span>”, “<span class="quote">Subject:</span>” 和 “<span class="quote">From:</span>” 头信息的正式邮件。
+            </p>
+            <p>更多使用 <span><strong class="command">case</strong></span> 语句的例子可以在你系统的初始脚本目录找到。初始化脚本使用 <span><strong class="command">start</strong></span> 和 <span><strong class="command">stop</strong></span> 分支来启动和停止系统进程。可以在下一节找到一个更具理论性的例子。
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_07_03_02"></a>7.3.2.&nbsp;初始脚本例子
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>初始脚本通常利用 <span><strong class="command">case</strong></span> 语句来启动，停止和查询系统服务。以下摘录启动 <span class="application">Anacron</span> 的脚本，一个周期性频繁运行命令的守护程序。
+            </p><pre class="screen">
+case "$1" in
+        start)
+            start
+            ;;
+         
+        stop)
+            stop
+            ;;
+         
+        status)
+            status anacron
+            ;;
+        restart)
+            stop
+            start
+            ;;
+        condrestart)
+            if test "x`pidof anacron`" != x; then
+                stop
+                start
+            fi
+            ;;
+         
+        *)
+            echo $"Usage: $0 {start|stop|restart|condrestart|status}"
+            exit 1
+ 
+esac
+</pre><p>任务在每个分支执行，比如停止和启动守护进程。定义在函数中，部分源自 <code class="filename">/etc/rc.d/init.d/functions</code> 文件。参见 <a href="ch11.html" title="第&nbsp;11&nbsp;章&nbsp;函数">第&nbsp;11&nbsp;章 <i>函数</i></a> 得到更多的解释。
+            </p>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch07s02.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch07.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch07s04.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">7.2.&nbsp;更多if的高级使用方法&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;7.4.&nbsp;总结</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

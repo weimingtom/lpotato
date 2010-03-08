@@ -1,0 +1,296 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>10.2.&nbsp;数组变量</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch10.html" title="第&nbsp;10&nbsp;章&nbsp;变量进阶">
+      <link rel="prev" href="ch10.html" title="第&nbsp;10&nbsp;章&nbsp;变量进阶">
+      <link rel="next" href="ch10s03.html" title="10.3.&nbsp;变量的操作">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">10.2.&nbsp;数组变量</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch10.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;10&nbsp;章&nbsp;变量进阶</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch10s03.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_10_02"></a>10.2.&nbsp;数组变量
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_10_02_01"></a>10.2.1.&nbsp;建立数组
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>数组是一个包含多个值的变量。任何变量都可以在数组中使用。数组的尺寸没有最大限制，也不要求成员变量连续索引或者赋值。数组是基于0的：第一个元素的下标以0开始。</p>
+            <p>间接的声明使用以下的语法来声明一个变量：</p>
+            <div class="cmdsynopsis">
+               <p><code class="command"><code class="varname">ARRAY[INDEXNR]</code>=value</code> 
+               </p>
+            </div>
+            <p> <span class="emphasis"><em>INDEXNR</em></span> 需要使用一个值为正数的数学表达式。
+            </p>
+            <p>一个数组的外部声明使用内建命令 <span><strong class="command">declare</strong></span> 来完成：
+            </p>
+            <div class="cmdsynopsis">
+               <p><code class="command">declare <code class="option">-a</code> <code class="varname">ARRAYNAME</code></code> 
+               </p>
+            </div>
+            <p>一个带有索引值的声明也是可以接受的，但是索引值将被忽略。对数组的指定属性可以通过使用内建命令 <span><strong class="command">declare</strong></span> 和 <span><strong class="command">readonly</strong></span>。属性对数组中的所有变量起作用；你不能使用混合数组。
+            </p>
+            <p>数组变量也可以使用这种格式的复合赋值来建立：</p>
+            <div class="cmdsynopsis">
+               <p><code class="command"><code class="varname">ARRAY</code>=(value1 value2 ... valueN)</code> 
+               </p>
+            </div>
+            <p>每个值将以这种形式 <span class="emphasis"><em>[indexnumber=]string</em></span> 排列。索引号是可选的。如果提供，索引号就赋给它；otherwise the index of the element assigned is the number of the last index that was assigned, plus
+               one.  这样的格式 <span><strong class="command">declare</strong></span> 也可以接受。如果不提供索引值，那索引自动从零开始。
+            </p>
+            <p>在数组中加入缺少或者额外的成员使用以下语法：</p>
+            <div class="cmdsynopsis">
+               <p><code class="command"><code class="varname">ARRAYNAME[indexnumber]</code>=value</code> 
+               </p>
+            </div>
+            <p>记住 <span><strong class="command">read</strong></span> 内建命令提供 <code class="option">-a</code> 选项，来允许对一个数组的成员变量进行读取和赋值。
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_10_02_02"></a>10.2.2.&nbsp;对数组的变量解引用
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>为了指明在一个数组中的项目的内容，为了指向一个数组中的一个项目的内容，使用{}。这样是必须的，正如你可以从下面的例子看出，来绕过扩展操作符的shell解释。如果索引的数字是 <span class="emphasis"><em>@</em></span> 或者 <span class="emphasis"><em>*</em></span>，一个数组的所有的成员都将被引用。
+            </p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command"><code class="varname">ARRAY</code>=<em class="parameter"><code>(one two three)</code></em></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${ARRAY[*]}</code></strong></span>
+one two three
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">$ARRAY[*]</code></strong></span>
+one[*]
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${ARRAY[2]}</code></strong></span>
+three
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command"><code class="varname">ARRAY[3]</code>=<em class="parameter"><code>four</code></em></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${ARRAY[*]}</code></strong></span>
+one two three four
+</pre><p>不提供索引号码来指向某个数组的一个数字变量的内容和指向第一个元素的内容是一样的。</p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_10_02_03"></a>10.2.3.&nbsp;删除数组变量
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p> <span><strong class="command">unset</strong></span> 内建命令用来删除数组或者数组成员：
+            </p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command">unset <code class="varname">ARRAY[1]</code></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${ARRAY[*]}</code></strong></span>
+one three four
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">unset <code class="varname">ARRAY</code></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${ARRAY[*]}</code></strong></span>
+&lt;--no output--&gt;
+</pre></div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_10_02_04"></a>10.2.4.&nbsp;数组的例子
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>很难找到数组使用的实际例子。你能在你的系统里找到相当多的并没有做多少事情的脚本，但是You will find plenty of scripts that don't really do anything on your system but
+               that do use arrays to calculate mathematical series, for instance.  And that would be one of the more interesting examples...most
+               scripts just show what you can do with an array in an oversimplified and theoretical way.
+            </p>
+            <p>The reason for this dullness is that arrays are rather complex structures.  You will find that most practical examples for
+               which arrays could be used are already implemented on your system using arrays, however on a lower level, in the C programming
+               language in which most UNIX commands are written.  A good example is the Bash <span><strong class="command">history</strong></span> built-in command.  Those readers who are interested might check the <code class="filename">built-ins</code> directory in the Bash source tree and take a look at <code class="filename">fc.def</code>, which is processed when compiling the built-ins.
+            </p>
+            <p>另外一个很难找到好的例子的原因不并不所有的shell都支持数组，所以这样会破坏兼容性。</p>
+            <p>经过几天的寻找，最后I finally found this example operating at an Internet provider.  It distributes Apache web server configuration
+               files onto hosts in a web farm:
+            </p><pre class="screen">
+#!/bin/bash
+
+# $Id$
+# $Log: chap10.xml,v $
+# Revision 1.8  2005/09/05 12:39:22  tille
+# sorry made a mistake
+#
+# Revision 1.6  2005/03/01 19:39:20  tille
+# removed blank tracer images, added info on future debugging features, more keywords, minor corrections.
+#
+# Revision 1.5  2004/12/06 12:27:09  tille
+# changes for new domainname, minor corrections
+#
+# Revision 1.6  2004/10/18 18:58:06  tille
+# debugging, typos removed, replaced screenshots in chap9 with screen sections.
+#
+# Revision 1.5  2004/06/24 14:02:48  tille
+# dded tracer image
+#
+# Revision 1.4  2004/06/15 08:47:12  tille
+# more markup, index
+#
+# Revision 1.3  2004/05/22 13:34:18  tille
+# review for fultus
+#
+# Revision 1.2  2004/04/26 13:24:41  tille
+# updates by tabatha
+#
+# Revision 1.1.1.1  2004/02/11 16:59:50  tille
+# initiele bash import
+#
+# Revision 1.3  2003/02/05 09:52:53  mbounine
+# httpd restarting added.
+#
+# Revision 1.2  2003/02/05 08:11:32  mbounine
+# Bug fixes.
+#
+# Revision 1.1  2003/02/04 15:41:35  mbounine
+# Script for syncing httpd config between web farm hosts.
+# Initial release.
+#
+if [ $(whoami) != 'root' ]; then
+        echo "Must be root to run $0"
+        exit 1;
+fi
+if [ -z $1 ]; then
+        echo "Usage: $0 &lt;/path/to/httpd.conf&gt;"
+        exit 1
+fi
+
+httpd_conf_new=$1
+httpd_conf_path="/usr/local/apache/conf"
+login=htuser
+
+farm_hosts=(web03 web04 web05 web06 web07)
+
+for i in ${farm_hosts[@]}; do
+        su $login -c "scp $httpd_conf_new ${i}:${httpd_conf_path}"
+        su $login -c "ssh $i sudo /usr/local/apache/bin/apachectl graceful"
+
+done
+exit 0
+</pre><p>First two tests are performed to check whether the correct user is running the script with the correct arguments.  The names
+               of the hosts that need to be configured are listed in the array <code class="varname">farm_hosts</code>.  Then all these hosts are provided with the Apache configuration file, after which the daemon is restarted.  Note the use
+               of commands from the Secure Shell suite, encrypting the connections to remote hosts.
+            </p>
+            <p>感谢，Eugene 和同事们，为此做出的贡献。</p>
+            <p>Dan Richter贡献了下面的例子。这是他面临的问题：</p>
+            <p>“<span class="quote">...在我的公司，我们的web站点上有些演示，每周有人得对全部演示进行测试。所以我做了一个cron任务来把所有可能的候选填入一个数组， 使用 <span><strong class="command">date <code class="option">+%W</code></strong></span> 来找到年中的某周，使用取模操作来找到正确的索引。幸运的人通过email得到通知。</span>”
+            </p>
+            <p>以下是他的解决办法：</p><pre class="screen">
+#!/bin/bash
+# This is get-tester-address.sh 
+#
+# First, we test whether bash supports arrays.
+# (Support for arrays was only added recently.)
+#
+whotest[0]='test' || (echo 'Failure: arrays not supported in this version of
+bash.' &amp;&amp; exit 2)
+                                                                                
+#
+# Our list of candidates. (Feel free to add or
+# remove candidates.)
+#
+wholist=(
+     'Bob Smith &lt;bob@example.com&gt;'
+     'Jane L. Williams &lt;jane@example.com&gt;'
+     'Eric S. Raymond &lt;esr@example.com&gt;'
+     'Larry Wall &lt;wall@example.com&gt;'
+     'Linus Torvalds &lt;linus@example.com&gt;'
+   )
+#
+# Count the number of possible testers.
+# (Loop until we find an empty string.)
+#
+count=0
+while [ "x${wholist[count]}" != "x" ]
+do
+   count=$(( $count + 1 ))
+done
+                                                                                
+#
+# Now we calculate whose turn it is.
+#
+week=`date '+%W'`    	# The week of the year (0..53).
+week=${week#0}       	# Remove possible leading zero.
+                                                                                
+let "index = $week % $count"   # week modulo count = the lucky person
+
+email=${wholist[index]}     # Get the lucky person's e-mail address.
+                                                                                
+echo $email     	# Output the person's e-mail address.
+</pre><p>这个脚本然后被其他脚本使用，比如这个，使用一个 <span class="emphasis"><em>here</em></span> 文档：
+            </p><pre class="screen">
+email=`get-tester-address.sh`   # Find who to e-mail.
+hostname=`hostname`    		# This machine's name.
+                                                                                
+#
+# Send e-mail to the right person.
+#
+mail $email -s '[Demo Testing]' &lt;&lt;EOF
+The lucky tester this week is: $email
+                                                                                
+Reminder: the list of demos is here:
+    http://web.example.com:8080/DemoSites
+                                                                                
+(This e-mail was generated by $0 on ${hostname}.)
+EOF
+</pre></div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch10.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch10.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch10s03.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">第&nbsp;10&nbsp;章&nbsp;变量进阶&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;10.3.&nbsp;变量的操作</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

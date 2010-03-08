@@ -1,0 +1,386 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>3.4.&nbsp;Shell扩展</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch03.html" title="第&nbsp;3&nbsp;章&nbsp;Bash环境">
+      <link rel="prev" href="ch03s03.html" title="3.3.&nbsp;引用字符">
+      <link rel="next" href="ch03s05.html" title="3.5.&nbsp;别名">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">3.4.&nbsp;Shell扩展</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch03s03.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;3&nbsp;章&nbsp;Bash环境</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch03s05.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_03_04"></a>3.4.&nbsp;Shell扩展
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_04_0"></a>3.4.1.&nbsp;概要
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>在命令被分割成 <span class="emphasis"><em>记号（tokens译做记号）</em></span> 之后(参见 <a href="ch01s04.html#sect_01_04_01_01" title="1.4.1.1.&nbsp;Shell语法">第&nbsp;1.4.1.1&nbsp;节 “Shell语法”</a>)， 这些记号或者词就扩展开或者分解开。在下面的章节中我们讨论按照顺序扩展的共计八种扩展实现。
+            </p>
+            <p>在所有扩展之后，就进行引用的移除。</p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_04_01"></a>3.4.2.&nbsp;括号扩展
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>括号扩展是一种可以生成任意字符串的机制。Patterns to be brace-expanded take the form of an optional <span class="emphasis"><em>PREAMBLE</em></span>, followed by a series of comma-separated strings between a pair of braces, followed by an optional <span class="emphasis"><em>POSTSCRIPT</em></span>.  The preamble is prefixed to each string contained within the braces, and the postscript is then appended to each resulting
+               string, expanding left to right.
+            </p>
+            <p>括号扩展可以嵌套。每个扩展开的字符串的结果是未分类的；从左至右的顺序是保留的：</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <em class="parameter"><code>sp{el,il,al}l</code></em></strong></span>
+spell spill spall
+</pre><p>括号扩展在任何其他扩展之前执行，而且在结果中保留对其它扩展有特殊意义的任何字符。完全是严格按照原文。Bash 不对扩展的上下文或者括号之间的文本进行任何句法的解释。为了防止和参数扩展的冲突，字符串 “<span class="quote">${</span>” 被认为对于括号扩展是非法的。
+            </p>
+            <p>一个正确形式的括号扩展必须包含未引用的一对括号，且至少一个未被引用的逗号。错误形式的括号扩展保留不做改变。</p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_04_02"></a>3.4.3.&nbsp;~扩展
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>如果一个字以非引用的波浪线 (“<span class="quote">~</span>”)开始，所有在第一个未引用的斜杠之前的字符（或者所有字符，如果没有未引用的斜杠）被认为是一个 <span class="emphasis"><em>tilde-prefix（tilde前缀）</em></span>。如果在tilde前缀中的没有字符被引用，那么在tilde前缀中的跟随tilde的字符就被当作一个可能的登陆名。如果这个登陆名是空字符串，这个tilde就使用shell变量 <code class="varname">HOME</code> 的值来代替。如果 <code class="varname">HOME</code> 没有预先设置，就用用户执行shell的home目录来进行替换。除非，tilde前缀已经用指定的登陆名替换掉了。
+            </p>
+            <p>如果tilde前缀是 “<span class="quote">~+</span>”， 变量 <code class="varname">PWD</code> 的值替换tilde前缀。如果tilde前缀是 “<span class="quote">~-</span>”，shell变量 <code class="varname">OLDPWD</code>的值，如果预先设置的话，就进行替换。
+            </p>
+            <p>如果跟随在tilde前缀中波浪线If the characters following the tilde in the tilde-prefix consist of a number N, optionally prefixed by a
+               “<span class="quote">+</span>” or a “<span class="quote">-</span>”, the tilde-prefix is replaced with the corresponding element from the directory stack, as it would be displayed by the <span><strong class="command">dirs</strong></span> built-in invoked with the characters following tilde in the tilde-prefix as an argument.  If the tilde-prefix, without the
+               tilde, consists of a number without a leading “<span class="quote">+</span>” or “<span class="quote">-</span>”, “<span class="quote">+</span>” is assumed.
+            </p>
+            <p>If the login name is invalid, or the tilde expansion fails, the word
+               is left unchanged.
+            </p>
+            <p>Each variable assignment is checked for unquoted tilde-prefixes immediately following a “<span class="quote">:</span>” or “<span class="quote">=</span>”.  In these cases, tilde expansion is also performed.  Consequently, one may use file names with tildes in assignments to
+               <code class="varname">PATH</code>, <code class="varname">MAILPATH</code>, and <code class="varname">CDPATH</code>, and the shell assigns the expanded value.
+            </p>
+            <p>例子：</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">export <code class="varname">PATH</code>=<em class="parameter"><code>"$PATH:~/testdir"</code></em></strong></span>
+</pre><p><code class="filename">~/testdir</code> 将会扩展成为 <code class="varname">$HOME</code><code class="filename">/testdir</code>，所以如果 <code class="varname">$HOME</code> 是 <code class="filename">/var/home/franky</code>，目录 <code class="filename">/var/home/franky/testdir</code> 将会加入到 <code class="varname">PATH</code> 变量中去。
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_04_03"></a>3.4.4.&nbsp;Shell参数和变量扩展
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p> “<span class="quote">$</span>” 字符引出参数扩展，命令替换，或者算术扩展。参数名字或者需要展开的符号可以放入括号内，  The parameter name or symbol to be expanded may be enclosed in braces, which
+               are optional but serve to protect the variable to be expanded from characters immediately following it which could be interpreted
+               as part of the name.
+            </p>
+            <p>当使用括号的时候,匹配的结束括号是第一个没有被反斜杠转义或者在引用字符串中，以及不在一个嵌入式的算术表达式，命令替换或者参数扩展的 “<span class="quote">}</span>”。
+            </p>
+            <p>参数扩展的基本形式是 “<span class="quote">${PARAMETER}</span>”。“<span class="quote">PARAMETER</span>” 的值是要被替换的。当 “<span class="quote">PARAMETER</span>” 是一个含有多于一个数字的位置参数的时候，需要使用括号，或者当 “<span class="quote">PARAMETER</span>” 后接一个不会被解释成它名字一部分的字符的时候。
+            </p>
+            <p>如果 “<span class="quote">PARAMETER</span>” 的第一个字符是一感叹号，Bash使用 uses the value of the variable formed from the rest of “<span class="quote">PARAMETER</span>” as the name of the variable; this variable is then expanded and that value is used in the rest of the substitution, rather
+               than the value of “<span class="quote">PARAMETER</span>” itself.  这就是所谓的 <span class="emphasis"><em>indirect expansion</em></span>.
+            </p>
+            <p>你应该已经熟悉了直接参数扩展，由于它无时无刻都在发生，甚至在最简单的诸如以下的例子：</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$SHELL</code></strong></span>
+/bin/bash
+</pre><p>以下是一个间接扩展的例子：</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">${!N*}</code></strong></span>
+NNTPPORT NNTPSERVER NPX_PLUGIN_PATH
+</pre><p>注意这个和 <span><strong class="command">echo <code class="varname">$N*</code></strong></span>是不同的。
+            </p>
+            <p>以下结构允许建立尚不存在的变量：</p>
+            <div class="cmdsynopsis">
+               <p><code class="command">${<code class="varname">VAR</code>:=<em class="parameter"><code>value</code></em>}</code> 
+               </p>
+            </div>
+            <p>例子：</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$FRANKY</code></strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <em class="parameter"><code>${FRANKY:=Franky}</code></em></strong></span>
+Franky
+</pre><p>但是，特别参数，Special parameters, among others the positional parameters, may not be assigned this way, however.</p>
+            <p>We will further discuss the use of the curly braces for treatment of variables in <a href="ch10.html" title="第&nbsp;10&nbsp;章&nbsp;变量进阶">第&nbsp;10&nbsp;章 <i>变量进阶</i></a>.  More information can also be found in the Bash info pages.
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_04_04"></a>3.4.5.&nbsp;命令替换
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>命令替换允许一个命令的输出来替换这个命令本身。命令替换在一个命令这样封装的时候发生：</p>
+            <div class="cmdsynopsis">
+               <p><code class="command">$(command)</code> 
+               </p>
+            </div>
+            <p>或者象这样使用：</p>
+            <div class="cmdsynopsis">
+               <p><code class="command">`command`</code> 
+               </p>
+            </div>
+            <p>Bash以执行COMMAND且以命令的删除任何多余空行的标准输出来替换命令替换以实现这种扩展。嵌在当中的空行不会被删除，不过在字分割阶段可能会被移除。</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <em class="parameter"><code>`date`</code></em></strong></span>
+Thu Feb 6 10:06:20 CET 2003
+</pre><p>当使用老式风格的反引用替换形式的时候，反斜杠保留它的含义，除非当跟在 “<span class="quote">$</span>”，“<span class="quote">`</span>”, 或者 “<span class="quote">\</span>” 之后。The first backticks not preceded by a backslash terminates the command substitution.  When using the “<span class="quote">$(COMMAND)</span>” form, all characters between the parentheses make up the command; none are treated specially.
+            </p>
+            <p>命令替换可以嵌套。To nest when using the backquoted form, escape the inner backticks with backslashes.</p>
+            <p>如果替换出现在双引号中，字分割和文件名扩展不会在该结果中执行。</p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_04_05"></a>3.4.6.&nbsp;算术扩展
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>算术扩展允许一个算术表达式的赋值和结果的替换。算术扩展的格式是：</p>
+            <div class="cmdsynopsis">
+               <p><code class="command">$(( EXPRESSION ))</code> 
+               </p>
+            </div>
+            <p>表达式当作好像在双引用中The expression is treated as if it were within double quotes, but a double quote inside the parentheses is not
+               treated specially.  All tokens in the expression undergo parameter expansion, command substitution, and quote removal.  算术扩展可以嵌套。
+            </p>
+            <p>Evaluation of arithmetic expressions is done in fixed-width integers with no check for overflow - although division by zero
+               is trapped and recognized as an error.  The operators are roughly the same as in the C programming language.  In order of
+               decreasing precedence, the list looks like this:
+            </p>
+            <div class="table"><a name="table_03_04"></a><p class="title"><b>表&nbsp;3.4.&nbsp;算术操作符</b></p>
+               <table summary="算术操作符" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                  <colgroup>
+                     <col width="50%">
+                     <col width="50%">
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">操作符</th>
+                        <th style="border-bottom: 0.5pt solid ; " align="left">意义</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">VAR++ and VAR--</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">变量自增和变量自减</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">++VAR and --VAR</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">变量前置加和前置减</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">- and +</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">一元减和加</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">! and ~</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">逻辑和按位取反</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">**</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">求幂</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">*, / and %</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">乘，除，求余</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">+ and -</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">加，减</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">&lt;&lt; and &gt;&gt;</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">左移和右移</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">&lt;=, &gt;=, &lt; and &gt;</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">比较操作符</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">== and !=</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">相等和不相等</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">&amp;</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">位与</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">^</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">位异或</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">|</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">位或</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">&amp;&amp;</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">逻辑与</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">||</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">逻辑或</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">expr ? expr : expr</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">条件赋值</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">=, *=, /=, %=, +=, -=, &lt;&lt;=, &gt;&gt;=, &amp;=, ^= and |=</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">赋值</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; " align="left">,</td>
+                        <td style="" align="left">表达式间的分隔符</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p>Shell变量允许 variables are allowed as operands; parameter expansion is performed before the expression is evaluated.  在一个表达式中，shell变量也可以不使用参数扩展语法来通过名字引用。变量的值在被引用时被当作一个算术表达式来求值。一个shell变量在一个表达式中使用时不需要打开它的整数属性。</p>
+            <p>以0开始的常量会被解释成一个八进制数字。一个以 “<span class="quote">0x</span>” 或者 “<span class="quote">0X</span>” 开始的表示十六进制。除非，数字采取 “<span class="quote">[BASE'#']N</span>”形式，其中 “<span class="quote">BASE</span>” 是一个代表is a decimal number between 2 and 64 representing the arithmetic base, and N is a number in that base.  如果 “<span class="quote">BASE'#'</span>” 省略，那么 then base 10 is used.  The digits greater than 9 are represented by the lowercase letters, the uppercase letters,
+               “<span class="quote">@</span>”, and “<span class="quote">_</span>”, in that order.  If “<span class="quote">BASE</span>” is less than or equal to 36, lowercase and uppercase letters may be used interchangably to represent numbers between 10
+               and 35.
+            </p>
+            <p>操作数按照优先级来求值。可能忽略优先级而先对在括号中的子表达式进行求值。</p>
+            <p>无论在什么地方，Bash用户应该尝试带上方括号使用这个语法：</p>
+            <div class="cmdsynopsis">
+               <p><code class="command">$[ EXPRESSION ]</code> 
+               </p>
+            </div>
+            <p>然而，这样将仅仅计算 <span class="emphasis"><em>EXPRESSION</em></span>的结果，且不进行测试：
+            </p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <em class="parameter"><code>$[365*24]</code></em></strong></span>
+8760
+</pre><p>参见 <a href="ch07.html#sect_07_01_02_02" title="7.1.2.2.&nbsp;数字的比较">第&nbsp;7.1.2.2&nbsp;节 “数字的比较”</a>，其他的，可以看实际脚本中的例子。
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_04_06"></a>3.4.7.&nbsp;过程替换Process substitution
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>Process substitution is supported on systems that support named pipes (FIFOs) or the <code class="filename">/dev/fd</code> method of naming open files.  It takes the form of
+            </p>
+            <div class="cmdsynopsis">
+               <p><code class="command">&lt;(LIST)</code> 
+               </p>
+            </div>
+            <p>or</p>
+            <div class="cmdsynopsis">
+               <p><code class="command">&gt;(LIST)</code> 
+               </p>
+            </div>
+            <p>The process <code class="varname">LIST</code> is run with its input or output connected to a FIFO or some file in <code class="filename">/dev/fd</code>.  The name of this file is passed as an argument to the current command as the result of the expansion.  If the “<span class="quote">&gt;(LIST)</span>” form is used, writing to the file will provide input for <code class="varname">LIST</code>.  If the “<span class="quote">&lt;(LIST)</span>” form is used, the file passed as an argument should be read to obtain the output of <code class="varname">LIST</code>.  Note that no space may appear between the &lt; or &gt; signs and the left parenthesis, otherwise the construct would be interpreted
+               as a redirection.
+            </p>
+            <p>When available, process substitution is performed simultaneously with parameter and variable expansion, command substitution,
+               and arithmetic expansion.
+            </p>
+            <p>More information in <a href="ch08s02.html#sect_08_02_03" title="8.2.3.&nbsp;重定向和文件描述符">第&nbsp;8.2.3&nbsp;节 “重定向和文件描述符”</a>.
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_04_07"></a>3.4.8.&nbsp;字分割
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>shell扫描不在双引号中发生的参数扩展，命令替换和算术扩展的结果来进行字分割。</p>
+            <p>shell把每个 <code class="varname">$IFS</code> 字符对待成一个分隔符，且基于这些字符把其他扩展的结果分割。如果 <code class="varname">IFS</code> 未设置，或者它的值正好是 “<span class="quote">'&lt;space&gt;&lt;tab&gt;&lt;newline&gt;'</span>”，默认，那么任何 <code class="varname">IFS</code> 字符的序列就送往分割字。如果 <code class="varname">IFS</code> 有一个不同于默认的值，那么hen sequences of the whitespace characters “<span class="quote">space</span>” and “<span class="quote">Tab</span>” are ignored at the beginning and end of the word, as long as the whitespace character is in the value of <code class="varname">IFS</code> (an <code class="varname">IFS</code> whitespace character).  Any character in <code class="varname">IFS</code> that is not <code class="varname">IFS</code> whitespace, along with any adjacent <code class="varname">IF</code> whitespace characters, delimits a field.  A sequence of <code class="varname">IFS</code> whitespace characters is also treated as a delimiter.  If the value of <code class="varname">IFS</code> is null, no word splitting occurs.
+            </p>
+            <p>Explicit null arguments (“<span class="quote">""</span>” or “<span class="quote">''</span>”) are retained.  Unquoted implicit null arguments, resulting from the expansion of parameters that have no values, are removed.
+                If a parameter with no value is expanded within double quotes, a null argument results and is retained.
+            </p>
+            <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <table border="0" summary="Note: Expansion and word splitting">
+                  <tr>
+                     <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                     <th align="left">Expansion and word splitting</th>
+                  </tr>
+                  <tr>
+                     <td align="left" valign="top">
+                        <p>If no expansion occurs, no splitting is performed.</p>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_04_08"></a>3.4.9.&nbsp;文件名扩展
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>在字分割之后，除非设置了 <code class="option">-f</code> 选项(参见 <a href="ch02s03.html#sect_02_03_02" title="2.3.2.&nbsp;调试部分脚本">第&nbsp;2.3.2&nbsp;节 “调试部分脚本”</a>)，Bash扫描每个字来搜索字符 “<span class="quote">*</span>”，“<span class="quote">?</span>”，和 “<span class="quote">[</span>”。如果出现其中一个字符，那么这个字就被作为一个 <span class="emphasis"><em>PATTERN</em></span>, and replaced with an alphabetically sorted list of file names matching the pattern. 如果没有找到匹配的文件，而且shell选项 <code class="option">nullglob</code> 被禁用，那么这个字就被保留不做改变。如果设置了 <code class="option">nullglob</code> 选项，而没有找到匹配，那么字就被删除。如果shell选项 <code class="option">nocaseglob</code> 开启，就不对字符的字母顺序进行考虑而直接进来匹配。
+            </p>
+            <p>When a pattern is used for file name generation, the character “<span class="quote">.</span>” at the start of a file name or immediately following a slash must be matched explicitly, unless the shell option <code class="option">dotglob</code> is set.  When matching a file name, the slash character must always be matched explicitly.  In other cases, the “<span class="quote">.</span>” character is not treated specially.
+            </p>
+            <p>The <code class="varname">GLOBIGNORE</code> shell variable may be used to restrict the set of file names matching a pattern.  If <code class="varname">GLOBIGNORE</code> is set, each matching file name that also matches one of the patterns in <code class="varname">GLOBIGNORE</code> is removed from the list of matches.  The file names <code class="filename">.</code> and <code class="filename">..</code> are always ignored, even when <code class="varname">GLOBIGNORE</code> is set.  However, setting <code class="varname">GLOBIGNORE</code> has the effect of enabling the <code class="option">dotglob</code> shell option, so all other file names beginning with a “<span class="quote">.</span>” will match.  To get the old behavior of ignoring file names beginning with a “<span class="quote">.</span>”, make “<span class="quote">.*</span>” one of the patterns in <code class="varname">GLOBIGNORE</code>.  The <code class="option">dotglob</code> option is disabled when <code class="varname">GLOBIGNORE</code> is unset.
+            </p>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch03s03.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch03.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch03s05.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">3.3.&nbsp;引用字符&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;3.5.&nbsp;别名</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

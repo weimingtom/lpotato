@@ -1,0 +1,625 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;7&nbsp;章&nbsp;条件语句</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch06s05.html" title="6.5.&nbsp;练习">
+      <link rel="next" href="ch07s02.html" title="7.2.&nbsp;更多if的高级使用方法">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;7&nbsp;章&nbsp;条件语句</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch06s05.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch07s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_07"></a>第&nbsp;7&nbsp;章&nbsp;条件语句
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch07.html#sect_07_01">7.1. 介绍if</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch07.html#sect_07_01_01">7.1.1. 概要</a></span></dt>
+                     <dt><span class="sect2"><a href="ch07.html#sect_07_01_02">7.1.2. if的简单应用</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch07s02.html">7.2. 更多if的高级使用方法</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch07s02.html#sect_07_02_01">7.2.1. if/then/else结构</a></span></dt>
+                     <dt><span class="sect2"><a href="ch07s02.html#sect_07_02_02">7.2.2. if/then/elif/else结构</a></span></dt>
+                     <dt><span class="sect2"><a href="ch07s02.html#sect_07_02_03">7.2.3. if嵌套语句</a></span></dt>
+                     <dt><span class="sect2"><a href="ch07s02.html#sect_07_02_04">7.2.4. 布尔操作</a></span></dt>
+                     <dt><span class="sect2"><a href="ch07s02.html#sect_07_02_05">7.2.5. 使用exit语句和if</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch07s03.html">7.3. 使用case语句</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch07s03.html#sect_07_03_01">7.3.1. 简单的条件</a></span></dt>
+                     <dt><span class="sect2"><a href="ch07s03.html#sect_07_03_02">7.3.2. 初始脚本例子</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch07s04.html">7.4. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch07s05.html">7.5. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>本章我们会讨论在Bash脚本中使用条件，包含以下几个话题：</p>
+            <p>
+               
+            </p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p> <span><strong class="command">if</strong></span> 语句
+                     </p>
+                  </li>
+                  <li>
+                     <p>使用命令的退出状态</p>
+                  </li>
+                  <li>
+                     <p>比较和测试输入和文件</p>
+                  </li>
+                  <li>
+                     <p><span><strong class="command">if/then/else</strong></span> 结构
+                     </p>
+                  </li>
+                  <li>
+                     <p><span><strong class="command">if/then/elif/else</strong></span> 结构
+                     </p>
+                  </li>
+                  <li>
+                     <p>使用和测试位置参数</p>
+                  </li>
+                  <li>
+                     <p>嵌套 <span><strong class="command">if</strong></span> 语句
+                     </p>
+                  </li>
+                  <li>
+                     <p>布尔表达式</p>
+                  </li>
+                  <li>
+                     <p>使用 <span><strong class="command">case</strong></span> 语句
+                     </p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+            </p>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_07_01"></a>7.1.&nbsp;介绍if
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_07_01_01"></a>7.1.1.&nbsp;概要
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>有时候你需要指定shell脚本中的依靠命令的成功与否来实施不同过程的行为。 <span><strong class="command">if</strong></span> 结构允许你来指定这样的条件。
+               </p>
+               <p>最精简的 <span><strong class="command">if</strong></span> 命令的语法是：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">if TEST-COMMANDS; then CONSEQUENT-COMMANDS; fi</code> 
+                  </p>
+               </div>
+               <p> <span><strong class="command">TEST-COMMAND</strong></span> 执行后且它的返回状态是0，那么 <span><strong class="command">CONSEQUENT-COMMANDS</strong></span> 就执行。返回状态是最后一个命令的退出状态，或者当没有条件是真的话为0。
+               </p>
+               <p> <span><strong class="command">TEST-COMMAND</strong></span> 经常包括数字和字符串的比较测试，但是也可以是任何在成功时返回状态0或者失败时返回一些其他状态的一些命令。一元表达式经常用于检查文件的状态。如果对某个要素primaries， <code class="filename">FILE</code> 参数是 <code class="filename">/dev/fd/N</code> 这样的形式，那么就检查文件描述符 “<span class="quote">N</span>”。<code class="filename">stdin</code>, <code class="filename">stdout</code> 和 <code class="filename">stderr</code> 和他们各自的文件描述符也可以用于测试。
+               </p>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_07_01_01_01"></a>7.1.1.1.&nbsp;和if使用的表达式
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>下表包含了一个组成 <span><strong class="command">TEST-COMMAND</strong></span> 命令或者命令列表，称作 “<span class="quote">要素primaries</span>” 的概览。这些primaries放置在方括号中来表示一个条件表达式的测试。
+                  </p>
+                  <div class="table"><a name="tab_07_01"></a><p class="title"><b>表&nbsp;7.1.&nbsp;主表达式</b></p>
+                     <table summary="主表达式" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                        <colgroup>
+                           <col width="50%">
+                           <col width="50%">
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">Primary</th>
+                              <th style="border-bottom: 0.5pt solid ; " align="left">意义</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-a</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-b</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且是一个块特殊文件则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-c</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且是一个字特殊文件则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-d</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且是一个目录则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-e</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-f</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且是一个普通文件则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-g</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且已经设置了SGID则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-h</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且是一个符号连接则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-k</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且已经设置了粘制位则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-p</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且是一个名字管道(F如果O)则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-r</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且是可读的则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-s</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且大小不为0则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-t</code> <code class="filename">FD</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果文件描述符 <code class="filename">FD</code> 打开且指向一个终端则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-u</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且设置了SUID (set user ID)则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-w</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code>  如果 FILE 存在且是可写的则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-x</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且是可执行的则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-O</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且属有效用户ID则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-G</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且属有效用户组则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-L</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且是一个符号连接则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-N</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在 and has been mod如果ied since it was last read则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-S</code> <code class="filename">FILE</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE</code> 存在且是一个套接字则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="filename">FILE1</code> <code class="option">-nt</code> <code class="filename">FILE2</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE1</code> has been changed more recently than <code class="filename">FILE2</code>, or 如果 <code class="filename">FILE1</code> exists and <code class="filename">FILE2</code> does not则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="filename">FILE1</code> <code class="option">-ot</code> <code class="filename">FILE2</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE1</code> 比 <code class="filename">FILE2</code> 要老, 或者 <code class="filename">FILE2</code> 存在且 <code class="filename">FILE1</code> 不存在则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="filename">FILE1</code> <code class="option">-ef</code> <code class="filename">FILE2</code> ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 <code class="filename">FILE1</code> 和 <code class="filename">FILE2</code> 指向相同的设备和节点号则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ <code class="option">-o</code> OPTIONNAME ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 shell选项 “<span class="quote">OPTIONNAME</span>” 开启则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">[ -z</code> STRING ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> “<span class="quote">STRING</span>” 的长度为零则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">[ -n</code> STRING ] or [ STRING ]
+                              </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> “<span class="quote">STRING</span>” 的长度为非零 non-zero则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ STRING1 == STRING2 ] </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果2个字符串相同。 “<span class="quote">=</span>” may be used instead of “<span class="quote">==</span>” for strict POSIX compliance则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ STRING1 != STRING2 ] </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果字符串不相等则为真。</td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ STRING1 &lt; STRING2 ] </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 “<span class="quote">STRING1</span>” sorts before “<span class="quote">STRING2</span>” lexicographically in the current locale则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ STRING1 &gt; STRING2 ] </td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left"> 如果 “<span class="quote">STRING1</span>” sorts after “<span class="quote">STRING2</span>” lexicographically in the current locale则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; " align="left">[ ARG1 OP ARG2 ]</td>
+                              <td style="" align="left">“<span class="quote">OP</span>” is one of <code class="option">-eq</code>, <code class="option">-ne</code>, <code class="option">-lt</code>, <code class="option">-le</code>, <code class="option">-gt</code> or <code class="option">-ge</code>.  These arithmetic binary operators return true if “<span class="quote">ARG1</span>” is equal to, not equal to, less than, less than or equal to, greater than, or greater than or equal to “<span class="quote">ARG2</span>”, respectively.  “<span class="quote">ARG1</span>” and “<span class="quote">ARG2</span>” are integers.
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <p>表达式可以借以下操作符组合起来，以降序列出：listed in decreasing order of precedence:</p>
+                  <div class="table"><a name="tab_07_02"></a><p class="title"><b>表&nbsp;7.2.&nbsp;组合表达式</b></p>
+                     <table summary="组合表达式" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                        <colgroup>
+                           <col width="50%">
+                           <col width="50%">
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">操作</th>
+                              <th style="border-bottom: 0.5pt solid ; " align="left">效果</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ ! EXPR ]</td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left">如果 <span><strong class="command">EXPR</strong></span> 是false则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ ( EXPR ) ]</td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left">返回 <span><strong class="command">EXPR</strong></span>的值。这样可以用来忽略正常的操作符优先级。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ EXPR1 -a EXPR2 ]</td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left">如果 <span><strong class="command">EXPR1</strong></span> and <span><strong class="command">EXPR2</strong></span> 全真则为真。
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; " align="left">[ EXPR1 -o EXPR2 ]</td>
+                              <td style="" align="left">如果 <span><strong class="command">EXPR1</strong></span> 或者 <span><strong class="command">EXPR2</strong></span> 为真则为真。
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <p> <span><strong class="command">[</strong></span> (或作 <span><strong class="command">test</strong></span>) 内建命令对条件表达式使用一系列基于参数数量的规则来求值。更多关于这个主题的信息可以在Bash文档中查找。就像<span><strong class="command">if</strong></span> 使用<span><strong class="command">fi</strong></span> 来结束一样，在条件列完之后必须用"&gt;"来结束。
+                  </p>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_07_01_01_02"></a>7.1.1.2.&nbsp;后接then语句的命令
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p> <span><strong class="command">CONSEQUENT-COMMANDS</strong></span> 列出了跟在 <span><strong class="command">then</strong></span> 语句后面可以是任何有效的UNIX命令，任何可执行的程序，任何可执行的shell脚本或者任何shell语句，除了 <span><strong class="command">fi</strong></span>. 。重要地记住 <span><strong class="command">then</strong></span> 和 <span><strong class="command">fi</strong></span> 在shell里面被认为是分开的语句。因此，在命令行上使用的时候，他们用分号隔开。 
+                  </p>
+                  <p>在脚本中，if语句的不同部分通常是良好分隔的。以下是一些简单的例子：</p>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_07_01_01_03"></a>7.1.1.3.&nbsp;检查文件
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>第一个例子检查一个文件是否存在：</p><pre class="screen">
+<code class="prompt">anny ~&gt;</code> <span><strong class="command">cat <code class="filename">msgcheck.sh</code></strong></span>
+#!/bin/bash
+
+echo "This scripts checks the existence of the messages file."
+echo "Checking..."
+if [ -f /var/log/messages ]
+  then
+    echo "/var/log/messages exists."
+fi
+echo
+echo "...done."
+
+<code class="prompt">anny ~&gt;</code> <span><strong class="command">./msgcheck.sh</strong></span>
+This scripts checks the existence of the messages file.
+Checking...
+/var/log/messages exists.
+
+...done.
+</pre></div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_07_01_01_04"></a>7.1.1.4.&nbsp;检查shell选项
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>加入到你的Bash配置文件中去：</p><pre class="screen">
+# These lines will print a message if the noclobber option is set:
+
+if [ -o noclobber ]
+  then
+	echo "Your files are protected against accidental overwriting using redirection."
+fi
+
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                     <table border="0" summary="Note: 环境">
+                        <tr>
+                           <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                           <th align="left">环境</th>
+                        </tr>
+                        <tr>
+                           <td align="left" valign="top">
+                              <p>以上的例子将在命令行输入后开始工作：</p><pre class="screen">
+<code class="prompt">anny ~&gt;</code> <span><strong class="command">if <em class="parameter"><code>[ -o noclobber ]</code></em> ; then echo ; echo <em class="parameter"><code>"your files are protected
+against overwriting."</code></em> ; echo ; fi</strong></span>
+
+your files are protected against overwriting.
+
+<code class="prompt">anny ~&gt;</code>
+</pre><p>然而，如果你使用依赖环境的测试，当你在脚本中输入相同的命令你可能得到不用的结果，因为脚本会打开一个新的，没有设置预期的变量和选项的shell。</p>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_07_01_02"></a>7.1.2.&nbsp;if的简单应用
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_07_01_02_01"></a>7.1.2.1.&nbsp;测试退出状态
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p> <code class="varname">?</code> 变量包含了之前执行命令的退出状态（最近完成的前台进程）。
+                  </p>
+                  <p>以下的例子显示了一个简单的测试：</p><pre class="screen">
+<code class="prompt">anny ~&gt;</code> <span><strong class="command">if <em class="parameter"><code>[ $? -eq 0 ]</code></em></strong></span>
+<code class="prompt">More input&gt;</code> <span><strong class="command">then echo <em class="parameter"><code>'That was a good job!'</code></em></strong></span>
+<code class="prompt">More input&gt;</code> <span><strong class="command">fi</strong></span>
+That was a good job!
+
+<code class="prompt">anny ~&gt;</code>
+</pre><p>以下的例子证明了 <span><strong class="command">TEST-COMMANDS</strong></span> 可以是任何有返回和退出状态的UNIX命令，之后 <span><strong class="command">if</strong></span> 再次返回零的退出状态：
+                  </p><pre class="screen">
+<code class="prompt">anny ~&gt;</code> <span><strong class="command">if <em class="parameter"><code>! grep $USER</code></em> <code class="filename">/etc/passwd</code></strong></span>
+<code class="prompt">More input&gt;</code> <span><strong class="command">then echo <em class="parameter"><code>"your user account is not managed locally"</code></em>; fi</strong></span>
+your user account is not managed locally
+
+<code class="prompt">anny &gt;</code> <span><strong class="command">echo <code class="varname">$?</code></strong></span>
+0
+
+<code class="prompt">anny &gt;</code>
+</pre><p>以下能得到同样的结果：</p><pre class="screen">
+<code class="prompt">anny &gt;</code> <span><strong class="command">grep <code class="varname">$USER</code> <code class="filename">/etc/passwd</code></strong></span>
+
+<code class="prompt">anny &gt;</code> <span><strong class="command">if <em class="parameter"><code>[ $? -ne 0 ]</code></em> ; then echo <em class="parameter"><code>"not a local account"</code></em> ; fi</strong></span>
+not a local account
+
+<code class="prompt">anny &gt;</code>
+</pre></div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_07_01_02_02"></a>7.1.2.2.&nbsp;数字的比较
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>以下的例子是用了数值的比较：</p><pre class="screen">
+<code class="prompt">anny &gt;</code> <span><strong class="command"><code class="varname">num</code>=<em class="parameter"><code>`wc -l work.txt`</code></em></strong></span>
+
+<code class="prompt">anny &gt;</code> <span><strong class="command">echo <code class="varname">$num</code></strong></span>
+201
+
+<code class="prompt">anny &gt;</code> <span><strong class="command">if <em class="parameter"><code>[ "$num" -gt "150" ]</code></em></strong></span>
+<code class="prompt">More input&gt;</code> <span><strong class="command">then echo ; echo <em class="parameter"><code>"you've worked hard enough for today."</code></em></strong></span>
+<code class="prompt">More input&gt;</code> <span><strong class="command">echo ; fi</strong></span>
+
+you've worked hard enough for today.
+
+
+<code class="prompt">anny &gt;</code>
+</pre><p>这个脚本在每个星期天由cron来执行。如果星期的数是偶数，他就提醒你把垃圾箱清理：</p><pre class="screen">
+#!/bin/bash
+
+# Calculate the week number using the date command:
+
+WEEKOFFSET=$[ $(date +"%V") % 2 ]
+
+# Test if we have a remainder.  If not, this is an even week so send a message.
+# Else, do nothing.
+
+if [ $WEEKOFFSET -eq "0" ]; then
+  echo "Sunday evening, put out the garbage cans." | mail -s "Garbage cans out" your@your_domain.org
+
+</pre></div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_07_01_02_03"></a>7.1.2.3.&nbsp;字符串比较
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>一个通过比较字符串来测试用户ID的例子：</p><pre class="screen">
+if [ "$(whoami)" != 'root' ]; then
+        echo "You have no permission to run $0 as non-root user."
+        exit 1;
+fi
+</pre><p>使用Bash，你可以缩短这样的结构。下面是以上测试的精简结构：</p><pre class="screen">
+[ "$(whoami)" != 'root' ] &amp;&amp; ( echo you are using a non-privileged account; exit 1 )
+</pre><p>类似于如果测试为真就执行的 “<span class="quote">&amp;&amp;</span>” 表达式， “<span class="quote">||</span>” 指定了测试为假就执行。类似于 “<span class="quote">&amp;&amp;</span>” 表达式指明了在两个测试条件为真时所采取的动作，“<span class="quote">||</span>” 指明测试为假时所采取的行动。
+                  </p>
+                  <p>正则表达式也可以在比较中使用：</p><pre class="screen">
+<code class="prompt">anny &gt;</code> <span><strong class="command"><code class="varname">gender</code>=<em class="parameter"><code>"female"</code></em></strong></span>
+
+<code class="prompt">anny &gt;</code> <span><strong class="command">if <em class="parameter"><code>[[ "$gender" == f* ]]</code></em></strong></span>
+<code class="prompt">More input&gt;</code> <span><strong class="command">then echo <em class="parameter"><code>"Pleasure to meet you, Madame."</code></em>; fi</strong></span>
+Pleasure to meet you, Madame.
+
+<code class="prompt">anny &gt;</code>
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                     <table border="0" summary="Note: 真正的程序员">
+                        <tr>
+                           <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                           <th align="left">真正的程序员</th>
+                        </tr>
+                        <tr>
+                           <td align="left" valign="top">
+                              <p>多数程序员更喜欢使用和方括号相同作用的内建的 <span><strong class="command">test</strong></span> 命令，像这样：
+                              </p><pre class="screen">
+test "$(whoami)" != 'root' &amp;&amp; (echo you are using a non-privileged account; exit 1)
+</pre></td>
+                        </tr>
+                     </table>
+                  </div>
+                  <p>参见信息页面得到更多关于Bash “<span class="quote">(( EXPRESSION ))</span>” 和 “<span class="quote">[[ EXPRESSION ]]</span>” 结构的模块匹配信息。
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch06s05.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch07s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">6.5.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;7.2.&nbsp;更多if的高级使用方法</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,92 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>7.5.&nbsp;练习</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch07.html" title="第&nbsp;7&nbsp;章&nbsp;条件语句">
+      <link rel="prev" href="ch07s04.html" title="7.4.&nbsp;总结">
+      <link rel="next" href="ch08.html" title="第&nbsp;8&nbsp;章&nbsp;编写交互脚本">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">7.5.&nbsp;练习</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch07s04.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;7&nbsp;章&nbsp;条件语句</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch08.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_07_05"></a>7.5.&nbsp;练习
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <p>这里有些能让你在脚本中开始使用 <span><strong class="command">if</strong></span> 的好建议：
+         </p>
+         <div class="orderedlist">
+            <ol type="1">
+               <li>
+                  <p>使用一个 <span><strong class="command">if/then/elif/else</strong></span> 结构来打印当前月份。这个脚本应该能打印本月的天数，而且如果当前月是二月的话能给出关于闰年的相关信息。
+                  </p>
+               </li>
+               <li>
+                  <p>同样地，使用一个 <span><strong class="command">case</strong></span> 语句和一个使用 <span><strong class="command">date</strong></span> 命令的方法。
+                  </p>
+               </li>
+               <li>
+                  <p>修改 <code class="filename">/etc/profile</code> 使你以 <span class="emphasis"><em>root</em></span> 身份连接的时候得到一个特殊的问候消息。
+                  </p>
+               </li>
+               <li>
+                  <p>编辑 <a href="ch07s02.html#sect_07_02_04" title="7.2.4.&nbsp;布尔操作">第&nbsp;7.2.4&nbsp;节 “布尔操作”</a> 的 <code class="filename">leaptest.sh</code> 脚本来使它需要一个参数year运行。  测试恰好提供一个参数。
+                  </p>
+               </li>
+               <li>
+                  <p>编写一个叫做 <code class="filename">whichdaemon.sh</code> 的脚本来检查 <span><strong class="command">httpd</strong></span> 和 <span><strong class="command">init</strong></span> 守护进程是否在你的系统上运行。如果一个 <span><strong class="command">httpd</strong></span> 进程在运行，这个脚本应该能打印一个消息类似， “<span class="quote">This machine is running a web server.</span>”  使用 <span><strong class="command">ps</strong></span> 来检查进程。
+                  </p>
+               </li>
+               <li>
+                  <p>编写一个脚本来使用 <span><strong class="command">scp</strong></span> 来在一个远程机器上备份你的主目录。这个脚本应该使用一个log文件来报告，比如 <code class="filename">~/log/homebackup.log</code>。如果你没有第二台机器来拷贝备份，使用 <span><strong class="command">scp</strong></span> 尝试拷贝到本机。这样将需要2台主机之间的 SSH 密钥，或者你需要提供一个密码。SSH 密钥的创建在 <span><strong class="command">man <em class="parameter"><code>ssh-keygen</code></em></strong></span>有详细说明。
+                  </p>
+                  <p>这个脚本应该使用 <span><strong class="command">tar <code class="option">cf</code></strong></span> 来建立备份并且使用 <span><strong class="command">gzip</strong></span> 或者 <span><strong class="command">bzip2</strong></span> 来压缩 <code class="filename">.tar</code> 文件。把所有文件名放进变量当中。把远程主机和远程目录放进一个变量当中。这样将很方便地能对脚本进行重用或者将来对它做某些更改。
+                  </p>
+                  <p>这个脚本应该检查压缩档案的存在。如果实现存在，先对它进行移除来防止输出产生。</p>
+                  <p>这个脚本也应该可用的磁盘空间。记住任何特定时间你的主目录都可能含有数据，在 <code class="filename">.tar</code> 文件中的数据和压缩档案中的数据都在你的磁盘上。如果没有足够的磁盘空间，会退出并在log文件中产生一个错误消息。
+                  </p>
+                  <p>这个脚本应该在压缩文档存在时进行清理。</p>
+               </li>
+            </ol>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch07s04.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch07.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch08.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">7.4.&nbsp;总结&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;第&nbsp;8&nbsp;章&nbsp;编写交互脚本</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,68 @@
+/*remove unneeded page elements*/
+#sitetools, #nav, #news {
+	display: none;
+}
+
+/* remove backgrounds */
+
+body {
+	background: #FFF;
+}
+
+#banner {
+	background: #FFF;
+}
+
+.warning {
+	padding-left: 0;
+	background: white;
+}
+
+/*layout adjustments */
+#wrapper {
+	background: #FFF;
+	width: auto;
+	border-style: none;
+}
+
+#main {
+	border: none;
+	padding: 0;
+	width: auto;
+}
+
+#legal {
+	padding-left: 0px;
+}
+
+
+/* font settings */
+* {
+	color: #000000 !important;
+}
+
+h1 {
+	font-size: 18pt !important;
+}
+
+h2 {
+	font-size: 14pt !important;
+	font-weight: bold !important;
+}
+
+p {
+	font-size: 10pt !important;
+}
+
+/*print only logo */
+#logo {
+	display: block;
+}
+
+/* print urls */
+a:after {
+   content: " (" attr(href) ") ";
+}
+  
+
+

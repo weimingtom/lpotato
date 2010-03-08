@@ -1,0 +1,260 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>1.4.&nbsp;建立块</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch01.html" title="第&nbsp;1&nbsp;章&nbsp;Bash和Bash脚本">
+      <link rel="prev" href="ch01s03.html" title="1.3.&nbsp;执行命令">
+      <link rel="next" href="ch01s05.html" title="1.5.&nbsp;开发优良脚本">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">1.4.&nbsp;建立块</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch01s03.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;1&nbsp;章&nbsp;Bash和Bash脚本</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch01s05.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_01_04"></a>1.4.&nbsp;建立块
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_01_04_01"></a>1.4.1.&nbsp;Shell建立块
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_01_04_01_01"></a>1.4.1.1.&nbsp;Shell语法
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>如果输入没有被注释掉，那么shell将读取并且把它分割成字和操作符，使用引用规则来定义输入的每个字符的意义。然后词和操作符就被转化为命令和其它结构，并能返回一个可供检查和处理的退出状态。以上fork-and-exec机制只有在以下列方法shell扫描输入后起作用：</p>
+               <div class="itemizedlist">
+                  <ul type="disc">
+                     <li>
+                        <p>shell从文件，字符串或者用户终端来读取它的输入。</p>
+                     </li>
+                     <li>
+                        <p>输入用字和操作符分割开，遵守引号规则，参见 <a href="ch03.html" title="第&nbsp;3&nbsp;章&nbsp;Bash环境">第&nbsp;3&nbsp;章 <i>Bash环境</i></a>。 这些记号使用 <span class="emphasis"><em>特殊字符</em></span> 来分隔。别名扩展也执行。
+                        </p>
+                     </li>
+                     <li>
+                        <p>shell <span class="emphasis"><em>解析</em></span> (搜索和替换) the tokens 成简单复合的命令。
+                        </p>
+                     </li>
+                     <li>
+                        <p>Bash执行多种shell扩展，把扩展记号分开成文件名的列表和命令以及参数。</p>
+                     </li>
+                     <li>
+                        <p>重定向在需要时进行实现，重定向操作符合它们的操作数被从参数列表中移开。</p>
+                     </li>
+                     <li>
+                        <p>命令执行后。</p>
+                     </li>
+                     <li>
+                        <p>Optionally shell等待命令结束并收集它的退出状态。</p>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_01_04_01_02"></a>1.4.1.2.&nbsp;Shell命令
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>一个简单的shell命令例如 <span><strong class="command">touch <code class="filename">file1</code> <code class="filename">file2</code> <code class="filename">file3</code></strong></span> 由命令本身，参数以及空格构成。
+               </p>
+               <p>更复杂的shell命令由简单的命令以多种方式组织在一起：例如管道把一个命令的输出变成另外一个命令的输入，循环或者条件结构，或者其他的组织方式。请看一些例子：</p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">ls | more</code> 
+                  </p>
+               </div>
+               <div class="cmdsynopsis">
+                  <p><code class="command">gunzip <code class="filename">file.tar.gz</code> | tar <code class="option">xvf</code> <em class="parameter"><code>-</code></em></code> 
+                  </p>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_01_04_01_03"></a>1.4.1.3.&nbsp;Shell函数
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>Shell函数是一种为一系列稍后执行的命令命名的方法。他们执行起来就像 “<span class="quote">普通</span>” 命令。当一个Shell函数的名字被当作一个简单命令使用后，和函数名字相关联的命令就会执行。
+               </p>
+               <p>Shell函数在当前shell的上下文执行；没有新的进程会建立来解释它们</p>
+               <p>函数会在 <a href="ch11.html" title="第&nbsp;11&nbsp;章&nbsp;函数">第&nbsp;11&nbsp;章 <i>函数</i></a> 进行详细说明。
+               </p>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_01_04_01_04"></a>1.4.1.4.&nbsp;Shell参数
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>参数是一个存储值的实体。可以是一个名字，一个数字，或者一个特殊的值。因为shell，一个变量是一个存储了名字的参数。一个变量可以是一个值或者是另或者其他属性。变量使用shell内建命令 <span><strong class="command">declare</strong></span> 来建立。
+               </p>
+               <p>如果不进行赋值，变量就被赋予空字符串。变量只能使用内建命令 <span><strong class="command">unset</strong></span> 来移除。
+               </p>
+               <p>变量赋值在 <a href="ch03s02.html" title="3.2.&nbsp;变量">第&nbsp;3.2&nbsp;节 “变量”</a> 讨论，变量高级使用在 <a href="ch10.html" title="第&nbsp;10&nbsp;章&nbsp;变量进阶">第&nbsp;10&nbsp;章 <i>变量进阶</i></a>。
+               </p>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_01_04_01_05"></a>1.4.1.5.&nbsp;Shell扩展
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>Shell扩展在每个命令行被分隔成记号（tokens）后执行。这些是执行的扩展：</p>
+               <div class="itemizedlist">
+                  <ul type="disc">
+                     <li>
+                        <p>括号扩展</p>
+                     </li>
+                     <li>
+                        <p>~ 扩展</p>
+                     </li>
+                     <li>
+                        <p>参数和变量扩展</p>
+                     </li>
+                     <li>
+                        <p>命令替换</p>
+                     </li>
+                     <li>
+                        <p>算术扩展</p>
+                     </li>
+                     <li>
+                        <p>词分割Word splitting</p>
+                     </li>
+                     <li>
+                        <p>文件名扩展</p>
+                     </li>
+                  </ul>
+               </div>
+               <p>我们会在 <a href="ch03s04.html" title="3.4.&nbsp;Shell扩展">第&nbsp;3.4&nbsp;节 “Shell扩展”</a> 具体讨论扩展的类型。
+               </p>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_01_04_01_06"></a>1.4.1.6.&nbsp;重定向
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>在一个命令执行之前，它的输入和输出可能重定向使用一个由shell解释的特殊符号。重定向也可以用为当前shell执行环境来打开和关闭文件。</p>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_01_04_01_07"></a>1.4.1.7.&nbsp;执行命令
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>当执行一个命令时，When executing a command, the words that the parser has marked as variable assignments (preceding the command name)
+                  and redirections are saved for later reference.  Words that are not variable assignments or redirections are expanded; the
+                  first remaining word after expansion is taken to be the name of the command and the rest are arguments to that command.  Then
+                  redirections are performed, then strings assigned to variables are expanded.  If no command name results, variables will affect
+                  the current shell environment.
+               </p>
+               <p>shell任务的一个重要部分是搜索命令。Bash是按照下面的步骤来完成的：</p>
+               <div class="itemizedlist">
+                  <ul type="disc">
+                     <li>
+                        <p>检查命令是否包含斜杠。如果没有，首先检查函数列表是否包含一个我们寻找的命令。</p>
+                     </li>
+                     <li>
+                        <p>如果命令不是一个函数，那么在内建命令列表中检查。</p>
+                     </li>
+                     <li>
+                        <p>如果命令既不是函数也不是内建命令，那么扫描列在 <code class="varname">PATH</code> 中的目录列表来进行查找。Bash使用一个 <span class="emphasis"><em>hash table</em></span> (内存中的数据存放区域) 来记忆可执行文件的完整路径，这样能防止对 <code class="varname">PATH</code> 的扩展搜索。
+                        </p>
+                     </li>
+                     <li>
+                        <p>如果搜索没有成功，Bash打印一条错误消息并返回退出状态127。</p>
+                     </li>
+                     <li>
+                        <p>如果搜索成功或者命令包含一个斜杠，shell在一个单独执行环境中执行这个命令。</p>
+                     </li>
+                     <li>
+                        <p>如果因为文件是不可执行的或者不是一个目录造成执行失败，就假设是一个shell脚本。</p>
+                     </li>
+                     <li>
+                        <p>如果命令是异步开始的，shell会等待命令完成并收集它的退出状态。</p>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_01_04_01_08"></a>1.4.1.8.&nbsp;Shell脚本
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>调用bash时，当一个包含shell命令的文件被用作第一个非选项参数时候（不带 <code class="option">-c</code> 或者 <code class="option">-s</code>，这两个参数将会创建一个非交互的shell）。这个shell首先搜寻脚本文件所在的当前目录，如果没有找到则对环境变量  <code class="varname">PATH</code> 进行查找。
+               </p>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch01s03.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch01.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch01s05.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">1.3.&nbsp;执行命令&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;1.5.&nbsp;开发优良脚本</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,260 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>6.2.&nbsp;打印程序</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch06.html" title="第&nbsp;6&nbsp;章&nbsp;GNU AWK编程语言">
+      <link rel="prev" href="ch06.html" title="第&nbsp;6&nbsp;章&nbsp;GNU AWK编程语言">
+      <link rel="next" href="ch06s03.html" title="6.3.&nbsp;Gawk变量">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">6.2.&nbsp;打印程序</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch06.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;6&nbsp;章&nbsp;GNU AWK编程语言</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch06s03.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_06_02"></a>6.2.&nbsp;打印程序
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_06_02_01"></a>6.2.1.&nbsp;打印选择的域
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p> <span><strong class="command">awk</strong></span> 中的 <span><strong class="command">print</strong></span> 命令把输入文件中选择的数据输出。
+            </p>
+            <p>当 <span><strong class="command">awk</strong></span> 读取文件的一行，根据指定的 <span class="emphasis"><em>输入域分隔符</em></span> 把行分开， <code class="varname">FS</code>，<span><strong class="command">awk</strong></span> 的一个环境变量(见 <a href="ch06s03.html#sect_06_03_02" title="6.3.2.&nbsp;输出分隔符">第&nbsp;6.3.2&nbsp;节 “输出分隔符”</a>)。它被预先定义为一个或者多个空格或者制表符。
+            </p>
+            <p>变量 <code class="varname">$1</code>, <code class="varname">$2</code>, <code class="varname">$3</code>, ..., <code class="varname">$N</code> 把输入行的第一第二第三直到最后一个域保存起来。变量 <code class="varname">$0</code> 把整行的值保存起来。在下面的图片描述中，我们看到 <span><strong class="command">df</strong></span> 命令输出有6栏。
+            </p>
+            <div class="figure"><a name="d0e7175"></a><p class="title"><b>图&nbsp;6.1.&nbsp;awk中的块</b></p>
+               <div class="mediaobject"><img src="images/awk.png" alt="由awk解释的块：第一栏是$1，第二栏是$2，以此类推。"></div>
+            </div>
+            <p>在 <span><strong class="command">ls <code class="option">-l</code></strong></span> 的输出，有9栏。 <span><strong class="command">print</strong></span> 语句像这样使用这些域：
+            </p><pre class="screen">
+<code class="prompt">kelly@octarine ~/test&gt;</code> <span><strong class="command">ls <code class="option">-l</code> | awk <em class="parameter"><code>'{ print $5 $9 }'</code></em></strong></span>
+160orig
+121script.sed
+120temp_file
+126test
+120twolines
+441txt2html.sh
+
+<code class="prompt">kelly@octarine ~/test&gt;</code>
+</pre><p>这个命令把包含文件大小的第五栏和包含文件名的最后一栏打印出来。除非你使用正式的方法来用一个逗号来分割你想打印的列，否则输出并不十分适合阅读。这样的情况下，默认的输出分割字符，通常是一个空格，将被放入每个输出域。</p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_06_02_02"></a>6.2.2.&nbsp;格式化域
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>没有格式化，只使用输出分隔符的话看上去比较破，插入几个制表符和指示输出的标记会使它变得漂亮很多：</p><pre class="screen">
+<code class="prompt">kelly@octarine ~/test&gt;</code> <span><strong class="command">ls <code class="option">-ldh</code> <code class="filename">*</code> | grep <code class="option">-v</code> <em class="parameter"><code>total</code></em> | \ 
+awk <em class="parameter"><code>'{ print "Size is " $5 " bytes for " $9 }'</code></em></strong></span>
+Size is 160 bytes for orig
+Size is 121 bytes for script.sed
+Size is 120 bytes for temp_file
+Size is 126 bytes for test
+Size is 120 bytes for twolines
+Size is 441 bytes for txt2html.sh
+
+<code class="prompt">kelly@octarine ~/test&gt;</code>
+</pre><p>注意反斜杠的用法，让shell不把它翻译成分隔命令而使其在下一行继续很长的输入。虽然命令行的输入实际上是没有长度限制的，但是你的显示器不是，打印的纸当然也不是。使用反斜杠也允许拷贝和粘贴以上行到一个终端窗口。</p>
+            <p> <span><strong class="command">ls</strong></span> 的 <code class="option">-h</code> 选项用来支持把大文件的字节数转换成更容易读的格式。当把目录作为参数的时候长列表的输出显示目录中快的总数。这行对我们并没有什么用处，所以我们加上一个*。同样的原因我们同样加上 <code class="option">-d</code> 选项，万一*对一个目录展开。
+            </p>
+            <p>在这个例子中的反斜杠提示了一行的延长。见 <a href="ch03s03.html#sect_03_03_02" title="3.3.2.&nbsp;转义字符">第&nbsp;3.3.2&nbsp;节 “转义字符”</a>。
+            </p>
+            <p>甚至在反序中你也能取出任何栏的的数字。下面的例子证明了最危险的区分。</p><pre class="screen">
+<code class="prompt">kelly@octarine ~&gt;</code> <span><strong class="command">df <code class="option">-h</code> | sort <code class="option">-rnk</code> <em class="parameter"><code>5</code></em> | head <em class="parameter"><code>-3</code></em> | \ 
+awk <em class="parameter"><code>'{ print "Partition " $6 "\t: " $5 " full!" }'</code></em></strong></span>
+Partition /var  : 86% full!
+Partition /usr  : 85% full!
+Partition /home : 70% full!
+
+<code class="prompt">kelly@octarine ~&gt;</code>
+</pre><p>下表给出了特殊格式化字符的总揽：</p>
+            <div class="table"><a name="tab_06_01"></a><p class="title"><b>表&nbsp;6.1.&nbsp;gawk的格式化字符</b></p>
+               <table summary="gawk的格式化字符" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                  <colgroup>
+                     <col width="50%">
+                     <col width="50%">
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">转义字符</th>
+                        <th style="border-bottom: 0.5pt solid ; " align="left">含义</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\a</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">Bell character</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\n</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">Newline character</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; " align="left">\t</td>
+                        <td style="" align="left">Tab</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p>引用，$和其他元字符应该使用反斜杠来进行转义。</p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_06_02_03"></a>6.2.3.&nbsp;print命令和正则表达式
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>用斜杠把正则表达式包含起来可以当作一个pattern。然后正则表达式测试整个文本的每条记录。语法如下：</p>
+            <div class="cmdsynopsis">
+               <p><code class="command">awk 'EXPRESSION  { PROGRAM }' <code class="filename">file(s)</code></code> 
+               </p>
+            </div>
+            <p>下面的例子现实了只有本地磁盘设备的信息，网络文件系统没有显示：</p><pre class="screen">
+<code class="prompt">kelly is in ~&gt;</code> <span><strong class="command">df <code class="option">-h</code> | awk <em class="parameter"><code>'/dev\/hd/ { print $6 "\t: " $5 }'</code></em></strong></span>
+/       : 46%
+/boot   : 10%
+/opt    : 84%
+/usr    : 97%
+/var    : 73%
+/.vol1  : 8%
+
+<code class="prompt">kelly is in ~&gt;</code>
+</pre><p>斜杠也需要转义，因为对于 <span><strong class="command">awk</strong></span> 它们有着特殊的含义。
+            </p>
+            <p>下面的另外一个例子是我们在 <code class="filename">/etc</code> 目录搜索以 “<span class="quote">.conf</span>” 结尾和 “<span class="quote">a</span>”  <span class="emphasis"><em>或者</em></span>  “<span class="quote">x</span>” 开头的文件，使用扩展的正则表达式：
+            </p><pre class="screen">
+<code class="prompt">kelly is in /etc&gt;</code> <span><strong class="command">ls <code class="option">-l</code> | awk <em class="parameter"><code>'/\&lt;(a|x).*\.conf$/ { print $9 }'</code></em></strong></span>
+amd.conf
+antivir.conf
+xcdroast.conf
+xinetd.conf
+
+<code class="prompt">kelly is in /etc&gt;</code>
+</pre><p>这个例子说明了在正则表达式中.的特殊意义。第一个表明了我们想要搜索在第一个搜索字符串之后的任何字符，第二个因为是要查找字符串的一部分所以被转义了（文件名的结束）。</p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_06_02_04"></a>6.2.4.&nbsp;特殊的patterns
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>为了在输出之前加上注释，使用BEGIN语句：</p><pre class="screen">
+<code class="prompt">kelly is in /etc&gt;</code> <span><strong class="command">ls <code class="option">-l</code> | \
+awk <em class="parameter"><code>'BEGIN { print "Files found:\n" } /\&lt;[a|x].*\.conf$/ { print $9 }'</code></em></strong></span>
+Files found:
+amd.conf
+antivir.conf
+xcdroast.conf
+xinetd.conf
+
+<code class="prompt">kelly is in /etc&gt;</code>
+</pre><p>加上 <span><strong class="command">END</strong></span> 语句能插入文本在整个输入被处理之后：
+            </p><pre class="screen">
+<code class="prompt">kelly is in /etc&gt;</code> <span><strong class="command">ls <code class="option">-l</code> | \
+awk <em class="parameter"><code>'/\&lt;[a|x].*\.conf$/ { print $9 } END { print \
+"Can I do anything else for you, mistress?" }'</code></em></strong></span>
+amd.conf
+antivir.conf
+xcdroast.conf
+xinetd.conf
+Can I do anything else for you, mistress?
+
+<code class="prompt">kelly is in /etc&gt;</code>
+</pre></div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_06_02_05"></a>6.2.5.&nbsp;Gawk脚本
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>由于往往命令都有点长，你可能想把他们放到脚本中，来重用它。一个 <span><strong class="command">awk</strong></span> 脚本包含定义pattern和动作的awk语句。
+            </p>
+            <p>作为一个说明，我们将建立一个报告来显示占用率最高的分区，参见 <a href="ch06s02.html#sect_06_02_02" title="6.2.2.&nbsp;格式化域">第&nbsp;6.2.2&nbsp;节 “格式化域”</a>。
+            </p><pre class="screen">
+<code class="prompt">kelly is in ~&gt;</code> <span><strong class="command">cat <code class="filename">diskrep.awk</code></strong></span>
+BEGIN { print "*** WARNING WARNING WARNING ***" }
+/\&lt;[8|9][0-9]%/ { print "Partition " $6 "\t: " $5 " full!" }
+END { print "*** Give money for new disks URGENTLY! ***" }
+
+kelly is in ~&gt; df -h | awk -f diskrep.awk
+*** WARNING WARNING WARNING ***
+Partition /usr  : 97% full!
+*** Give money for new disks URGENTLY! ***
+
+<code class="prompt">kelly is in ~&gt;</code>
+</pre><p><span><strong class="command">awk</strong></span> 先打印一个开始信息，然后格式化所有包含一个8或者9开头的词的行，然后后接一个数字和百分符号，然后加入结束信息。
+            </p>
+            <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <table border="0" summary="Note: 语法高亮">
+                  <tr>
+                     <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                     <th align="left">语法高亮</th>
+                  </tr>
+                  <tr>
+                     <td align="left" valign="top">
+                        <p>Awk是一个编程语言。他的语法能被大多数能对其他语言比如c,bash,HTML进行语法高亮编辑器所识别。</p>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch06.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch06.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch06s03.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">第&nbsp;6&nbsp;章&nbsp;GNU AWK编程语言&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;6.3.&nbsp;Gawk变量</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

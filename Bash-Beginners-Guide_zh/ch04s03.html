@@ -1,0 +1,112 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>4.3.&nbsp;Pattern匹配使用Bash特性</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch04.html" title="第&nbsp;4&nbsp;章&nbsp;正则表达式">
+      <link rel="prev" href="ch04s02.html" title="4.2.&nbsp;使用grep的例子">
+      <link rel="next" href="ch04s04.html" title="4.4.&nbsp;总结">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">4.3.&nbsp;Pattern匹配使用Bash特性</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch04s02.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;4&nbsp;章&nbsp;正则表达式</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch04s04.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_04_03"></a>4.3.&nbsp;Pattern匹配使用Bash特性
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_04_03_01"></a>4.3.1.&nbsp;字符范围
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>除了 <span><strong class="command">grep</strong></span> 和正则表达式之外，shell里有很多无需使用外部程序就可以直接使用的匹配模板。
+            </p>
+            <p>就和你已经知道的一样，*和?分别匹配任何字符串和任何单个字符，引用这些特殊字符来匹配他们的字面值：</p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">touch <code class="filename">"*"</code></strong></span>
+
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">ls <code class="filename">"*"</code></strong></span>
+*
+</pre><p>你也可以使用方括号来匹配任何enclosed character or range of characters，如果一对字符被-分隔，一个例子But you can also use the square braces to match any
+               enclosed character or range of characters, if pairs of characters are separated by a hyphen.  An example:
+            </p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">ls <code class="option">-ld</code> <code class="filename">[a-cx-z]*</code></strong></span>
+drwxr-xr-x    2 cathy	 cathy		4096 Jul 20  2002 app-defaults/
+drwxrwxr-x    4 cathy    cathy          4096 May 25  2002 arabic/
+drwxrwxr-x    2 cathy    cathy          4096 Mar  4 18:30 bin/
+drwxr-xr-x    7 cathy    cathy          4096 Sep  2  2001 crossover/
+drwxrwxr-x    3 cathy    cathy          4096 Mar 22  2002 xml/
+</pre><p>列出了 <span class="emphasis"><em>cathy</em></span> home目录里的所有以“<span class="quote">a</span>”,“<span class="quote">a</span>”,“<span class="quote">b</span>”,“<span class="quote">c</span>”,“<span class="quote">x</span>”,“<span class="quote">y</span>”开头的文件。
+            </p>
+            <p>If the first character within the braces is “<span class="quote">!</span>” or “<span class="quote">^</span>”, any character not enclosed will be matched.  To match the dash (“<span class="quote">-</span>”), include it as the first or last character in the set.  The sorting depends on the current locale and of the value of the
+               <code class="varname">LC_COLLATE</code> variable, if it is set.  Mind that other locales might interpret “<span class="quote">[a-cx-z]</span>” as “<span class="quote">[aBbCcXxYyZz]</span>” if sorting is done in dictionary order.  If you want to be sure to have the traditional interpretation of ranges, force
+               this behavior by setting <code class="varname">LC_COLLATE</code> or <code class="varname">LC_ALL</code> to “<span class="quote">C</span>”.
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_04_03_02"></a>4.3.2.&nbsp;字符族
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>字符族可以用方括号来指定，使用语法 <span><strong class="command">[:CLASS:]</strong></span>，CALSS是定义在POSIX标准中的取以下某个值
+            </p>
+            <p>“<span class="quote">alnum</span>”, “<span class="quote">alpha</span>”, “<span class="quote">ascii</span>”, “<span class="quote">blank</span>”, “<span class="quote">cntrl</span>”, “<span class="quote">digit</span>”, “<span class="quote">graph</span>”, “<span class="quote">lower</span>”, “<span class="quote">print</span>”, “<span class="quote">punct</span>”, “<span class="quote">space</span>”, “<span class="quote">upper</span>”, “<span class="quote">word</span>” or “<span class="quote">xdigit</span>”.
+            </p>
+            <p>一些例子：</p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">ls <code class="option">-ld</code> <code class="filename">[[:digit:]]*</code></strong></span>
+drwxrwxr-x    2 cathy	cathy		4096 Apr 20 13:45 2/
+
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">ls <code class="option">-ld</code> <code class="filename">[[:upper:]]*</code></strong></span>
+drwxrwxr--    3 cathy   cathy           4096 Sep 30  2001 Nautilus/
+drwxrwxr-x    4 cathy   cathy           4096 Jul 11  2002 OpenOffice.org1.0/
+-rw-rw-r--    1 cathy   cathy         997376 Apr 18 15:39 Schedule.sdc
+</pre><p>当开启 <code class="option">extglob</code> shell选项(使用 <span><strong class="command">shopt</strong></span> 内建命令)， several extended pattern matching operators are recognized.  Read more in the Bash info pages, section <span class="guimenu">Basic shell features</span> → <span class="guisubmenu">Shell Expansions</span> → <span class="guisubmenu">Filename Expansion</span> → <span class="guimenuitem">Pattern Matching</span>.
+            </p>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch04s02.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch04.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch04s04.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">4.2.&nbsp;使用grep的例子&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;4.4.&nbsp;总结</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

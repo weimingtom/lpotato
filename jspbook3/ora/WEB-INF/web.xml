@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+      http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+    version="2.4">
+
+  <!-- Used by the JSTL I18N actions -->
+  <context-param>
+    <param-name>
+      javax.servlet.jsp.jstl.fmt.fallbackLocale
+    </param-name>
+    <param-value>
+      en
+    </param-value>
+  </context-param>
+
+  <!-- Used by the JSTL database actions -->
+  <context-param>
+    <param-name>
+      javax.servlet.jsp.jstl.sql.dataSource
+    </param-name>
+    <param-value>
+      jdbc:mysql:///test,org.gjt.mm.mysql.Driver
+    </param-value>
+  </context-param>
+
+  <!-- Used by the ResourceManagerListener in Chapter 19  -->
+  <context-param>
+    <param-name>driverClass</param-name>
+    <param-value>
+      org.gjt.mm.mysql.Driver
+    </param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>jdbcURL</param-name>
+    <param-value>
+      jdbc:mysql:///test
+    </param-value>
+  </context-param>
+
+  <!-- Filter and listener configurations for Chapter 19 -->
+  <filter>
+    <filter-name>accessControl</filter-name>
+    <filter-class>
+      com.ora.jsp.servlets.AccessControlFilter
+    </filter-class>
+    <init-param>
+      <param-name>loginPage</param-name>
+      <param-value>/ch19/login.jsp</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>accessControl</filter-name>
+    <url-pattern>/ch19/protected/*</url-pattern>
+  </filter-mapping>
+
+  <listener>
+    <listener-class>
+      com.ora.jsp.servlets.ResourceManagerListener
+    </listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>
+      com.ora.jsp.servlets.SessionCounterListener
+    </listener-class>
+  </listener>
+
+  <!-- Servlet for showing JSP source. NOTE! Remove this in production -->
+  <servlet>
+    <servlet-name>jspSource</servlet-name>
+    <servlet-class>JSPSourceServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>jspSource</servlet-name>
+    <url-pattern>/jspSource/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- Example servlets, see Chapter 19 -->
+  <servlet>
+    <servlet-name>helloWorld</servlet-name>
+    <servlet-class>HelloWorld</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>helloWorld</servlet-name>
+    <url-pattern>/hello/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>helloYou</servlet-name>
+    <servlet-class>HelloYou</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>helloYou</servlet-name>
+    <url-pattern>/helloYou/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>helloMIME</servlet-name>
+    <servlet-class>HelloMIME</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>helloMIME</servlet-name>
+    <url-pattern>/helloMIME/*</url-pattern>
+  </servlet-mapping>
+
+
+  <!-- Struts Controller servlet, see Chapter 19 -->
+  <servlet>
+    <servlet-name>action</servlet-name>
+    <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>action</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+
+  <!-- The Welcome File List -->
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+<!--
+  Uncomment if you want all exceptions to be handled by the customized 
+  error page.
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/ch9/errorpage.jsp</location>
+  </error-page>
+-->
+
+  <!-- 
+    This resource reference is only used to test the JNDI config described 
+    in Chapter 23. None of the examples use it.
+  -->
+  <resource-ref>
+    <description>
+      JNDI DataSource for example database
+    </description>
+    <res-ref-name>jdbc/Example</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+    <res-sharing-scope>Sharable</res-sharing-scope>
+  </resource-ref>
+
+  <!-- Security constraints for examples in Chapter 13 -->
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>admin</web-resource-name>
+      <url-pattern>/ch13/admin/*</url-pattern>
+      <url-pattern>/ch13/search/delete.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>search</web-resource-name>
+      <url-pattern>/ch13/search/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>user</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>ORA Examples</realm-name>
+  </login-config>
+
+  <security-role>
+    <role-name>admin</role-name>
+  </security-role>
+  <security-role>
+    <role-name>user</role-name>
+  </security-role>
+
+</web-app>

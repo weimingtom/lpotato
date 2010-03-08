@@ -1,0 +1,36 @@
+package com.ora.jsp.tags;
+
+import javax.servlet.http.*;
+import javax.servlet.jsp.*;
+import javax.servlet.jsp.jstl.core.*;
+import org.apache.taglibs.standard.lang.support.*;
+
+/**
+ * This class is a custom action for testing if a String value
+ * contains a substring.
+ * If it does, the body is evaluated. If a var attribute is provided, 
+ * the result is also saved as a Boolean variable in the specified 
+ * scope, or in the page if no scope is specified.
+ *
+ * @author Hans Bergsten, Gefion software <hans@gefionsoftware.com>
+ * @version 2.0
+ */
+public class IfContainsTag extends ConditionalTagSupport {
+    private String value;
+    private String substring;
+
+    public void setValue(String value) {
+	this.value = value;
+    }
+
+    public void setSubstring(String substring) {
+	this.substring = substring;
+    }
+
+    public boolean condition() throws JspTagException {
+	if (value == null || substring == null) {
+	    throw new JspTagException("ifContains: one of the attributes is null");
+	}
+	return value.indexOf(substring) != -1;
+    }
+}

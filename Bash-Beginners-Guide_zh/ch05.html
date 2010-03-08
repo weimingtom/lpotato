@@ -1,0 +1,253 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;5&nbsp;章&nbsp;GNU SED流编辑器</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch04s05.html" title="4.5.&nbsp;练习">
+      <link rel="next" href="ch05s02.html" title="5.2.&nbsp;交互编辑">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;5&nbsp;章&nbsp;GNU SED流编辑器</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch04s05.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch05s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_05"></a>第&nbsp;5&nbsp;章&nbsp;GNU SED流编辑器
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch05.html#sect_05_01">5.1. 介绍</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch05.html#sect_05_01_01">5.1.1. 什么是sed？</a></span></dt>
+                     <dt><span class="sect2"><a href="ch05.html#sect_05_01_02">5.1.2. sed命令</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch05s02.html">5.2. 交互编辑</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch05s02.html#sect_05_02_01">5.2.1. 打印包含pattern的行</a></span></dt>
+                     <dt><span class="sect2"><a href="ch05s02.html#sect_05_02_02">5.2.2. 删除包含pattern的输入行</a></span></dt>
+                     <dt><span class="sect2"><a href="ch05s02.html#sect_05_02_03">5.2.3. 行的范围</a></span></dt>
+                     <dt><span class="sect2"><a href="ch05s02.html#sect_05_02_04">5.2.4. 用sed来查找替换</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch05s03.html">5.3. 非交互编辑</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch05s03.html#sect_05_03_01">5.3.1. 从文件读取sed命令</a></span></dt>
+                     <dt><span class="sect2"><a href="ch05s03.html#sect_05_03_02">5.3.2. 写输出文件</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch05s04.html">5.4. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch05s05.html">5.5. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>本章结束你会了解到以下话题：</p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>什么是 <span><strong class="command">sed</strong></span>？
+                     </p>
+                  </li>
+                  <li>
+                     <p><span><strong class="command">sed</strong></span> 的交互使用
+                     </p>
+                  </li>
+                  <li>
+                     <p>正则表达式和流编辑</p>
+                  </li>
+                  <li>
+                     <p>在脚本中使用 <span><strong class="command">sed</strong></span> 命令
+                     </p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+            </p>
+            <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <table border="0" summary="Note: 这仅仅是一个介绍">
+                  <tr>
+                     <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                     <th align="left">这仅仅是一个介绍</th>
+                  </tr>
+                  <tr>
+                     <td align="left" valign="top">
+                        <p>这些说明远不够完整，不能够作为如何使用 <span><strong class="command">sed</strong></span> 的手册。本章只含有为了在下一章展示一些更为有趣的话题，而且因为每个强力用户应该掌握一些基本的知识来使用这个编辑器完成些工作。
+                        </p>
+                        <p>需要详细信息，请见 <span><strong class="command">sed</strong></span> 信息和帮助页面。
+                        </p>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+            <p>
+               
+            </p>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_05_01"></a>5.1.&nbsp;介绍
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_05_01_01"></a>5.1.1.&nbsp;什么是sed？
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p><span class="application">流编辑器</span> 是用来从文件读取文本或者从管道实现基本的变化。结果送到标准输出。 <span><strong class="command">sed</strong></span> 命令的语法不指定输出文件，但是结果可以通过使用输出重定向来写入到文件中。编辑器并不改变原来的文件。
+               </p>
+               <p> <span><strong class="command">sed</strong></span> 和其它编辑器比如 <span><strong class="command">vi</strong></span> 和 <span><strong class="command">sed</strong></span>的区别在于它能够过滤来自管道的输入。在编辑器运行的时候你不要去干涉它；所以 <span><strong class="command">sed</strong></span>常常被称作 <span class="emphasis"><em>批编辑器</em></span> 。此特性允许你在脚本中使用编辑命令，极大的方便了重复性编辑任务。当面对文件中大量的文本替换的时候， <span><strong class="command">ed</strong></span> 将是一个极大的帮助。
+               </p>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_05_01_02"></a>5.1.2.&nbsp;sed命令
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> <span><strong class="command">sed</strong></span> 程序可以通过使用正则表达式来实现文本的模板替换和删除，就和使用 <span><strong class="command">grep</strong></span> 一样，见 <a href="ch04s02.html" title="4.2.&nbsp;使用grep的例子">第&nbsp;4.2&nbsp;节 “使用grep的例子”</a>。
+               </p>
+               <p>编辑命令和 <span><strong class="command">vi</strong></span> 编辑器的命令很相近：
+               </p>
+               <div class="table"><a name="tab_05_01"></a><p class="title"><b>表&nbsp;5.1.&nbsp;Sed编辑命令</b></p>
+                  <table summary="Sed编辑命令" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                     <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">命令</th>
+                           <th style="border-bottom: 0.5pt solid ; " align="left">结果</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">a\</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">在当前行后面增加文本。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">c\</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">用新的文本替换当前行。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">d</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">删除文本。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">i\</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">在当前行之前插入文本。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">p</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">打印文本。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">r</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">读取一个文件。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">s</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">搜索并且替换文本。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; " align="left">w</td>
+                           <td style="" align="left">写入一个文件。</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>除了编辑命令，你也可以给 <span><strong class="command">sed</strong></span>加上选项。见下表：
+               </p>
+               <div class="table"><a name="tab_05_02"></a><p class="title"><b>表&nbsp;5.2.&nbsp;Sed选项</b></p>
+                  <table summary="Sed选项" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                     <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">选项</th>
+                           <th style="border-bottom: 0.5pt solid ; " align="left">效果</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">-e SCRIPT</code></td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">把SCRIPT指定的命令加入到在处理输入的时候运行的系列命令。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">-f</code></td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">把包含在 SCRIPT-FILE 文件中的命令加入到处理输入的时候运行的系列命令之中。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">-n</code></td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">安静模式。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; " align="left"><code class="option">-V</code></td>
+                           <td style="" align="left">打印版本信息然后退出。</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p> <span><strong class="command">sed</strong></span> info页面包含更多信息；这里我们只列出了最常用的命令和选项。
+               </p>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch04s05.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch05s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">4.5.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;5.2.&nbsp;交互编辑</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

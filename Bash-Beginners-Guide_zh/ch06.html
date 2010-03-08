@@ -1,0 +1,187 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;6&nbsp;章&nbsp;GNU AWK编程语言</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch05s05.html" title="5.5.&nbsp;练习">
+      <link rel="next" href="ch06s02.html" title="6.2.&nbsp;打印程序">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;6&nbsp;章&nbsp;GNU AWK编程语言</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch05s05.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch06s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_06"></a>第&nbsp;6&nbsp;章&nbsp;GNU AWK编程语言
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch06.html#sect_06_01">6.1. gawk上路</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch06.html#sect_06_01_01">6.1.1. 什么是gawk?</a></span></dt>
+                     <dt><span class="sect2"><a href="ch06.html#sect_06_01_02">6.1.2. Gawk命令</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch06s02.html">6.2. 打印程序</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch06s02.html#sect_06_02_01">6.2.1. 打印选择的域</a></span></dt>
+                     <dt><span class="sect2"><a href="ch06s02.html#sect_06_02_02">6.2.2. 格式化域</a></span></dt>
+                     <dt><span class="sect2"><a href="ch06s02.html#sect_06_02_03">6.2.3. print命令和正则表达式</a></span></dt>
+                     <dt><span class="sect2"><a href="ch06s02.html#sect_06_02_04">6.2.4. 特殊的patterns</a></span></dt>
+                     <dt><span class="sect2"><a href="ch06s02.html#sect_06_02_05">6.2.5. Gawk脚本</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch06s03.html">6.3. Gawk变量</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_01">6.3.1. 输入域的分隔符</a></span></dt>
+                     <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_02">6.3.2. 输出分隔符</a></span></dt>
+                     <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_03">6.3.3. 记录的数量</a></span></dt>
+                     <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_04">6.3.4. 用户定义的变量</a></span></dt>
+                     <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_05">6.3.5. 更多例子</a></span></dt>
+                     <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_06">6.3.6. printf程序</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch06s04.html">6.4. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch06s05.html">6.5. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>本章我们会讨论：</p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>什么是 <span class="application">gawk</span>？
+                     </p>
+                  </li>
+                  <li>
+                     <p>在命令行中使用 <span class="application">gawk</span> 命令
+                     </p>
+                  </li>
+                  <li>
+                     <p>怎么使用 <span class="application">gawk</span> 来格式化文本
+                     </p>
+                  </li>
+                  <li>
+                     <p> <span class="application">gawk</span> 怎么使用则正则表达式
+                     </p>
+                  </li>
+                  <li>
+                     <p>脚本中的 <span class="application">gawk</span> 
+                     </p>
+                  </li>
+                  <li>
+                     <p> <span class="application">gawk</span> 和变量
+                     </p>
+                  </li>
+               </ul>
+            </div>
+            <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <table border="0" summary="Note: 把它变得更有趣味">
+                  <tr>
+                     <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                     <th align="left">把它变得更有趣味</th>
+                  </tr>
+                  <tr>
+                     <td align="left" valign="top">
+                        <p>就像sed一样，整本书写了多个版本的awk。这个介绍远还不够完整，且只是为了能够理解在后面章节中的例子。要得到更多的信息，最好是从 <span class="application">GNU awk</span> 的随附文档开始：“<span class="quote">GAWK: Effective AWK Programming: A User's Guide for GNU Awk</span>”.
+                        </p>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_06_01"></a>6.1.&nbsp;gawk上路
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_06_01_01"></a>6.1.1.&nbsp;什么是gawk?
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p><span class="application">Gawk</span> 是通常在UNIX系统下使用的另外一个流行的流编辑器 <span><strong class="command">awk</strong></span> 的GNU版本。尽管 <span><strong class="command">awk</strong></span> 程序常常只是一个 <span><strong class="command">gawk</strong></span> 的连接，但是我们还是称作它为 <span><strong class="command">awk</strong></span>。
+               </p>
+               <p> <span><strong class="command">awk</strong></span> 的最基本的作用是搜索含有1个或者多个模板的文件中的行或者其他文本块。当一行符合搜索的patterns，在该行就会实现指定的动作。
+               </p>
+               <p>在 <span><strong class="command">awk</strong></span> 中的程序和许多其他语言中的程序是不一样的，因为 <span><strong class="command">awk</strong></span> 程序是 “<span class="quote">数据驱动的</span>” ：你先描述你想处理的数据，然后当找到它们的时候怎么处理。许多其他的语言是“<span class="quote">过程的</span>”。你需要具体的描述程序该采取的措施。当使用过程化的语言时，通常更难清楚地描述你需要处理的数据。正因为如此， <span><strong class="command">awk</strong></span> 程序经常能清爽容易地读写。
+               </p>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_06_01_02"></a>6.1.2.&nbsp;Gawk命令
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>当你运行 <span><strong class="command">awk</strong></span> 的时候，你指定一个 <span><strong class="command">awk</strong></span> <span class="emphasis"><em>程序 </em></span>来通知 <span><strong class="command">awk</strong></span> 该如何做。程序由一系列 <span class="emphasis"><em>规则</em></span> 组成。（也可能包含函数定义，循环，条件和其他程序结构，高级特性等一系列我们已经遗忘的东西。）每个规则指定了搜索的模板和在搜索到一个模板后执行的动作。
+               </p>
+               <p>有几种运行 <span><strong class="command">awk</strong></span> 的方法。如果程序很短，最方便的是在命令行运行它：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">awk PROGRAM <code class="filename">inputfile(s)</code></code> 
+                  </p>
+               </div>
+               <p>在已经完成的多个改变，通常在多个文件，很方便把 <span><strong class="command">awk</strong></span> 命令放到脚本当中，读起来像这样：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">awk <code class="option">-f</code> <code class="filename">PROGRAM-FILE</code> <code class="filename">inputfile(s)</code></code> 
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch05s05.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch06s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">5.5.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;6.2.&nbsp;打印程序</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

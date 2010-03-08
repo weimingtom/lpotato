@@ -1,0 +1,200 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;1&nbsp;章&nbsp;Bash和Bash脚本</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="pr01s10.html" title="10.&nbsp;本文档组织结构">
+      <link rel="next" href="ch01s02.html" title="1.2.&nbsp;Bourne Again SHell的优势">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;1&nbsp;章&nbsp;Bash和Bash脚本</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="pr01s10.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch01s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_01"></a>第&nbsp;1&nbsp;章&nbsp;Bash和Bash脚本
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch01.html#sect_01_01">1.1. 常用的shell程序</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch01.html#sect_01_01_01">1.1.1. shell的普遍作用</a></span></dt>
+                     <dt><span class="sect2"><a href="ch01.html#sect_01_01_02">1.1.2. Shell类型</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch01s02.html">1.2. Bourne Again SHell的优势</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch01s02.html#sect_01_02_01">1.2.1. Bash是GNU shell</a></span></dt>
+                     <dt><span class="sect2"><a href="ch01s02.html#sect_01_02_02">1.2.2. Bash独有的特性</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch01s03.html">1.3. 执行命令</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch01s03.html#sect_01_03_01">1.3.1. 概要</a></span></dt>
+                     <dt><span class="sect2"><a href="ch01s03.html#sect_01_03_02">1.3.2. Shell内建命令</a></span></dt>
+                     <dt><span class="sect2"><a href="ch01s03.html#sect_01_03_03">1.3.3. 从脚本执行程序</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch01s04.html">1.4. 建立块</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch01s04.html#sect_01_04_01">1.4.1. Shell建立块</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch01s05.html">1.5. 开发优良脚本</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_01">1.5.1. 优良脚本的要素</a></span></dt>
+                     <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_02">1.5.2. 结构</a></span></dt>
+                     <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_03">1.5.3. 术语</a></span></dt>
+                     <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_04">1.5.4. 关于顺序和逻辑</a></span></dt>
+                     <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_05">1.5.5. 一个Bash脚本的例子：mysystem.sh</a></span></dt>
+                     <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_06">1.5.6. init脚本例子</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch01s06.html">1.6. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch01s07.html">1.7. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>在这个介绍章节中，我们</p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>描述一些常用的shell</p>
+                  </li>
+                  <li>
+                     <p>指出GNU Bash的优势和特性</p>
+                  </li>
+                  <li>
+                     <p>描述shell块的建立</p>
+                  </li>
+                  <li>
+                     <p>讨论Bash初始化文件</p>
+                  </li>
+                  <li>
+                     <p>了解shell怎么执行命令</p>
+                  </li>
+                  <li>
+                     <p>观察一些简单的脚本例子</p>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_01_01"></a>1.1.&nbsp;常用的shell程序
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_01_01_01"></a>1.1.1.&nbsp;shell的普遍作用
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>UNIX的shell程序解释用户的命令，不管是用户直接输入的或者从一个称作Shell脚本或者Shell程序文件读入。Shell脚本是解释型的，而不是编译型的。Shell从脚本行的每行读取命令并在系统中搜索这些命令(参见 <a href="ch01s02.html" title="1.2.&nbsp;Bourne Again SHell的优势">第&nbsp;1.2&nbsp;节 “Bourne Again SHell的优势”</a>)，当编译器把一个程序转化为可供机器读取的形式时，那么它就可以被以一个可执行文件用在shell脚本当中。
+               </p>
+               <p>除了向内核传送命令之外，shell的主要任务是提供一个可单独配置的使用shell资源配置文件的用户环境。</p>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_01_01_02"></a>1.1.2.&nbsp;Shell类型
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>就像一个人会知道不同的语言和方言一样，你的UNIX系统通常提供多种shell类型：</p>
+               <div class="itemizedlist">
+                  <ul type="disc">
+                     <li>
+                        <p><span><strong class="command">sh</strong></span> 或者称作 Bourne Shell: 最初的shell并且仍然在UNIX系统和UNIX相关系统中使用。它是基本的shell，是一个特性不多的小程序。虽然不是一个标准的shell，但是为了UNIX程序的兼容性在每个Linux系统上仍然存在。
+                        </p>
+                     </li>
+                     <li>
+                        <p><span><strong class="command">bash</strong></span> 或者称作 Bourne Again shell: 标准的GNU shell，直观而又灵活。或许是初学者的最明智选择同时对高级和专业用户来说也是一个强有力的工具。在Linux上，<span><strong class="command">bash</strong></span> 是普通用户的标准shell。这个shell因此称为Bourne shell的<span class="emphasis"><em>超集</em></span>，一套附件和插件。意味着bash和sh是兼容的：在<span><strong class="command">sh</strong></span>中可以工作的命令，在<span><strong class="command">bash</strong></span>中也能工作，反之则不然。本书所有的例子和练习均使用<span><strong class="command">bash</strong></span>。
+                        </p>
+                     </li>
+                     <li>
+                        <p><span><strong class="command">csh</strong></span> 或者称作 C shell: 语法了类似于C语言，某些时候程序员会使用。
+                        </p>
+                     </li>
+                     <li>
+                        <p><span><strong class="command">tcsh</strong></span> 或者称作 Turbo C shell: 普通C shell的超集，加强了的用户友好度和速度。
+                        </p>
+                     </li>
+                     <li>
+                        <p><span><strong class="command">ksh</strong></span> 或者称作 Korn shell: 某些时候被有UNIX背景的人所赏识。Bourne shell的一个超集，有着对初学者来说就是一场恶梦的标准配置。
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>文件 <code class="filename">/etc/shells</code> 给出了Linux系统上所有的已知shell的概览:
+               </p><pre class="screen">
+<code class="prompt">mia:~&gt;</code> <span><strong class="command">cat <code class="filename">/etc/shells</code></strong></span>
+/bin/bash
+/bin/sh
+/bin/tcsh
+/bin/csh
+</pre><p>你默认的shell设置在 <code class="filename">/etc/passwd</code> 文件中，象下面这行对用户 <span class="emphasis"><em>mia</em></span> 的设置:
+               </p><pre class="screen">
+mia:L2NOfqdlPrHwE:504:504:Mia Maya:/home/mia:/bin/bash
+</pre><p>要从一个shell转换到另外一个，只要在活动的终端里输入新shell的的名字。系统在<code class="varname">PATH</code>设置的目录里面寻找是否包含着个名字，既然一个shell就是一个可执行的文件（程序），当前的shell激活它使它运行起来，新的提示符出现，因为每个shell都有自己典型的外观：
+               </p><pre class="screen">
+<code class="prompt">mia:~&gt;</code> <span><strong class="command">tcsh</strong></span>
+[mia@post21 ~]$
+</pre></div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="pr01s10.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch01s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">10.&nbsp;本文档组织结构&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;1.2.&nbsp;Bourne Again SHell的优势</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

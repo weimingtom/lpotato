@@ -1,0 +1,15 @@
+com.ora.jsp.beans.calc
+com.ora.jsp.beans.debug
+com.ora.jsp.beans.emp
+com.ora.jsp.beans.motd
+com.ora.jsp.beans.news
+com.ora.jsp.beans.poll
+com.ora.jsp.beans.shopping
+com.ora.jsp.beans.sql
+com.ora.jsp.beans.userinfo
+com.ora.jsp.servlets
+com.ora.jsp.sql
+com.ora.jsp.tags
+com.ora.jsp.tags.xmp
+com.ora.jsp.tlv
+com.ora.jsp.util

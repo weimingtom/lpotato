@@ -1,0 +1,97 @@
+/* BASIC */
+
+body {
+	margin: 0px;
+	padding: 0px;
+	font: 62.7% Verdana, Arial, Helvetica, sans-serif;
+	background: #E6E6E6 url(images/page_bg.png) repeat-y center top;
+	text-align: center;
+}
+
+h1, h2, h3, h4, p, ul, ol {
+	margin: 0px;
+	padding: 0px;
+}
+
+/* LAYOUT */
+#wrapper {
+	width: 760px;
+	margin-right: auto;
+	margin-left: auto;
+	text-align: left;
+	background-color: #FFFFFF;
+}
+
+#banner {
+	width: 760px;
+	background: url(images/banner.png) no-repeat right top;
+	height: 90px;
+	margin: 0;
+}
+
+#main {
+	margin: 10px;
+	padding: 0 10px;
+}
+
+
+#legal {
+	border-top: 1px dashed #999999;
+	color: #666666;
+	padding: 5px 10px 20px;
+	clear: both;
+	line-height: 1.5;
+}
+#legal p {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+#main h1 {
+	color: #152D6A;
+	margin-top: 15px;
+	margin-bottom: 5px;
+	border-bottom: 2px solid #B2F511;
+	font: normal 2.7em Impact, "Arial Narrow", sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	word-spacing: 5px;
+	background: url(images/feature_bug.png) no-repeat top right;
+}
+#main h3 {
+	font-weight: normal;
+	font-size: 1.2em;
+	border-bottom: 1px dashed #CCC;
+	text-transform: uppercase;
+	color: #000000;
+	margin-top: 10px;
+}
+#main h3 strong {
+	color: #FFFFFF;
+	padding-right: 5px;
+	padding-left: 5px;
+	background-color: #152D6A;
+}
+#main ul {
+	padding-left: 25px;
+}
+#main li {
+	margin-left: 15px;
+	margin-top: 5px;
+	font-size: 1.4em;
+}
+
+#main h2 {
+	font: normal 2em Georgia, "Times New Roman", Times, serif;
+	margin-top: 15px;
+	margin-bottom: 3px;
+	color: #152D6A;
+	background: url(images/warning.png) no-repeat left center;
+	padding-top: 2px;
+	border-bottom: 1px dotted #CCCCCC;
+	padding-left: 30px;
+}
+#main p {
+	font-size: 1.25em;
+	margin-bottom: 5px;
+}

@@ -1,0 +1,96 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>3.8.&nbsp;练习</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch03.html" title="第&nbsp;3&nbsp;章&nbsp;Bash环境">
+      <link rel="prev" href="ch03s07.html" title="3.7.&nbsp;总结">
+      <link rel="next" href="ch04.html" title="第&nbsp;4&nbsp;章&nbsp;正则表达式">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">3.8.&nbsp;练习</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch03s07.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;3&nbsp;章&nbsp;Bash环境</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch04.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_03_08"></a>3.8.&nbsp;练习
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <p>为了完成这个练习，你需要去阅读 <span><strong class="command">useradd</strong></span> 的man页面，因为我们将要使用 <code class="filename">/etc/skel</code> 目录来存放将要拷贝到每个新加入用户的主目录的默认的shell配置文件。
+         </p>
+         <p>首先我们来在设置和显示变量上做一些普通的练习。</p>
+         <div class="orderedlist">
+            <ol type="1">
+               <li>
+                  <p>建立3个变量，<code class="varname">VAR1</code>，<code class="varname">VAR2</code> 和 <code class="varname">VAR3</code>；分别把他们初始化成 “<span class="quote">thirteen</span>”，“<span class="quote">13</span>” 和 “<span class="quote">Happy Birthday</span>”。
+                  </p>
+               </li>
+               <li>
+                  <p>显示所有3个变量的值。</p>
+               </li>
+               <li>
+                  <p>这些是本地或者全局变量吗？</p>
+               </li>
+               <li>
+                  <p>移除 <code class="varname">VAR3</code>。
+                  </p>
+               </li>
+               <li>
+                  <p>你能在一个新的终端窗口中看到剩下的2个变量吗？</p>
+               </li>
+               <li>
+                  <p>编辑 <code class="filename">/etc/profile</code> 这样能对所有的用户在登陆的时候进行问候（测试下）。
+                  </p>
+               </li>
+               <li>
+                  <p>对于 <span class="emphasis"><em>root</em></span> 账号，把提示设置成类似 “<span class="quote">Danger!! root is doing stuff in \w</span>”，尤其是某种鲜明的颜色比如红色和粉色或者用反白显示模式。
+                  </p>
+               </li>
+               <li>
+                  <p>确保新创建的用户也都能得到一个漂亮的能表明他们当前工作的系统和目录的个性化提示。创建一个新用户并且登陆来对你的修改进行测试。</p>
+               </li>
+               <li>
+                  <p>写一个定义两个整形变量的脚本。这个脚本应该能计算包含这两个部分的长方形的面积。必须能显示注释并产生良好的输出。</p>
+               </li>
+            </ol>
+         </div>
+         <p>别忘记 <span><strong class="command">chmod</strong></span> 你的脚本！
+         </p>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch03s07.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch03.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch04.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">3.7.&nbsp;总结&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;第&nbsp;4&nbsp;章&nbsp;正则表达式</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

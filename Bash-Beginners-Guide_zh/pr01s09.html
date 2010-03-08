@@ -1,0 +1,157 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>9.&nbsp;本文档约定</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="pr01.html" title="介绍">
+      <link rel="prev" href="pr01s08.html" title="8.&nbsp;你需要什么？">
+      <link rel="next" href="pr01s10.html" title="10.&nbsp;本文档组织结构">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">9.&nbsp;本文档约定</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="pr01s08.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">介绍</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="pr01s10.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="section" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="intro_09"></a>9.&nbsp;本文档约定
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <p>出现在正文中的印刷文字和使用约定：</p>
+         <div class="table"><a name="conventions"></a><p class="title"><b>表&nbsp;1.&nbsp;印刷文字和使用约定</b></p>
+            <table summary="印刷文字和使用约定" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+               <colgroup>
+                  <col width="50%">
+                  <col width="50%">
+               </colgroup>
+               <thead>
+                  <tr>
+                     <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">文本类型</th>
+                     <th style="border-bottom: 0.5pt solid ; " align="left">含义</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">“<span class="quote">引用文本</span>”
+                     </td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">引用其他人和计算机输出。</td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><pre class="screen">终端显示</pre></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">从计算机终端捕捉的输入和输出，通常使用淡灰背景色。</td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><span><strong class="command">命令</strong></span></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">可以输入在命令行上的命令的名字。</td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="varname">变量</code></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">变量的名字或者只想某个变量内容的指针，好像
+                        <code class="varname">$VARNAME</code>.
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">选项</code></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">命令的选项，类似 “<span class="quote">the <code class="option">-a</code> 是
+                           <span><strong class="command">ls</strong></span> 命令的选项</span>”。
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><em class="parameter"><code>参数</code></em></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">命令的参数，类似 “<span class="quote">read
+                           <span><strong class="command">man <em class="parameter"><code>ls</code></em></strong></span></span>”.
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">
+                        <div class="cmdsynopsis">
+                           <p><code class="command">命令 <code class="option">选项</code>
+                                 <em class="parameter"><code>参数</code></em></code> 
+                           </p>
+                        </div>
+                     </td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">命令形式或者普通用法，在每个分隔行上。</td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="filename">文件名</code></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">文件或者目录的名字，比如 “<span class="quote">切换到
+                           <code class="filename">/usr/bin</code> 目录。</span>”
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><span><strong class="keycap">按键</strong></span></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">在键盘上敲击得键，比如 “<span class="quote">输入 <span><strong class="keycap">Q</strong></span>
+                           来退出。</span>”.
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><span class="guibutton">按钮</span></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">可以按得图形按钮，就像 <span class="guibutton">OK</span>
+                        按钮。
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><span class="guimenu">菜单</span> → <span class="guimenuitem">选择项</span></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">从一个图形化菜单选择选项，例如： “<span class="quote">选择
+                           <span class="guimenu">Help</span> → <span class="guimenuitem">About Mozilla</span> 在浏览器中。</span>”
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><span class="emphasis"><em>术语</em></span></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">重要的概念或者术语：“<span class="quote">The Linux <span class="emphasis"><em>kernel</em></span>
+                           是系统的心脏。</span>”
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><pre class="screen">\</pre></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">反斜杠表明了在某个终端窗口或者命令种没有完成的行。换句话说，如果你看到一个长的命令被分割在多行里面，\ 意味着 “<span class="quote">暂时不要按 <span><strong class="keycap">Enter</strong></span> </span>”
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">参见 <a href="ch01.html" title="第&nbsp;1&nbsp;章&nbsp;Bash和Bash脚本">第&nbsp;1&nbsp;章 <i>Bash和Bash脚本</i></a></td>
+                     <td style="border-bottom: 0.5pt solid ; " align="left">链接到本指南中的相关主题。</td>
+                  </tr>
+                  <tr>
+                     <td style="border-right: 0.5pt solid ; " align="left"><a href="http://tille.xalasys.com" target="_top">作者</a></td>
+                     <td style="" align="left">外部web资源链接。</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="pr01s08.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="pr01.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="pr01s10.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">8.&nbsp;你需要什么？&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;10.&nbsp;本文档组织结构</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

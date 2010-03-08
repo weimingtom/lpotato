@@ -1,0 +1,18 @@
+<%@ taglib prefix="fn" uri="http://java.sun.com/jstl/fn" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ tag body-content="scriptless" %>
+
+<%-- Capture the body evaluation result in a variable --%>
+<c:out value="${pageContext.request.servletPath}" />
+Before conversion: <c:out value="${bodyRes}"/>
+<%-- Convert special characters to character entities --%>
+<c:set var="escapedBody" value="${fn:escapeXml(bodyRes)}" />
+
+<%-- Replace "[code]/[/code]" with "<code>/</code>" --%>
+<c:set var="convBody" 
+  value="${fn:replace(escapedBody, '[code]', '<code>')}" />
+<c:set var="convBody" 
+  value="${fn:replace(convBody, '[/code]', '</code>')}" />
+
+<%-- Ouput the result --%>
+Result: ${convBody}

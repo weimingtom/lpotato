@@ -1,0 +1,926 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>3.2.&nbsp;变量</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch03.html" title="第&nbsp;3&nbsp;章&nbsp;Bash环境">
+      <link rel="prev" href="ch03.html" title="第&nbsp;3&nbsp;章&nbsp;Bash环境">
+      <link rel="next" href="ch03s03.html" title="3.3.&nbsp;引用字符">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">3.2.&nbsp;变量</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch03.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;3&nbsp;章&nbsp;Bash环境</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch03s03.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_03_02"></a>3.2.&nbsp;变量
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_02_01"></a>3.2.1.&nbsp;变量的类型
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>正如上面的例子，shell变量约定俗成地用大写表示。Bash保留两种类型的变量列表：</p>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_03_02_01_01"></a>3.2.1.1.&nbsp;全局变量
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>全局变量或者环境变量存在于所有的shell里面。<span><strong class="command">env</strong></span> 或者 <span><strong class="command">printenv</strong></span> 命令能够通常用于显示环境变量。这些程序在 <span class="emphasis"><em>sh-utils</em></span> 包内。
+               </p>
+               <p>下面是一个典型的输出：</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">printenv</strong></span>
+CC=gcc
+CDPATH=.:~:/usr/local:/usr:/
+CFLAGS=-O2 -fomit-frame-pointer
+COLORTERM=gnome-terminal
+CXXFLAGS=-O2 -fomit-frame-pointer
+DISPLAY=:0
+DOMAIN=hq.xalasys.com
+e=
+TOR=vi
+FCEDIT=vi
+FIGNORE=.o:~
+G_BROKEN_FILENAMES=1
+GDK_USE_XFT=1
+GDMSESSION=Default
+GNOME_DESKTOP_SESSION_ID=Default
+GTK_RC_FILES=/etc/gtk/gtkrc:/nethome/franky/.gtkrc-1.2-gnome2
+GWMCOLOR=darkgreen
+GWMTERM=xterm
+HISTFILESIZE=5000
+history_control=ignoredups
+HISTSIZE=2000
+HOME=/nethome/franky
+HOSTNAME=octarine.hq.xalasys.com
+INPUTRC=/etc/inputrc
+IRCNAME=franky
+JAVA_HOME=/usr/java/j2sdk1.4.0
+LANG=en_US
+LDFLAGS=-s
+LD_LIBRARY_PATH=/usr/lib/mozilla:/usr/lib/mozilla/plugins
+LESSCHARSET=latin1
+LESS=-edfMQ
+LESSOPEN=|/usr/bin/lesspipe.sh %s
+LEX=flex
+LOCAL_MACHINE=octarine
+LOGNAME=franky
+LS_COLORS=no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:
+MACHINES=octarine
+MAILCHECK=60
+MAIL=/var/mail/franky
+MANPATH=/usr/man:/usr/share/man/:/usr/local/man:/usr/X11R6/man
+MEAN_MACHINES=octarine
+MOZ_DIST_BIN=/usr/lib/mozilla
+MOZILLA_FIVE_HOME=/usr/lib/mozilla
+MOZ_PROGRAM=/usr/lib/mozilla/mozilla-bin
+MTOOLS_FAT_COMPATIBILITY=1
+MYMALLOC=0
+NNTPPORT=119
+NNTPSERVER=news
+NPX_PLUGIN_PATH=/plugin/ns4plugin/:/usr/lib/netscape/plugins
+OLDPWD=/nethome/franky
+OS=Linux
+PAGER=less
+PATH=/nethome/franky/bin.Linux:/nethome/franky/bin:/usr/local/bin:/usr/local/sbin:/usr/X11R6/bin:/usr/bin:/usr/sbin:/bin:/sbin:.
+PS1=\[\033[1;44m\]franky is in \w\[\033[0m\]
+PS2=More input&gt;
+PWD=/nethome/franky
+SESSION_MANAGER=local/octarine.hq.xalasys.com:/tmp/.ICE-unix/22106
+SHELL=/bin/bash
+SHELL_LOGIN=--login
+SHLVL=2
+SSH_AGENT_PID=22161
+SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
+SSH_AUTH_SOCK=/tmp/ssh-XXmhQ4fC/agent.22106
+START_WM=twm
+TERM=xterm
+TYPE=type
+USERNAME=franky
+USER=franky
+_=/usr/bin/printenv
+VISUAL=vi
+WINDOWID=20971661
+XAPPLRESDIR=/nethome/franky/app-defaults
+XAUTHORITY=/nethome/franky/.Xauthority
+XENVIRONMENT=/nethome/franky/.Xdefaults
+XFILESEARCHPATH=/usr/X11R6/lib/X11/%L/%T/%N%C%S:/usr/X11R6/lib/X11/%l/%T/%N%C%S:/usr/X11R6/lib/X11/%T/%N%C%S:/usr/X11R6/lib/X11/%L/%T/%N%S:/usr/X11R6/lib/X11/%l/%T/%N%S:/usr/X11R6/lib/X11/%T/%N%S
+XKEYSYMDB=/usr/X11R6/lib/X11/XKeysymDB
+XMODIFIERS=@im=none
+XTERMID=
+XWINHOME=/usr/X11R6
+X=X11R6
+YACC=bison -y
+</pre></div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_03_02_01_02"></a>3.2.1.2.&nbsp;本地变量
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>本地变量只存在于当前shell。使用内建的不带选项的 <span><strong class="command">set</strong></span> 命令将显示所有变量的列表（包括环境变量）和函数。输出会根据当前的设置排列而且以可以重用的方式显示。
+               </p>
+               <p>以下是在退出了同样被 <span><strong class="command">set</strong></span> 命令显示的函数之后，比较<span><strong class="command">printenv</strong></span> 和 <span><strong class="command">set</strong></span> 的输出的文件：
+               </p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">diff <code class="filename">set.sorted</code> <code class="filename">printenv.sorted</code></strong></span> | <span><strong class="command">grep <em class="parameter"><code>"&lt;"</code></em></strong></span> | <span><strong class="command">awk <em class="parameter"><code>'{ print $2 }'</code></em></strong></span>
+BASE=/nethome/franky/.Shell/hq.xalasys.com/octarine.aliases
+BASH=/bin/bash
+BASH_VERSINFO=([0]="2"
+BASH_VERSION='2.05b.0(1)-release'
+COLUMNS=80
+DIRSTACK=()
+DO_FORTUNE=
+EUID=504
+GROUPS=()
+HERE=/home/franky
+HISTFILE=/nethome/franky/.bash_history
+HOSTTYPE=i686
+IFS=$'
+LINES=24
+MACHTYPE=i686-pc-linux-gnu
+OPTERR=1
+OPTIND=1
+OSTYPE=linux-gnu
+PIPESTATUS=([0]="0")
+PPID=10099
+PS4='+
+PWD_REAL='pwd
+SHELLOPTS=braceexpand:emacs:hashall:histexpand:history:interactive-comments:monitor
+THERE=/home/franky
+UID=504
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                  <table border="0" summary="Note: Awk">
+                     <tr>
+                        <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                        <th align="left">Awk</th>
+                     </tr>
+                     <tr>
+                        <td align="left" valign="top">
+                           <p>GNU Awk编程语言在 <a href="ch06.html" title="第&nbsp;6&nbsp;章&nbsp;GNU AWK编程语言">第&nbsp;6&nbsp;章 <i>GNU AWK编程语言</i></a> 中解释。
+                           </p>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_03_02_01_03"></a>3.2.1.3.&nbsp;按内容区别的变量
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>除了把变量分为本地和全局变量，我们也可以根据变量所含内容的类型来分。这样，变量就有四种类型：</p>
+               <div class="itemizedlist">
+                  <ul type="disc">
+                     <li>
+                        <p>字符串变量</p>
+                     </li>
+                     <li>
+                        <p>整数变量</p>
+                     </li>
+                     <li>
+                        <p>常量</p>
+                     </li>
+                     <li>
+                        <p>数组变量</p>
+                     </li>
+                  </ul>
+               </div>
+               <p>我们将在 <a href="ch10.html" title="第&nbsp;10&nbsp;章&nbsp;变量进阶">第&nbsp;10&nbsp;章 <i>变量进阶</i></a> 讨论这些类型。现在，我们会用整数和字符串来操纵变量。
+               </p>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_02_02"></a>3.2.2.&nbsp;建立变量
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>默认情况下，变量是区分大小写的。某些时候给予一个本地变量小写字母是约定俗成的。然而，你可以自由的使用这些名字或者混合大小写。变量也可以包含数字，但是数字开头的名字是不允许的：</p><pre class="screen">
+<code class="prompt">prompt&gt;</code> <span><strong class="command">export <code class="varname">1number</code>=<em class="parameter"><code>1</code></em></strong></span>
+bash: export: `1number=1': not a valid identifier
+</pre><p>在shell中设置一个变量，使用</p>
+            <div class="cmdsynopsis">
+               <p><code class="command"><code class="varname">VARNAME</code>="value"</code> 
+               </p>
+            </div>
+            <p>在等号周围放置空格会造成错误。在对变量赋值得时候把内容字符串用引号引起来是一个良好的习惯：这样会降低出错的机会。</p>
+            <p>一些实用大小写，数字和空格的例子：</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command"><code class="varname">MYVAR1</code>=<em class="parameter"><code>"2"</code></em></strong></span>
+
+<code class="prompt">franky ~7gt;</code> <span><strong class="command">echo <code class="varname">$MYVAR1</code></strong></span>
+2
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command"><code class="varname">first_name</code>=<em class="parameter"><code>"Franky"</code></em></strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$first_name</code></strong></span>
+Franky
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command"><code class="varname">full_name</code>=<em class="parameter"><code>"Franky M. Singh"</code></em></strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$full_name</code></strong></span>
+Franky M. Singh
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command"><code class="varname">MYVAR-2</code>=<em class="parameter"><code>"2"</code></em></strong></span>
+bash: MYVAR-2=2: command not found
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command"><code class="varname">MYVAR1</code> =<em class="parameter"><code>"2"</code></em></strong></span>
+bash: MYVAR1: command not found
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command"><code class="varname">MYVAR1</code>= <em class="parameter"><code>"2"</code></em></strong></span>
+bash: 2: command not found
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">unset <code class="varname">MYVAR1</code> <code class="varname">first_name</code> <code class="varname">full_name</code></strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$MYVAR1</code> <code class="varname">$first_name</code> <code class="varname">$full_name</code></strong></span>
+&lt;--no output--&gt;
+
+<code class="prompt">franky ~&gt;</code>
+</pre></div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_02_03"></a>3.2.3.&nbsp;导出变量Exporting variables
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>一个变量的建立后就像上面的例子那样仅仅存在于当前shell。它是本地变量：当前shell的子进程不会意识到这个的存在。为了把变量传递到子shell，我们需要使用内建的 <span><strong class="command">export</strong></span> 命令把他们 <span class="emphasis"><em>输出</em></span> 出来。被输出出来的变量就像环境变量一样，设置和输出变量通常用下面一步来完成：
+            </p>
+            <div class="cmdsynopsis">
+               <p><code class="command">export <code class="varname">VARNAME</code>="<em class="parameter"><code>value</code></em>"</code> 
+               </p>
+            </div>
+            <p>一个子shell能够改变从父shell变量继承过来的变量，但是在子shell所作的改变对父shell也没有影响。下面的例子来证明这个：</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command"><code class="varname">full_name</code>=<em class="parameter"><code>"Franky M. Singh"</code></em></strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">bash</strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$full_name</code></strong></span>
+
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">exit</strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">export <code class="varname">full_name</code></strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">bash</strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$full_name</code></strong></span>
+Franky M. Singh
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">export <code class="varname">full_name</code>=<em class="parameter"><code>"Charles the Great"</code></em></strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$full_name</code></strong></span>
+Charles the Great
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">exit</strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$full_name</code></strong></span>
+Franky M. Singh
+
+<code class="prompt">franky ~&gt;</code>
+</pre><p>当第一次尝试在子shell里面读取 <code class="varname">full_name</code> 的值时，它并不存在（<span><strong class="command">echo</strong></span> 显示了一个空字符串）。子shell退出，然后 <code class="varname">full_name</code> 在父shell里面export，一个变量在赋值后仍然可以被export。然后一个新的子shell开始运行，从父shell那里export出来的变量是可见的。这个变量被修改来存放其他名字，但是在父shell中放置变量的值还是一样的。那么一个新的子shell启动后，从父shell那里export来的变量是可见的。当变量修改以存放一个其它的名字时，在父shell中这个变量的值仍然是原来的值。
+               
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_02_04"></a>3.2.4.&nbsp;保留变量
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_03_02_04_01"></a>3.2.4.1.&nbsp;Bourne shell保留变量
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>Bash和 Bourne shell以同一种方法来使用特定的shell变量。某些情况下，Bash为变量分配一个默认的值。下表给出一个简单的shell变量的概览：</p>
+               <div class="table"><a name="table_03_01"></a><p class="title"><b>表&nbsp;3.1.&nbsp;保留的 Bourne shell 变量</b></p>
+                  <table summary="保留的 Bourne shell 变量" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                     <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">变量名字</th>
+                           <th style="border-bottom: 0.5pt solid ; " align="left">定义</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">CDPATH</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个由冒号分割的目录列表作为内建命令 <span><strong class="command">cd</strong></span> 的搜索路径。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">HOME</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">当前用户的home目录；默认为内建命令 <span><strong class="command">cd</strong></span> 。这个变量的值同样被~扩展使用。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">IFS</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">分割域的一个字符的列表；用于shell把词分开作为扩展。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">MAIL</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">如果这个变量设成一个文件名并且 <code class="varname">MAILPATH</code> 变量没有设置，Bash在指定文件中通知用户邮件的到达。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">MAILPATH</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个用冒号分隔的文件名列表，shell周期性地从这个文件里检测新邮件。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">OPTARG</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left"> <span><strong class="command">getopts</strong></span> 内建命令处理的最后的选项参数的值。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">OPTIND</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left"> 最后一个由 <span><strong class="command">getopts</strong></span> 内建命令处理的选项参数的索引号。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">PATH</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个用冒号分隔的目录列表，shell从这些目录里寻找命令。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">PS1</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">主要提示符。默认值是 “<span class="quote">'\s-\v\$ '</span>”。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; " align="left">PS2</td>
+                           <td style="" align="left">次要提示符。默认值是 “<span class="quote">'&gt; '</span>”。
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_03_02_04_02"></a>3.2.4.2.&nbsp;Bash保留变量
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>这些变量是设置好的或者被Bash使用的，但是其他shell通常不会对它们进行特殊处理。</p>
+               <div class="table"><a name="table_03_02"></a><p class="title"><b>表&nbsp;3.2.&nbsp;保留Bash变量</b></p>
+                  <table summary="保留Bash变量" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                     <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">变量名</th>
+                           <th style="border-bottom: 0.5pt solid ; " align="left">定义</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">auto_resume</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">这个变量控制shell如何与用户交互和作业控制。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">BASH</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">用于执行当前Bash实例的全路径。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">BASH_ENV</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">如果这个变量在Bash调用执行一个shell脚本时已被设置，它的值将被展开并用作在执行脚本前读取的启动文件名。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">BASH_VERSION</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">当前Bash实例的版本号。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">BASH_VERSINFO</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个只读变量数组，它的成员保存这个Bash实例的版本信息。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">COLUMNS</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left"> <span><strong class="command">select</strong></span> 内建命令来决定打印选择列表时终端宽度。在收到 <span class="emphasis"><em>SIGWINCH</em></span> 信号时自动设置。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">COMP_CWORD</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">包含当前光标位置的字的 <code class="varname">${COMP_WORDS}</code> 的一个索引。An index into <code class="varname">${COMP_WORDS}</code> of the word containing the current cursor position.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">COMP_LINE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">当前命令行。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">COMP_POINT</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">指明相对于当前命令起点的当前光标位置。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">COMP_WORDS</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个由当前命令行中单个词组成的变量数组。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">COMPREPLY</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个变量数组，Bash从中读取由一个可编程完整设备调用的一个shell函数生成的可能的完成。An array variable from which Bash reads the possible completions generated by
+                              a shell function invoked by the programmable completion facility.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">DIRSTACK</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个保存当前目录栈内容的变量数组。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">EUID</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">当前用户的数字有效用户ID。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">FCEDIT</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">内建命令 <span><strong class="command">fc</strong></span> 使用 <code class="option">-e</code> 选项时默认使用的编辑器。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">FIGNORE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个由冒号分隔的在补全文件名时要忽略的后缀列表。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">FUNCNAME</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">任意当前正在执行的shell函数名。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">GLOBIGNORE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个由冒号分隔的模板列表，定义在文件名展开时忽略的文件名集。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">GROUPS</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个数组变量，包含当前用户作为成员的组的列表。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">histchars</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">共有三个字符控制历史展开、快速替换和 <span class="emphasis"><em>标记</em></span>。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">HISTCMD</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">当前命令的历史数字，或者在历史列表里的索引。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">HISTCONTROL</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">定义一个命令是否加入到历史列表中。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">HISTFILE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">保存历史命令的文件名。默认值是 <code class="filename">~/.bash_history</code>。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">HISTFILESIZE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">在历史文件中包含的最大行数，默认为500。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">HISTIGNORE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个由冒号分隔的模式列表，用来决定哪些命令行应该保存在历史列表中。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">HISTSIZE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">在历史列表中记录的最大命令数，默认为500。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">HOSTFILE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">包含与 <code class="filename">/etc/hosts</code> 格式相同的文件名，shell需要补全主机名时读取。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">HOSTNAME</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">当前主机的名字。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">HOSTTYPE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个描述运行Bash的机器的字符串。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">IGNOREEOF</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">控制shell接收到一个 <span class="emphasis"><em>EOF</em></span> 字符作为独立输入的行为。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">INPUTRC</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">Readline初始化文件的名字，取代默认值为 <code class="filename">/etc/inputrc</code>。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">LANG</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">用于为任意没有特别选择用LC_开头的变量指明的设置决定场合设置。Used to determine the locale category for any category not specifically selected with a variable
+                              starting with <code class="varname">LC_</code>.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">LC_ALL</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">这个变量取代 <code class="varname">LANG</code> 的值并为任意其他 <code class="varname">LC_</code> 变量指定一个区域种类。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">LC_COLLATE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">这个变量决定搜索文件名展开结果时使用的整理顺序，并决定在文件名展开和模式匹配里区域表达、等价类和处理序列的表现。This variable determines the collation order used when sorting the
+                              results of file name expansion, and determines the behavior of range expressions, equivalence classes, and collating sequences
+                              within file name expansion and pattern matching.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">LC_CTYPE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">这个变量决定在文件名展开和模板匹配里字符的解释和字符集的行为。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">LC_MESSAGES</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">这个变量决定用于转换由 “<span class="quote">$</span>” 引导的双引号字符串的区域。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">LC_NUMERIC</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">这个变量决定数字格式化的本地类别。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">LINENO</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">当前执行的脚本或者shell函数的行数。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">LINES</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">内建命令 <span><strong class="command">select</strong></span> 用来决定打印选择列表的列长度。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">MACHTYPE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个以标准的GNU CPU-COMPANY-SYSTEM 格式来充分描述运行Bash的系统的类型的字符串。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">MAILCHECK</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">shell从 <code class="varname">MAILPATH</code> 或 <code class="varname">MAIL</code> 变量里指定的文件中检查邮件的频度（秒）。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">OLDPWD</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">内建命令 <span><strong class="command">cd</strong></span> 设置的之前的工作目录。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">OPTERR</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">如果设置成1，Bash显示内建命令 <span><strong class="command">getopts</strong></span> 生成的错误信息。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">OSTYPE</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个描述运行Bash的操作系统的字符串。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">PIPESTATUS</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个数组变量，包含一个最近运行过的前台管道（可能只包含一个命令）进程的退出状态值的列表。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">POSIXLY_CORRECT</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">如果这个变量在 <span><strong class="command">bash</strong></span> 启动的时候存在于环境变量中，shell将进入POSIX模式。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">PPID</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">shell父进程的进程ID。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">PROMPT_COMMAND</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">如果设置了，这个值解释为一个在打印每个基本提示符(<code class="varname">PS1</code>)之前执行的命令。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">PS3</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">这个变量的值被用作 <span><strong class="command">select</strong></span> 命令的提示符。默认值是 “<span class="quote">'#? '</span>”。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">PS4</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">这个值在 <code class="option">-x</code> 选项启用时，在命令行前打印的提示符。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">PWD</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">内建命令 <span><strong class="command">cd</strong></span> 设置的当前工作目录。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">RANDOM</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">每次这个参数被引用时，生成一个0和32767之间的随机整数。给这个变量指定一个值作为随机数生成器的种子。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">REPLY</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">内建命令 <span><strong class="command">read</strong></span> 的默认值。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">SECONDS</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">这个变量扩展为shell运行的秒数。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">SHELLOPTS</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">一个由冒号分隔的shell已经启用的选项列表。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">SHLVL</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">新的Bash实例启动就增加一。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">TIMEFORMAT</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">这个参数的值用来作为一个格式化的字符串用来指定以 <span><strong class="command">time</strong></span> 保留字作为前缀的管道定时信息如何显示。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">TMOUT</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">如果设成一个大于0的值。 <code class="varname">TMOUT</code> 作为内建命令 <span><strong class="command">read</strong></span> 的默认超时时间。在一个交互shell中，当shell处于交互状态时，这个值作为等待在基本提示串后输入的秒数。 在这个秒数后如果没有输入Bash就终止。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; " align="left">UID</td>
+                           <td style="" align="left">数值，当前用户的真实用户ID。</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>检查Bash的手册，信息或者文档页面得到更多扩展信息。一些变量是只读的，一些是自动设置的，另外一些如果设置了一个不同的值会失去原有的含义。</p>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_02_05"></a>3.2.5.&nbsp;特殊参数
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>shell对几个参数进行特别处理。这些参数可能只能被引用；对它们赋值是不允许的。</p>
+            <div class="table"><a name="table_03_03"></a><p class="title"><b>表&nbsp;3.3.&nbsp;特殊Bash变量</b></p>
+               <table summary="特殊Bash变量" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                  <colgroup>
+                     <col width="50%">
+                     <col width="50%">
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">字符</th>
+                        <th style="border-bottom: 0.5pt solid ; " align="left">定义</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="varname">$*</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">展开为位置参数，从1开始。当扩展发生在双引号时，它展开成一个单独的词，每个参数的值由 <code class="varname">IFS</code> 特殊变量的第一个字符分隔。
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="varname">$@</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">展开为位置参数，从1开始。当在双引号里展开时，每个参数展开成独立的词。</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="varname">$#</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">把位置参数展开为十进制数字。</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="varname">$?</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">展开成最近执行的前台管道程序的退出状态。</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="varname">$-</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">一个连字符展开为当前选项标志   内部命令集 或者那些shell自己的集（如-i）。A hyphen expands to the current option flags as specified upon invocation, by the
+                           <span><strong class="command">set</strong></span> built-in command, or those set by the shell itself (such as the <code class="option">-i</code>).
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="varname">$$</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">展开成shell的进程ID。</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="varname">$!</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">展开成最近在后台（异步）执行的命令的进程ID。</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="varname">$0</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">展开成shell或者shell脚本名。</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; " align="left"><code class="varname">$_</code></td>
+                        <td style="" align="left">下划线变量在shell启动时设置，包含shell的绝对文件名或者作为参数列表被执行的脚本。随后，它展开为前一个命令扩展后的最后一个参数。它同样设置为每个执行程序的全路径，放在那个命令的输出环境中。当检查邮件时，这个参数保存邮件文件的名字。The
+                           underscore variable is set at shell startup and contains the absolute file name of the shell or script being executed as passed
+                           in the argument list.  Subsequently, it expands to the last argument to the previous command, after expansion.  It is also
+                           set to the full pathname of each command executed and placed in the environment exported to that command. 
+                           
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p>位置参数是跟随在一个shell脚本的名字之后的字。他们被放进变量 <code class="varname">$1</code>, <code class="varname">$2</code>, <code class="varname">$3</code> 等。只要需要，变量就被加入到一个内部数组。 <code class="varname">$#</code> 存放了整个参数的总数量，在以下例子脚本中加以证明：
+            </p><pre class="screen">
+#!/bin/bash
+
+# positional.sh
+# This script reads 3 positional parameters and prints them out.
+
+POSPAR1="$1"
+POSPAR2="$2"
+POSPAR3="$3"
+
+echo "$1 is the first positional parameter, \$1."
+echo "$2 is the second positional parameter, \$2."
+echo "$3 is the third positional parameter, \$3."
+echo
+echo "The total number of positional parameters is $#."
+</pre><p>在执行的时候可以给出任意数量的参数：</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">positional.sh <em class="parameter"><code>one two three four five</code></em></strong></span>
+one is the first positional parameter, $1.
+two is the second positional parameter, $2.
+three is the third positional parameter, $3.
+
+The total number of positional parameters is 5.
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">positional.sh <em class="parameter"><code>one two</code></em></strong></span>
+one is the first positional parameter, $1.
+two is the second positional parameter, $2.
+ is the third positional parameter, $3.
+
+The total number of positional parameters is 2.
+</pre><p>更多关于评估这些参数请参见 <a href="ch07.html" title="第&nbsp;7&nbsp;章&nbsp;条件语句">第&nbsp;7&nbsp;章 <i>条件语句</i></a> 和 <a href="ch09s07.html" title="9.7.&nbsp;shift内建命令">第&nbsp;9.7&nbsp;节 “shift内建命令”</a>.
+            </p>
+            <p>一些关于其他特殊参数的例子：</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">grep <em class="parameter"><code>dictionary</code></em> <code class="filename">/usr/share/dict/words</code></strong></span>
+dictionary
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$_</code></strong></span>
+/usr/share/dict/words
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$$</code></strong></span>
+10662
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">mozilla &amp;</strong></span>
+[1] 11064
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$!</code></strong></span>
+11064
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$0</code></strong></span>
+bash
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$?</code></strong></span>
+0
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">ls <code class="filename">doesnotexist</code></strong></span>
+ls: doesnotexist: No such file or directory
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">echo <code class="varname">$?</code></strong></span>
+1
+
+<code class="prompt">franky ~&gt;</code>
+</pre><p>用户 <span class="emphasis"><em>franky</em></span> 开始进入 <span><strong class="command">id</strong></span> 命令， 导致了对 <code class="varname">_</code> 变量的赋值。他的shell的进程号是10662。在把一个作业方到后台之后，<code class="varname">!</code> 存放了后台作业的进程号。shell运行 <span><strong class="command">bash</strong></span>。当一个错误发生，<code class="varname">?</code> 存放了不为0的退出代码。
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_02_06"></a>3.2.6.&nbsp;脚本借助变量的循环使用
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>除了使脚本变得更加易读，变量也会使你更加快速的在另外一个环境中应用一个脚本或者其他的目的。考虑下面的例子，一个非常简单的脚本把 <span class="emphasis"><em>franky</em></span>的home目录备份到远程服务器上：
+            </p><pre class="screen">
+#!/bin/bash
+
+# This script makes a backup of my home directory.
+
+cd /home
+
+# This creates the archive
+tar cf /var/tmp/home_franky.tar franky &gt; /dev/null 2&gt;&amp;1
+
+# First remove the old bzip2 file.  Redirect errors because this generates some if the archive
+# does not exist.  Then create a new compressed file.
+rm /var/tmp/home_franky.tar.bz2 2&gt; /dev/null
+bzip2 /var/tmp/home_franky.tar
+
+# Copy the file to another host - we have ssh keys for making this work without intervention.
+scp /var/tmp/home_franky.tar.bz2 bordeaux:/opt/backup/franky &gt; /dev/null 2&gt;&amp;1
+
+# Create a timestamp in a logfile.
+date &gt; /home/franky/log/home_backup.log
+echo backup succeeded &gt; /home/franky/log/home_backup.log
+</pre><p>首先，如果每次需要的时候你都手动命名文件和目录很可能造成错误。其次，假设 <span class="emphasis"><em>franky</em></span> 向把这个脚本给 <span class="emphasis"><em>carol</em></span> ，在 <span class="emphasis"><em>carol</em></span> 能使用脚本备份她的主目录之前需要做一些编辑。同样如果<span class="emphasis"><em>franky</em></span> 想使用这个脚本来备份其他目录。为了简单的再循环，使所有的文件，目录，用户名，服务器名字等变量。因此，你只需要编辑一次值，而不需要在整个脚本中检查哪里需要出现参数。以下是一个例子：
+            </p><pre class="screen">
+#!/bin/bash
+                                                                                                 
+# This script makes a backup of my home directory.
+
+# Change the values of the variables to make the script work for you:
+BACKUPDIR=/home
+BACKUPFILES=franky
+TARFILE=/var/tmp/home_franky.tar
+BZIPFILE=/var/tmp/home_franky.tar.bz2
+SERVER=bordeaux
+REMOTEDIR=/opt/backup/franky
+LOGFILE=/home/franky/log/home_backup.log
+
+cd $BACKUPDIR
+
+# This creates the archive
+tar cf $TARFILE $BACKUPFILES &gt; /dev/null 2&gt;&amp;1
+                                                                                                 
+# First remove the old bzip2 file.  Redirect errors because this generates some if the archive 
+# does not exist.  Then create a new compressed file.
+rm $BZIPFILE 2&gt; /dev/null
+bzip2 $TARFILE
+
+# Copy the file to another host - we have ssh keys for making this work without intervention.
+scp $BZIPFILE $SERVER:$REMOTEDIR &gt; /dev/null 2&gt;&amp;1
+
+# Create a timestamp in a logfile.
+date &gt; $LOGFILE
+echo backup succeeded &gt; $LOGFILE
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <table border="0" summary="Note: 庞大的目录和低带宽">
+                  <tr>
+                     <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                     <th align="left">庞大的目录和低带宽</th>
+                  </tr>
+                  <tr>
+                     <td align="left" valign="top">
+                        <p>以上是个大家都能理解的例子，使用一个小目录和一个在相同子网的主机。根据你的带宽，目录的大小和远程服务器的，使用这种机制来备份可能会花费很多时间。对更大的目录和更低的带宽，使用 <span><strong class="command">rsync</strong></span> 来保证目录之间保持同步。
+                        </p>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch03.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch03.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch03s03.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">第&nbsp;3&nbsp;章&nbsp;Bash环境&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;3.3.&nbsp;引用字符</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

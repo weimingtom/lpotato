@@ -1,0 +1,535 @@
+<html><head>
+   
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
+      <title>Bash新手指南</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="next" href="pr01.html" title="介绍">
+   </head><body bgcolor="white" link="#0000ff" vlink="#840084" text="black" alink="#0000ff">
+      <div class="navheader">
+         <table summary="Navigation header" width="100%">
+            <tbody><tr>
+               <th colspan="3" align="center">Bash新手指南</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left">&nbsp;</td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="pr01.html">下一页</a></td>
+            </tr>
+         </tbody></table>
+         <hr>
+      </div>
+      <div class="book" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h1 class="title"><a name="d0e1"></a>Bash新手指南
+                  </h1>
+               </div>
+               <div>
+                  <div class="authorgroup">
+                     <div class="author">
+                        <h3 class="author"><span class="firstname">Machtelt</span> <span class="surname">Garrels</span></h3>
+                        <div class="affiliation"><span class="orgname">Xalasys.com
+                              <br></span><div class="address">
+                              <p><br>
+                                 <code class="email">&lt;<a href="mailto:tille%20wants%20no%20spam%20_at_%20xalasys%20dot%20com">tille&nbsp;wants&nbsp;no&nbsp;spam&nbsp;_at_&nbsp;xalasys&nbsp;dot&nbsp;com</a>&gt;</code><br>
+                                 
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="preface"><a href="pr01.html">介绍</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="pr01.html#intro_01">1. 本指南由来</a></span></dt>
+                     <dt><span class="section"><a href="pr01s02.html">2. 谁应该阅读此书？</a></span></dt>
+                     <dt><span class="section"><a href="pr01s03.html">3. 新版本和取得方法</a></span></dt>
+                     <dt><span class="section"><a href="pr01s04.html">4. 历史修订</a></span></dt>
+                     <dt><span class="section"><a href="pr01s05.html">5. 贡献</a></span></dt>
+                     <dt><span class="section"><a href="pr01s06.html">6. 反馈</a></span></dt>
+                     <dt><span class="section"><a href="pr01s07.html">7. 版权信息</a></span></dt>
+                     <dt><span class="section"><a href="pr01s08.html">8. 你需要什么？</a></span></dt>
+                     <dt><span class="section"><a href="pr01s09.html">9. 本文档约定</a></span></dt>
+                     <dt><span class="section"><a href="pr01s10.html">10. 本文档组织结构</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch01.html">1. Bash和Bash脚本</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch01.html#sect_01_01">1.1. 常用的shell程序</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch01.html#sect_01_01_01">1.1.1. shell的普遍作用</a></span></dt>
+                           <dt><span class="sect2"><a href="ch01.html#sect_01_01_02">1.1.2. Shell类型</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch01s02.html">1.2. Bourne Again SHell的优势</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch01s02.html#sect_01_02_01">1.2.1. Bash是GNU shell</a></span></dt>
+                           <dt><span class="sect2"><a href="ch01s02.html#sect_01_02_02">1.2.2. Bash独有的特性</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch01s03.html">1.3. 执行命令</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch01s03.html#sect_01_03_01">1.3.1. 概要</a></span></dt>
+                           <dt><span class="sect2"><a href="ch01s03.html#sect_01_03_02">1.3.2. Shell内建命令</a></span></dt>
+                           <dt><span class="sect2"><a href="ch01s03.html#sect_01_03_03">1.3.3. 从脚本执行程序</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch01s04.html">1.4. 建立块</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch01s04.html#sect_01_04_01">1.4.1. Shell建立块</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch01s05.html">1.5. 开发优良脚本</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_01">1.5.1. 优良脚本的要素</a></span></dt>
+                           <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_02">1.5.2. 结构</a></span></dt>
+                           <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_03">1.5.3. 术语</a></span></dt>
+                           <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_04">1.5.4. 关于顺序和逻辑</a></span></dt>
+                           <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_05">1.5.5. 一个Bash脚本的例子：mysystem.sh</a></span></dt>
+                           <dt><span class="sect2"><a href="ch01s05.html#sect_01_05_06">1.5.6. init脚本例子</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch01s06.html">1.6. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch01s07.html">1.7. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch02.html">2. 编写和调试脚本</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch02.html#sect_02_01">2.1. 建立并且运行一个脚本</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch02.html#sect_02_01_01">2.1.1. 编写与命名</a></span></dt>
+                           <dt><span class="sect2"><a href="ch02.html#sect_02_01_02">2.1.2. script1.sh</a></span></dt>
+                           <dt><span class="sect2"><a href="ch02.html#sect_02_01_03">2.1.3. 执行脚本</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch02s02.html">2.2. 脚本基础</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch02s02.html#sect_02_02_01">2.2.1. 哪个Shell来执行脚本？</a></span></dt>
+                           <dt><span class="sect2"><a href="ch02s02.html#sect_02_02_02">2.2.2. 加入注释</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch02s03.html">2.3. 调试Bash脚本</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch02s03.html#sect_02_03_01">2.3.1. 调试整个脚本</a></span></dt>
+                           <dt><span class="sect2"><a href="ch02s03.html#sect_02_03_02">2.3.2. 调试部分脚本</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch02s04.html">2.4. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch02s05.html">2.5. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch03.html">3. Bash环境</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch03.html#sect_03_01">3.1. Shell初始化文件</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch03.html#sect_03_01_01">3.1.1. 跨系统配置文件</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03.html#sect_03_01_02">3.1.2. 单独用户配置文件</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03.html#sect_03_01_03">3.1.3. 改变shell配置文件</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch03s02.html">3.2. 变量</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_01">3.2.1. 变量的类型</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_02">3.2.2. 建立变量</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_03">3.2.3. 导出变量Exporting variables</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_04">3.2.4. 保留变量</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_05">3.2.5. 特殊参数</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_06">3.2.6. 脚本借助变量的循环使用</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch03s03.html">3.3. 引用字符</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_01">3.3.1. Why?</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_02">3.3.2. 转义字符</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_03">3.3.3. 单引号</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_04">3.3.4. 双引号</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_05">3.3.5. ANSI-C引用</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_06">3.3.6. 场合</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch03s04.html">3.4. Shell扩展</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_0">3.4.1. 概要</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_01">3.4.2. 括号扩展</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_02">3.4.3. ~扩展</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_03">3.4.4. Shell参数和变量扩展</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_04">3.4.5. 命令替换</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_05">3.4.6. 算术扩展</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_06">3.4.7. 过程替换Process substitution</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_07">3.4.8. 字分割</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_08">3.4.9. 文件名扩展</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch03s05.html">3.5. 别名</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch03s05.html#sect_03_05_01">3.5.1. 什么是别名？</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s05.html#sect_03_05_02">3.5.2. 建立和移除别名</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch03s06.html">3.6. 更多 Bash 选项</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch03s06.html#sect_03_06_01">3.6.1. 显示选项</a></span></dt>
+                           <dt><span class="sect2"><a href="ch03s06.html#sect_03_06_02">3.6.2. 改变选项</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch03s07.html">3.7. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch03s08.html">3.8. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch04.html">4. 正则表达式</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch04.html#sect_04_01">4.1. 正则表达式</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch04.html#sect_04_01_01">4.1.1. 什么是正则表达式？</a></span></dt>
+                           <dt><span class="sect2"><a href="ch04.html#sect_04_01_02">4.1.2. 正则表达式特殊字符</a></span></dt>
+                           <dt><span class="sect2"><a href="ch04.html#sect_04_01_03">4.1.3. 基本和扩展正则表达式</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch04s02.html">4.2. 使用grep的例子</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch04s02.html#sect_04_02_01">4.2.1. 什么是grep？</a></span></dt>
+                           <dt><span class="sect2"><a href="ch04s02.html#sect_04_02_02">4.2.2. Grep与正则表达式</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch04s03.html">4.3. Pattern匹配使用Bash特性</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch04s03.html#sect_04_03_01">4.3.1. 字符范围</a></span></dt>
+                           <dt><span class="sect2"><a href="ch04s03.html#sect_04_03_02">4.3.2. 字符族</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch04s04.html">4.4. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch04s05.html">4.5. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch05.html">5. GNU SED流编辑器</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch05.html#sect_05_01">5.1. 介绍</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch05.html#sect_05_01_01">5.1.1. 什么是sed？</a></span></dt>
+                           <dt><span class="sect2"><a href="ch05.html#sect_05_01_02">5.1.2. sed命令</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch05s02.html">5.2. 交互编辑</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch05s02.html#sect_05_02_01">5.2.1. 打印包含pattern的行</a></span></dt>
+                           <dt><span class="sect2"><a href="ch05s02.html#sect_05_02_02">5.2.2. 删除包含pattern的输入行</a></span></dt>
+                           <dt><span class="sect2"><a href="ch05s02.html#sect_05_02_03">5.2.3. 行的范围</a></span></dt>
+                           <dt><span class="sect2"><a href="ch05s02.html#sect_05_02_04">5.2.4. 用sed来查找替换</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch05s03.html">5.3. 非交互编辑</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch05s03.html#sect_05_03_01">5.3.1. 从文件读取sed命令</a></span></dt>
+                           <dt><span class="sect2"><a href="ch05s03.html#sect_05_03_02">5.3.2. 写输出文件</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch05s04.html">5.4. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch05s05.html">5.5. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch06.html">6. GNU AWK编程语言</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch06.html#sect_06_01">6.1. gawk上路</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch06.html#sect_06_01_01">6.1.1. 什么是gawk?</a></span></dt>
+                           <dt><span class="sect2"><a href="ch06.html#sect_06_01_02">6.1.2. Gawk命令</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch06s02.html">6.2. 打印程序</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch06s02.html#sect_06_02_01">6.2.1. 打印选择的域</a></span></dt>
+                           <dt><span class="sect2"><a href="ch06s02.html#sect_06_02_02">6.2.2. 格式化域</a></span></dt>
+                           <dt><span class="sect2"><a href="ch06s02.html#sect_06_02_03">6.2.3. print命令和正则表达式</a></span></dt>
+                           <dt><span class="sect2"><a href="ch06s02.html#sect_06_02_04">6.2.4. 特殊的patterns</a></span></dt>
+                           <dt><span class="sect2"><a href="ch06s02.html#sect_06_02_05">6.2.5. Gawk脚本</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch06s03.html">6.3. Gawk变量</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_01">6.3.1. 输入域的分隔符</a></span></dt>
+                           <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_02">6.3.2. 输出分隔符</a></span></dt>
+                           <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_03">6.3.3. 记录的数量</a></span></dt>
+                           <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_04">6.3.4. 用户定义的变量</a></span></dt>
+                           <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_05">6.3.5. 更多例子</a></span></dt>
+                           <dt><span class="sect2"><a href="ch06s03.html#sect_06_03_06">6.3.6. printf程序</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch06s04.html">6.4. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch06s05.html">6.5. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch07.html">7. 条件语句</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch07.html#sect_07_01">7.1. 介绍if</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch07.html#sect_07_01_01">7.1.1. 概要</a></span></dt>
+                           <dt><span class="sect2"><a href="ch07.html#sect_07_01_02">7.1.2. if的简单应用</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch07s02.html">7.2. 更多if的高级使用方法</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch07s02.html#sect_07_02_01">7.2.1. if/then/else结构</a></span></dt>
+                           <dt><span class="sect2"><a href="ch07s02.html#sect_07_02_02">7.2.2. if/then/elif/else结构</a></span></dt>
+                           <dt><span class="sect2"><a href="ch07s02.html#sect_07_02_03">7.2.3. if嵌套语句</a></span></dt>
+                           <dt><span class="sect2"><a href="ch07s02.html#sect_07_02_04">7.2.4. 布尔操作</a></span></dt>
+                           <dt><span class="sect2"><a href="ch07s02.html#sect_07_02_05">7.2.5. 使用exit语句和if</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch07s03.html">7.3. 使用case语句</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch07s03.html#sect_07_03_01">7.3.1. 简单的条件</a></span></dt>
+                           <dt><span class="sect2"><a href="ch07s03.html#sect_07_03_02">7.3.2. 初始脚本例子</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch07s04.html">7.4. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch07s05.html">7.5. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch08.html">8. 编写交互脚本</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch08.html#sect_08_01">8.1. 显示用户消息</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch08.html#sect_08_01_01">8.1.1. 交互与否？</a></span></dt>
+                           <dt><span class="sect2"><a href="ch08.html#sect_08_01_02">8.1.2. 使用内建命令echo</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch08s02.html">8.2. 捕捉用户输入</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch08s02.html#sect_08_02_01">8.2.1. 使用内建命令read</a></span></dt>
+                           <dt><span class="sect2"><a href="ch08s02.html#sect_08_02_02">8.2.2. 提示用户输入</a></span></dt>
+                           <dt><span class="sect2"><a href="ch08s02.html#sect_08_02_03">8.2.3. 重定向和文件描述符</a></span></dt>
+                           <dt><span class="sect2"><a href="ch08s02.html#sect_08_02_04">8.2.4. 文件输入和输出</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch08s03.html">8.3. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch08s04.html">8.4. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch09.html">9. 重复性任务</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch09.html#sect_09_01">9.1. for循环</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch09.html#sect_09_01_01">9.1.1. 如何工作？</a></span></dt>
+                           <dt><span class="sect2"><a href="ch09.html#sect_09_01_02">9.1.2. 例子</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch09s02.html">9.2. while循环</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch09s02.html#sect_09_02_01">9.2.1. 什么是while循环？</a></span></dt>
+                           <dt><span class="sect2"><a href="ch09s02.html#sect_09_02_02">9.2.2. 例子</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch09s03.html">9.3. until循环</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch09s03.html#sect_09_03_01">9.3.1. 什么是until循环？</a></span></dt>
+                           <dt><span class="sect2"><a href="ch09s03.html#sect_09_03_02">9.3.2. 例子</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch09s04.html">9.4. I/0 重定向和循环</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch09s04.html#sect_09_04_01">9.4.1. 输入重定向</a></span></dt>
+                           <dt><span class="sect2"><a href="ch09s04.html#sect_09_04_02">9.4.2. 输出重定向</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch09s05.html">9.5. Break 和 continue</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch09s05.html#sect_09_05_01">9.5.1. break 内建命令</a></span></dt>
+                           <dt><span class="sect2"><a href="ch09s05.html#sect_09_05_02">9.5.2. continue 内建命令</a></span></dt>
+                           <dt><span class="sect2"><a href="ch09s05.html#sect_09_05_03">9.5.3. 例子</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch09s06.html">9.6. 使用select内建命令来制作菜单</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch09s06.html#sect_09_06_01">9.6.1. 概要</a></span></dt>
+                           <dt><span class="sect2"><a href="ch09s06.html#sect_09_06_02">9.6.2. 子菜单</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch09s07.html">9.7. shift内建命令</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch09s07.html#sect_09_07_01">9.7.1. What does it do?</a></span></dt>
+                           <dt><span class="sect2"><a href="ch09s07.html#sect_09_07_02">9.7.2. 例子</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch09s08.html">9.8. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch09s09.html">9.9. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch10.html">10. 变量进阶</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch10.html#sect_10_01">10.1. 变量的类型</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch10.html#sect_10_01_01">10.1.1. 普通的变量赋值</a></span></dt>
+                           <dt><span class="sect2"><a href="ch10.html#sect_10_01_02">10.1.2. 使用 declare 内建命令built-in</a></span></dt>
+                           <dt><span class="sect2"><a href="ch10.html#sect_10_01_03">10.1.3. 常量</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch10s02.html">10.2. 数组变量</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch10s02.html#sect_10_02_01">10.2.1. 建立数组</a></span></dt>
+                           <dt><span class="sect2"><a href="ch10s02.html#sect_10_02_02">10.2.2. 对数组的变量解引用</a></span></dt>
+                           <dt><span class="sect2"><a href="ch10s02.html#sect_10_02_03">10.2.3. 删除数组变量</a></span></dt>
+                           <dt><span class="sect2"><a href="ch10s02.html#sect_10_02_04">10.2.4. 数组的例子</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch10s03.html">10.3. 变量的操作</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch10s03.html#sect_10_03_01">10.3.1. 变量算术运算</a></span></dt>
+                           <dt><span class="sect2"><a href="ch10s03.html#sect_10_03_02">10.3.2. 变量的长度</a></span></dt>
+                           <dt><span class="sect2"><a href="ch10s03.html#sect_10_03_03">10.3.3. 变量的转化</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch10s04.html">10.4. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch10s05.html">10.5. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch11.html">11. 函数</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch11.html#sect_11_01">11.1. 介绍</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch11.html#sect_11_01_01">11.1.1. 什么是函数？</a></span></dt>
+                           <dt><span class="sect2"><a href="ch11.html#sect_11_01_02">11.1.2. 函数语法</a></span></dt>
+                           <dt><span class="sect2"><a href="ch11.html#sect_11_01_03">11.1.3. 函数中的位置参数</a></span></dt>
+                           <dt><span class="sect2"><a href="ch11.html#sect_11_01_04">11.1.4. 显示函数</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch11s02.html">11.2. 函数在脚本中的例子</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch11s02.html#sect_11_02_01">11.2.1. 循环利用</a></span></dt>
+                           <dt><span class="sect2"><a href="ch11s02.html#sect_11_02_02">11.2.2. 设置路径</a></span></dt>
+                           <dt><span class="sect2"><a href="ch11s02.html#sect_11_02_03">11.2.3. 远程备份</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch11s03.html">11.3. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch11s04.html">11.4. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="chapter"><a href="ch12.html">12. 捕捉信号</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="ch12.html#sect_12_01">12.1. 信号</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch12.html#sect_12_01_01">12.1.1. 介绍</a></span></dt>
+                           <dt><span class="sect2"><a href="ch12.html#sect_12_01_02">12.1.2. kill信号的使用</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch12s02.html">12.2. 陷阱</a></span></dt>
+                     <dd>
+                        <dl>
+                           <dt><span class="sect2"><a href="ch12s02.html#sect_12_02_01">12.2.1. 概要</a></span></dt>
+                           <dt><span class="sect2"><a href="ch12s02.html#sect_12_02_02">12.2.2. Bash怎样解释陷阱</a></span></dt>
+                           <dt><span class="sect2"><a href="ch12s02.html#sect_12_02_03">12.2.3. 更多例子</a></span></dt>
+                        </dl>
+                     </dd>
+                     <dt><span class="sect1"><a href="ch12s03.html">12.3. 总结</a></span></dt>
+                     <dt><span class="sect1"><a href="ch12s04.html">12.4. 练习</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="appendix"><a href="apa.html">A. Shell特性</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="apa.html#d0e13779">A.1. 普通特性</a></span></dt>
+                     <dt><span class="sect1"><a href="apas02.html">A.2. 不同的特性</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="appendix"><a href="apb.html">B. GNU Free Documentation License</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect1"><a href="apb.html#gfdl-0">B.1. Preamble</a></span></dt>
+                     <dt><span class="sect1"><a href="apbs02.html">B.2. Applicability and definitions</a></span></dt>
+                     <dt><span class="sect1"><a href="apbs03.html">B.3. Verbatim copying</a></span></dt>
+                     <dt><span class="sect1"><a href="apbs04.html">B.4. Copying in quantity</a></span></dt>
+                     <dt><span class="sect1"><a href="apbs05.html">B.5. Modifications</a></span></dt>
+                     <dt><span class="sect1"><a href="apbs06.html">B.6. Combining documents</a></span></dt>
+                     <dt><span class="sect1"><a href="apbs07.html">B.7. Collections of documents</a></span></dt>
+                     <dt><span class="sect1"><a href="apbs08.html">B.8. Aggregation with independent works</a></span></dt>
+                     <dt><span class="sect1"><a href="apbs09.html">B.9. Translation</a></span></dt>
+                     <dt><span class="sect1"><a href="apbs10.html">B.10. Termination</a></span></dt>
+                     <dt><span class="sect1"><a href="apbs11.html">B.11. Future revisions of this license</a></span></dt>
+                     <dt><span class="sect1"><a href="apbs12.html">B.12. How to use this License for your documents</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="glossary"><a href="gloss.html">术语表</a></span></dt>
+               <dt><span class="glossary"><a href="go02.html">Index</a></span></dt>
+            </dl>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table summary="Navigation footer" width="100%">
+            <tbody><tr>
+               <td width="40%" align="left">&nbsp;</td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="pr01.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" valign="top" align="left">&nbsp;</td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" valign="top" align="right">&nbsp;介绍</td>
+            </tr>
+         </tbody></table>
+      </div>
+   </body></html>

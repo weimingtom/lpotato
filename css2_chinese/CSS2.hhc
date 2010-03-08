@@ -1,0 +1,568 @@
+<HTML><HEAD></HEAD><BODY>
+<OBJECT type="text/site properties"><param name="Window Styles" value="0x227"></OBJECT>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="译者简介">
+<PARAM NAME="Local" VALUE="译者简介.html">
+<PARAM NAME="ImageNumber" value="9">
+</OBJECT>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="层叠样式表，第2级">
+<PARAM NAME="ImageNumber" value="1">
+</OBJECT>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="层叠样式表，第2级">
+<PARAM NAME="Local" VALUE="cover.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="关于CSS2规范">
+<PARAM NAME="Local" VALUE="about.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="CSS2简介">
+<PARAM NAME="Local" VALUE="intro.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="一致性：要求和推荐">
+<PARAM NAME="Local" VALUE="conform.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="CSS2语法和基本数据类型">
+<PARAM NAME="Local" VALUE="syndata.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="选择子">
+<PARAM NAME="Local" VALUE="selector.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="指定属性值，层叠和继承">
+<PARAM NAME="Local" VALUE="cascade.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="媒介类型">
+<PARAM NAME="Local" VALUE="media.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="包含框模型">
+<PARAM NAME="Local" VALUE="box.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="可视化格式模型">
+<PARAM NAME="Local" VALUE="visuren.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="可视化格式模型的细节">
+<PARAM NAME="Local" VALUE="visudet.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="视觉效果">
+<PARAM NAME="Local" VALUE="visufx.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="生成的内容，自动编号以及列表">
+<PARAM NAME="Local" VALUE="generate.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="页面介质">
+<PARAM NAME="Local" VALUE="page.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="颜色和背景">
+<PARAM NAME="Local" VALUE="colors.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="字体">
+<PARAM NAME="Local" VALUE="fonts.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="文本">
+<PARAM NAME="Local" VALUE="text.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="表格">
+<PARAM NAME="Local" VALUE="tables.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="用户界面">
+<PARAM NAME="Local" VALUE="ui.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="音频样式表">
+<PARAM NAME="Local" VALUE="aural.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="附录">
+<PARAM NAME="ImageNumber" value="1">
+</OBJECT>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="附录A：一个HTML 4.0样本样式表">
+<PARAM NAME="Local" VALUE="sample.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="附录B：自CSS1的改变">
+<PARAM NAME="Local" VALUE="changes.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="附录C：字体的实现和性能的注解">
+<PARAM NAME="Local" VALUE="notes.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="附录D：CSS2语法">
+<PARAM NAME="Local" VALUE="grammar.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="附录E：参考资料">
+<PARAM NAME="Local" VALUE="refs.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="附录F：属性索引">
+<PARAM NAME="Local" VALUE="propidx.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="附录G：描述子索引">
+<PARAM NAME="Local" VALUE="descidx.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="附录H：索引">
+<PARAM NAME="Local" VALUE="indexlist.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="长描述(原文)">
+<PARAM NAME="ImageNumber" value="1">
+</OBJECT>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for anonymous block box">
+<PARAM NAME="Local" VALUE="images/longdesc/anon-block-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for the first Bach/XML formatting example">
+<PARAM NAME="Local" VALUE="images/longdesc/bach1-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for the second Bach/XML formatting example">
+<PARAM NAME="Local" VALUE="images/longdesc/bach2-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for background pattern">
+<PARAM NAME="Local" VALUE="images/longdesc/bg-repeat-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of illustration of box areas">
+<PARAM NAME="Local" VALUE="images/longdesc/boxdim-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of list box example showing margins,
+padding...">
+<PARAM NAME="Local" VALUE="images/longdesc/boxdimeg-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example illustrating table row height...">
+<PARAM NAME="Local" VALUE="images/longdesc/cell-align-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for change bar example">
+<PARAM NAME="Local" VALUE="images/longdesc/changebar-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for example of clipping region">
+<PARAM NAME="Local" VALUE="images/longdesc/clip-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example illustrating hidden internal
+borders">
+<PARAM NAME="Local" VALUE="images/longdesc/CSStbl3-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for sample document tree diagram">
+<PARAM NAME="Local" VALUE="images/longdesc/doctree-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of text shadow example">
+<PARAM NAME="Local" VALUE="images/longdesc/eclipse-outline-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for drop cap example">
+<PARAM NAME="Local" VALUE="images/longdesc/first-letter-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for punctuation and drop cap example">
+<PARAM NAME="Local" VALUE="images/longdesc/first-letter2-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of how floats overlap with boxes in normal
+ flow">
+<PARAM NAME="Local" VALUE="images/longdesc/float2p-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of how floats overlap with boxes in normal
+ flow">
+<PARAM NAME="Local" VALUE="images/longdesc/floatclear-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of float and text flow example">
+<PARAM NAME="Local" VALUE="images/longdesc/floateg-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for example illustrating positioning
+ with...">
+<PARAM NAME="Local" VALUE="images/longdesc/flow-abs-rel-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for example illustrating absolute positioning">
+<PARAM NAME="Local" VALUE="images/longdesc/flow-absolute-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example illustrating floating 
+without...">
+<PARAM NAME="Local" VALUE="images/longdesc/flow-clear-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example illustrating floating
+with clear">
+<PARAM NAME="Local" VALUE="images/longdesc/flow-clear2-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example illustrating floating">
+<PARAM NAME="Local" VALUE="images/longdesc/flow-float-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for normal flow example">
+<PARAM NAME="Local" VALUE="images/longdesc/flow-generic-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for relative flow example">
+<PARAM NAME="Local" VALUE="images/longdesc/flow-relative-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description illustrating absolute positioning 
+with...">
+<PARAM NAME="Local" VALUE="images/longdesc/flow-static-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for frame layout example">
+<PARAM NAME="Local" VALUE="images/longdesc/frame-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for illustration of margin/border...">
+<PARAM NAME="Local" VALUE="images/longdesc/inline-layout-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for italic forms">
+<PARAM NAME="Local" VALUE="images/longdesc/italic-40-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for kerning">
+<PARAM NAME="Local" VALUE="images/longdesc/kern-22-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for example showing caption to the left of a...">
+<PARAM NAME="Local" VALUE="images/longdesc/left-caption-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for example showing inside vs. outside
+list...">
+<PARAM NAME="Local" VALUE="images/longdesc/list-inout-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for example with unclipped overflow">
+<PARAM NAME="Local" VALUE="images/longdesc/overflow1-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for example with clipped overflow">
+<PARAM NAME="Local" VALUE="images/longdesc/overflow2-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description illustrating relationship between page box...">
+<PARAM NAME="Local" VALUE="images/longdesc/page-info-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for screen shot of Windows 95 font description...">
+<PARAM NAME="Local" VALUE="images/longdesc/panose-16-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for the illustration of a pixel's definition">
+<PARAM NAME="Local" VALUE="images/longdesc/pixel1-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for the illustration of reference 
+vs...">
+<PARAM NAME="Local" VALUE="images/longdesc/pixel2-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for example showing how structurally 
+overla...">
+<PARAM NAME="Local" VALUE="images/longdesc/table-overlap-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example illustrating a table of
+travel...">
+<PARAM NAME="Local" VALUE="images/longdesc/table1-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example illustrating precedence 
+in the...">
+<PARAM NAME="Local" VALUE="images/longdesc/tbl-border-conflict-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example illustrating background calculation
+">
+<PARAM NAME="Local" VALUE="images/longdesc/tbl-empty-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example of cell background calculation">
+<PARAM NAME="Local" VALUE="images/longdesc/tbl-layers-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example illustrating rows separated
+by a...">
+<PARAM NAME="Local" VALUE="images/longdesc/tbl-rules-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example illustrating the separated
+ border...">
+<PARAM NAME="Local" VALUE="images/longdesc/tbl-spacing-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description of example illustrating the collapsing 
+borders...">
+<PARAM NAME="Local" VALUE="images/longdesc/tbl-width-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Long description for example showing caption above a table">
+<PARAM NAME="Local" VALUE="images/longdesc/top-caption-desc.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+</UL>
+<UL>
+<LI><OBJECT TYPE="text/sitemap">
+<PARAM NAME="Name" VALUE="Translations of the CSS 2 Recommendation">
+<PARAM NAME="Local" VALUE="translations.html">
+<PARAM NAME="ImageNumber" value="11">
+</OBJECT>
+</UL>
+</UL>
+</BODY></HTML>

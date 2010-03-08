@@ -1,0 +1,163 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>5.3.&nbsp;非交互编辑</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch05.html" title="第&nbsp;5&nbsp;章&nbsp;GNU SED流编辑器">
+      <link rel="prev" href="ch05s02.html" title="5.2.&nbsp;交互编辑">
+      <link rel="next" href="ch05s04.html" title="5.4.&nbsp;总结">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">5.3.&nbsp;非交互编辑</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch05s02.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;5&nbsp;章&nbsp;GNU SED流编辑器</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch05s04.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_05_03"></a>5.3.&nbsp;非交互编辑
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_05_03_01"></a>5.3.1.&nbsp;从文件读取sed命令
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>多个 <span><strong class="command">sed</strong></span> 命令可以一起放到一个文件中，用 <code class="option">-f</code> 选项来执行。当建立了一个这样的文件，请确保：
+            </p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>每行的末尾没有多余的空格。</p>
+                  </li>
+                  <li>
+                     <p>不能使用引用。</p>
+                  </li>
+                  <li>
+                     <p>当进入文本来添加和替换的时候，除了最后行已为的所有行都要以反斜扛结尾。</p>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_05_03_02"></a>5.3.2.&nbsp;写输出文件
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>当使用重定向符号 <span><strong class="command">&gt;</strong></span>的时候，写输出就完成了。这是一个例子脚本，用来从纯文本文件建立非常简单的HTML文件。
+            </p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">cat <code class="filename">script.sed</code></strong></span>
+1i\
+&lt;html&gt;\
+&lt;head&gt;&lt;title&gt;sed generated html&lt;/title&gt;&lt;/head&gt;\
+&lt;body bgcolor="#ffffff"&gt;\
+&lt;pre&gt;
+$a\
+&lt;/pre&gt;\
+&lt;/body&gt;\
+&lt;/html&gt;
+
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">cat <code class="filename">txt2html.sh</code></strong></span>
+#!/bin/bash
+
+# This is a simple script that you can use for converting text into HTML.
+# First we take out all newline characters, so that the appending only happens
+# once, then we replace the newlines.
+
+echo "converting $1..."
+
+SCRIPT="/home/sandy/scripts/script.sed"
+NAME="$1"
+TEMPFILE="/var/tmp/sed.$PID.tmp"
+sed "s/\n/^M/" $1 | sed -f $SCRIPT | sed "s/^M/\n/" &gt; $TEMPFILE
+mv $TEMPFILE $NAME
+
+echo "done."
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p><code class="varname">$1</code> 把第一个参数送到命令中，这个例子中它是要转换的文件的名字：
+            </p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">cat <code class="filename">test</code></strong></span>
+line1
+line2
+line3
+</pre><p>更多的位置参数请参见 <a href="ch07.html" title="第&nbsp;7&nbsp;章&nbsp;条件语句">第&nbsp;7&nbsp;章 <i>条件语句</i></a>。
+            </p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">txt2html.sh <code class="filename">test</code></strong></span>
+converting test...
+done.
+
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">cat <code class="filename">test</code></strong></span>
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;sed generated html&lt;/title&gt;&lt;/head&gt;
+&lt;body bgcolor="#ffffff"&gt;
+&lt;pre&gt;
+line1
+line2
+line3
+&lt;/pre&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p>这并不是真的是这么完成的；这个例子仅仅证明了 <span><strong class="command">sed</strong></span> 的实际能力。参见 <a href="ch06s03.html" title="6.3.&nbsp;Gawk变量">第&nbsp;6.3&nbsp;节 “Gawk变量”</a> 得到一个对这个问题来说更好的解决方法，使用 <span><strong class="command">awk</strong></span> <span class="emphasis"><em>BEGIN</em></span> 和 <span class="emphasis"><em>END</em></span> 结构。
+            </p>
+            <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <table border="0" summary="Note: 便捷的sed">
+                  <tr>
+                     <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                     <th align="left">便捷的sed</th>
+                  </tr>
+                  <tr>
+                     <td align="left" valign="top">
+                        <p>高级编辑器，支持语法的高亮来识别 <span><strong class="command">sed</strong></span> 语法。如果你忘记反斜杠之类的它将提供很大的帮助。
+                        </p>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch05s02.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch05.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch05s04.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">5.2.&nbsp;交互编辑&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;5.4.&nbsp;总结</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

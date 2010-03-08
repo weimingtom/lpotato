@@ -1,0 +1,303 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;12&nbsp;章&nbsp;捕捉信号</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch11s04.html" title="11.4.&nbsp;练习">
+      <link rel="next" href="ch12s02.html" title="12.2.&nbsp;陷阱">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;12&nbsp;章&nbsp;捕捉信号</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch11s04.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch12s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_12"></a>第&nbsp;12&nbsp;章&nbsp;捕捉信号
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch12.html#sect_12_01">12.1. 信号</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch12.html#sect_12_01_01">12.1.1. 介绍</a></span></dt>
+                     <dt><span class="sect2"><a href="ch12.html#sect_12_01_02">12.1.2. kill信号的使用</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch12s02.html">12.2. 陷阱</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch12s02.html#sect_12_02_01">12.2.1. 概要</a></span></dt>
+                     <dt><span class="sect2"><a href="ch12s02.html#sect_12_02_02">12.2.2. Bash怎样解释陷阱</a></span></dt>
+                     <dt><span class="sect2"><a href="ch12s02.html#sect_12_02_03">12.2.3. 更多例子</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch12s03.html">12.3. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch12s04.html">12.4. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>本章，我们讨论以下话题：</p>
+            <p>
+               
+            </p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>现有的信号</p>
+                  </li>
+                  <li>
+                     <p>信号的用法</p>
+                  </li>
+                  <li>
+                     <p> <span><strong class="command">trap</strong></span> 语句的用法
+                     </p>
+                  </li>
+                  <li>
+                     <p>怎么防止用户中断你的程序</p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+            </p>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_12_01"></a>12.1.&nbsp;信号
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_12_01_01"></a>12.1.1.&nbsp;介绍
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_12_01_01_01"></a>12.1.1.1.&nbsp;寻找信号的帮助页面
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>你的系统包含了一个列出所有现有信号帮助页面，但是依据你的操作系统，他可能需要用不同的方法打开。在多数linux系统上，将会是 <span><strong class="command">man <code class="option">7</code> signal</strong></span>。有任何疑问，使用下面命令来定位准备的帮助页面：
+                  </p>
+                  <div class="cmdsynopsis">
+                     <p><code class="command">man <code class="option">-k</code> signal | grep <code class="option">list</code></code> 
+                     </p>
+                  </div>
+                  <p>或者</p>
+                  <div class="cmdsynopsis">
+                     <p><code class="command">apropos signal | grep <code class="option">list</code></code> 
+                     </p>
+                  </div>
+                  <p>信号名可以用 <span><strong class="command">kill -l</strong></span>来查找。
+                  </p>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_12_01_01_02"></a>12.1.1.2.&nbsp;Bash shell的信号
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>当缺乏陷阱的时候，一个交互式bash脚本忽略 <span class="emphasis"><em>SIGTERM</em></span> 和 <span class="emphasis"><em>SIGQUIT</em></span>。 <span class="emphasis"><em>SIGINT</em></span> 被捕获并处理，在作业控制在激动状态下， <span class="emphasis"><em>SIGTTIN</em></span>, <span class="emphasis"><em>SIGTTOU</em></span> 和 <span class="emphasis"><em>SIGTSTP</em></span> 也是被忽略的。当以命令替代的结果运行的命令也忽略这些信号，当键盘合成的时候。
+                  </p>
+                  <p><span class="emphasis"><em>SIGHUP</em></span> 默认退出一个shell，一个交互shell将把 <span class="emphasis"><em>SIGHUP</em></span> 送到所有的作业，运行的或者停止的；如果你想禁用特定进程的默认行为的话，请用 <span><strong class="command">disown</strong></span> 命令察看文档。当接收到收到 <span class="emphasis"><em>SIGHUP</em></span> 信号时使用内置命令shopt，huponexit选项来杀死所有的作业。
+                  </p>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_12_01_01_03"></a>12.1.1.3.&nbsp;使用shell来传送信号
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>以下信号可以使用Bash shell来发送：</p>
+                  <div class="table"><a name="tab_12_01"></a><p class="title"><b>表&nbsp;12.1.&nbsp;在Bash中的控制信号</b></p>
+                     <table summary="在Bash中的控制信号" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                        <colgroup>
+                           <col width="50%">
+                           <col width="50%">
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">标准组合键</th>
+                              <th style="border-bottom: 0.5pt solid ; " align="left">意义</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><span><strong class="keycap">Ctrl</strong></span>+<span><strong class="keycap">C</strong></span></td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left">中断信号，向在前台运行的作业发送SIGINT。</td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><span><strong class="keycap">Ctrl</strong></span>+<span><strong class="keycap">Y</strong></span></td>
+                              <td style="border-bottom: 0.5pt solid ; " align="left">延迟悬挂特征，使一个试图从终端读取输入的运行中的进程停止。控制权返回到shell，用户可以从前台，后台或者杀死进程。延迟挂起只有在支持这种特性的操作系统才存在。</td>
+                           </tr>
+                           <tr>
+                              <td style="border-right: 0.5pt solid ; " align="left"><span><strong class="keycap">Ctrl</strong></span>+<span><strong class="keycap">Z</strong></span></td>
+                              <td style="" align="left"> <span class="emphasis"><em>suspend</em></span> 信号，向正在运行的程序发送 <span class="emphasis"><em>SIGTSTP</em></span>，因此停止程序并且把控制权返回给shell。
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                     <table border="0" summary="Note: 终端设置">
+                        <tr>
+                           <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                           <th align="left">终端设置</th>
+                        </tr>
+                        <tr>
+                           <td align="left" valign="top">
+                              <p>检查你的 <span><strong class="command">stty</strong></span> 设置，如果你使用 “<span class="quote">现代的</span>” 终端模拟，输出的挂起和继续通常是禁用的。标准的 <span><strong class="command">xterm</strong></span> 默认支持 <span><strong class="keycap">Ctrl</strong></span>+<span><strong class="keycap">S</strong></span> 和 <span><strong class="keycap">Ctrl</strong></span>+<span><strong class="keycap">Q</strong></span>。
+                              </p>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_12_01_02"></a>12.1.2.&nbsp;kill信号的使用
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>多数现代的shell，包括Bash，有一个内建的 <span><strong class="command">kill</strong></span> 函数。在Bash里，信号名和数字都可以被接受为选项，选项可以是作业名或者进程号。使用 <code class="option">-l</code>选项使得一个退出状态可以被报告：0是至少被成功发送的一个信号，有错误发生的话就是非零。
+               </p>
+               <p>从 <code class="filename">/usr/bin</code> 使用 <span><strong class="command">kill</strong></span> 命令，你的系统可能开启了额外选项，比如以不同于你的ID的用户或者执行进程的名字来杀死进程，同使用 <span><strong class="command">pgrep</strong></span> 和 <span><strong class="command">pkill</strong></span> 一样。
+               </p>
+               <p>Both <span><strong class="command">kill</strong></span> commands send the <span class="emphasis"><em>TERM</em></span> signal if none is given.
+               </p>
+               <p>下表所列是最常用的信号：</p>
+               <div class="table"><a name="tab_12_02"></a><p class="title"><b>表&nbsp;12.2.&nbsp;常用的kill信号</b></p>
+                  <table summary="常用的kill信号" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                     <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">信号名</th>
+                           <th style="border-bottom: 0.5pt solid ; " align="left">信号量</th>
+                           <th style="border-bottom: 0.5pt solid ; " align="left">效果</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">SIGHUP</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">1</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">挂起</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">SIGINT</td>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">2</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">从键盘中断</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">SIGKILL</td>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">9</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">杀死信号</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">SIGTERM</td>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">15</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">中止信号</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; " align="left">SIGSTOP</td>
+                           <td style="border-right: 0.5pt solid ; " align="left">17,19,23</td>
+                           <td style="" align="left">停止进程</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                  <table border="0" summary="Note: SIGKILL 和 SIGSTOP">
+                     <tr>
+                        <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                        <th align="left">SIGKILL 和 SIGSTOP</th>
+                     </tr>
+                     <tr>
+                        <td align="left" valign="top">
+                           <p><span class="emphasis"><em>SIGKILL</em></span> 和 <span class="emphasis"><em>SIGSTOP</em></span> 可以被捕获，阻止和忽略。
+                           </p>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+               <p>当杀死一个或者一系列进程，通常先尝试最小危险的信号 <span class="emphasis"><em>SIGTERM</em></span>。那样，关心按次序关机的程序得到设计来执行当收到类似清理关闭打开文件的 <span class="emphasis"><em>SIGTERM</em></span> 信号。如果你向一个进程发送一个 <span class="emphasis"><em>SIGKILL</em></span> 信号，你就把进程在关闭前进行清理工作的机会给剥夺了，可能造成意想不到的后果。
+               </p>
+               <p>但是如果一个清理终止没有起作用，那么 <span class="emphasis"><em>INT</em></span> 或者 <span class="emphasis"><em>KILL</em></span> 信号可能是唯一的选择。比如，当一个进程不是使用 <span><strong class="keycap">Ctrl</strong></span>+<span><strong class="keycap">C</strong></span>中止的话，最好使用kill -9加上进程号。
+               </p><pre class="screen">
+<code class="prompt">maud: ~&gt;</code> <span><strong class="command">ps <code class="option">-ef</code> | grep <em class="parameter"><code>stuck_process</code></em></strong></span>
+maud    5607   2214  0 20:05 pts/5    00:00:02 stuck_process
+
+<code class="prompt">maud: ~&gt;</code> <span><strong class="command">kill <code class="option">-9</code> <em class="parameter"><code>5607</code></em></strong></span>
+
+<code class="prompt">maud: ~&gt;</code> <span><strong class="command">ps <code class="option">-ef</code> | grep <em class="parameter"><code>stuck_process</code></em></strong></span>
+maud    5614    2214 0 20:15 pts/5    00:00:00 grep stuck_process
+[1]+ Killed		stuck_process
+</pre><p>当一个进程启动了几个实例， <span><strong class="command">killall</strong></span> 可能更方便。它使用和kill同样的选项，只不过对进程的所有实例起作用。在正式环境使用之前测试这个命令，即便它可能不能像期望的那样在某些商业用途。
+               </p>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch11s04.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch12s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">11.4.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;12.2.&nbsp;陷阱</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

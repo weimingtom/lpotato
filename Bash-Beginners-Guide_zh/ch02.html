@@ -1,0 +1,275 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;2&nbsp;章&nbsp;编写和调试脚本</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch01s07.html" title="1.7.&nbsp;练习">
+      <link rel="next" href="ch02s02.html" title="2.2.&nbsp;脚本基础">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;2&nbsp;章&nbsp;编写和调试脚本</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch01s07.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch02s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_02"></a>第&nbsp;2&nbsp;章&nbsp;编写和调试脚本
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch02.html#sect_02_01">2.1. 建立并且运行一个脚本</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch02.html#sect_02_01_01">2.1.1. 编写与命名</a></span></dt>
+                     <dt><span class="sect2"><a href="ch02.html#sect_02_01_02">2.1.2. script1.sh</a></span></dt>
+                     <dt><span class="sect2"><a href="ch02.html#sect_02_01_03">2.1.3. 执行脚本</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch02s02.html">2.2. 脚本基础</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch02s02.html#sect_02_02_01">2.2.1. 哪个Shell来执行脚本？</a></span></dt>
+                     <dt><span class="sect2"><a href="ch02s02.html#sect_02_02_02">2.2.2. 加入注释</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch02s03.html">2.3. 调试Bash脚本</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch02s03.html#sect_02_03_01">2.3.1. 调试整个脚本</a></span></dt>
+                     <dt><span class="sect2"><a href="ch02s03.html#sect_02_03_02">2.3.2. 调试部分脚本</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch02s04.html">2.4. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch02s05.html">2.5. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>经过学习本章节，你将能够：</p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>写简单的脚本</p>
+                  </li>
+                  <li>
+                     <p>定义shell类型来运行脚本</p>
+                  </li>
+                  <li>
+                     <p>在脚本中加入注释</p>
+                  </li>
+                  <li>
+                     <p>改变脚本的权限</p>
+                  </li>
+                  <li>
+                     <p>执行并且调试脚本</p>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_02_01"></a>2.1.&nbsp;建立并且运行一个脚本
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_02_01_01"></a>2.1.1.&nbsp;编写与命名
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>一个shell脚本是你重复使用的命令序列。这个序列通常是通过在命令行输入整个脚本的命令来执行的。或者，你可以使用cron工具来使脚本自动执行任务。脚本的另外一个用法是在UNIX的启动和关闭过程中定义在init脚本中的守护程序和服务的操作。</p>
+               <p>要建立一个shell脚本，在你的编辑器中打开一个新的空白文件。任何文本编辑器就可以：<span><strong class="command">vim</strong></span>，<span><strong class="command">emacs</strong></span>，<span><strong class="command">gedit</strong></span>，<span><strong class="command">dtpad</strong></span>都可以。可能你会选择一个高级的编辑器比如<span><strong class="command">vim</strong></span> 或者 <span><strong class="command">emacs</strong></span>，因为它们可以设置来高亮语法来帮助初学者避免很多经常犯的错误，比如忘记括号和冒号。
+               </p>
+               <p>把UNIX命令放在一个新的空白文件里，就象在命令行输入命令。就像先前的讨论（参阅<a href="ch01s03.html" title="1.3.&nbsp;执行命令">第&nbsp;1.3&nbsp;节 “执行命令”</a>），命令可以作为shell函数，shell组成部分，UNIX命令和其他脚本。
+               </p>
+               <p>为你的脚本起一个合理的名字来提醒自己脚本的作用。确定你的脚本的名字和已经存在的命令是没有冲突的。为了保证不会引起混乱，脚本名字经常以<code class="filename">.sh</code>结尾；尽管如此，还是有可能你选择的脚本名字已经和系统中原来的是相同的。使用<span><strong class="command">which</strong></span>，<span><strong class="command">whereis</strong></span>和一些其他命令来查找程序的文件的信息：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">which <code class="option">-a</code> <code class="filename">script_name</code></code> 
+                  </p>
+               </div>
+               <div class="cmdsynopsis">
+                  <p><code class="command">whereis <code class="filename">script_name</code></code> 
+                  </p>
+               </div>
+               <div class="cmdsynopsis">
+                  <p><code class="command">locate <code class="filename">script_name</code></code> 
+                  </p>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_02_01_02"></a>2.1.2.&nbsp;script1.sh
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>在本例子中我们使用bash内建命令 <span><strong class="command">echo</strong></span> 在此任务运行建立输出之前来通知用户将发生什么。强烈建议告知用户脚本的用途，<span class="emphasis"><em>因为本脚本什么事都不干</em></span>防止用户变得过于紧张。我们会在<a href="ch08.html" title="第&nbsp;8&nbsp;章&nbsp;编写交互脚本">第&nbsp;8&nbsp;章 <i>编写交互脚本</i></a>第八章继续如何通知用户。
+               </p>
+               <div class="figure"><a name="d0e2180"></a><p class="title"><b>图&nbsp;2.1.&nbsp;script1.sh</b></p>
+                  <div class="mediaobject"><img src="images/script1.sh.png" alt="Example script using statements like &#34;echo hello&#34;, &#34;echo hello $USER&#34; and &#34;VARIABLE=value&#34;."></div>
+               </div>
+               <p>正好自己写一下脚本。建立一个目录 <code class="filename">~/scripts</code> 来存放你的脚本将会是个好主意。把此目录添加到 <code class="varname">PATH</code> 变量中：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">export <code class="varname">PATH</code>="<code class="varname">$PATH</code>:<code class="filename">~/scripts</code>"</code> 
+                  </p>
+               </div>
+               <p>如果你才开始使用Bash，最好使用一个给不同结构以不同颜色的文本编辑器。<span><strong class="command">vim</strong></span>，<span><strong class="command">gvim</strong></span>，<span><strong class="command">(x)emacs</strong></span>，<span><strong class="command">kwrite</strong></span>和许多其他支持语法高亮的编辑器；详细请察看编辑器的文档。
+               </p>
+               <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                  <table border="0" summary="Note: 不同的提示符">
+                     <tr>
+                        <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                        <th align="left">不同的提示符</th>
+                     </tr>
+                     <tr>
+                        <td align="left" valign="top">
+                           <p>本教程的提示符的改变都依赖作者的心情。相对于标准的<span class="emphasis"><em>$</em></span>提示符他更接近之际情况。唯一的约定就是，<span class="emphasis"><em>root</em></span>提示符以#结尾。
+                           </p>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_02_01_03"></a>2.1.3.&nbsp;执行脚本
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>为了能使当前用户运行脚本，它应该有可执行权限。在设置权限时，检查你是否得到你想要得权限。完成后脚本就可以象其他命令一样运行：
+                  
+               </p><pre class="screen">
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">chmod <code class="option">u+x</code> <code class="filename">script1.sh</code></strong></span>
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">ls <code class="option">-l</code> <code class="filename">script1.sh</code></strong></span>
+-rwxrw-r--    1 willy	willy		456 Dec 24 17:11 script1.sh
+
+<code class="prompt">willy:~&gt;</code> <span><strong class="command">script1.sh</strong></span>
+The script starts now.
+Hi, willy!
+
+I will now fetch you a list of connected users:
+
+  3:38pm  up 18 days,  5:37,  4 users,  load average: 0.12, 0.22, 0.15
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU  WHAT
+root     tty2     -                Sat 2pm  4:25m  0.24s  0.05s  -bash
+willy	 :0       -                Sat 2pm   ?     0.00s   ?     -
+willy    pts/3    -                Sat 2pm  3:33m 36.39s 36.39s  BitchX willy ir
+willy    pts/2    -                Sat 2pm  3:33m  0.13s  0.06s  /usr/bin/screen
+
+I'm setting two variables now.
+This is a string: black
+And this is a number: 9
+
+I'm giving you back your prompt now.
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">echo <code class="varname">$COLOUR</code></strong></span>
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">echo <code class="varname">$VALUE</code></strong></span>
+
+<code class="prompt">willy:~/scripts&gt;</code>
+</pre><p>这是执行脚本最普通的方法。在子shell中一般都是这么执行脚本。建立在子shell中的变量，函数和别名等只有子shell使用。当那个shell退出，父shell重新得到控制的时候，所有的东西都被清空，脚本对shell状态所作的改变耶全部清除。</p>
+               <p>如果你没有把 <code class="filename">scripts</code>的目录放到<code class="varname">PATH</code>里面，当前目录也不在<code class="varname">PATH</code>变量中，那么你可以这样来执行脚本：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">./script_name.sh</code> 
+                  </p>
+               </div>
+               <p>脚本也可以被明确地指定shell执行，不过通常我们只有在想得到特殊的行为时候才这样做，比如脚本是否能在另外一个shell里面工作或者打印调试的信息：</p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">rbash <code class="filename">script_name.sh</code></code> 
+                  </p>
+               </div>
+               <div class="cmdsynopsis">
+                  <p><code class="command">sh <code class="filename">script_name.sh</code></code> 
+                  </p>
+               </div>
+               <div class="cmdsynopsis">
+                  <p><code class="command">bash <code class="option">-x</code> <code class="filename">script_name.sh</code></code> 
+                  </p>
+               </div>
+               <p>特定的shell会成为当前shell子shell来运行脚本。当你想以特殊的选项或者以脚本没有指定的特殊条件来启动脚本时候可以这么做。</p>
+               <p>如果你想在当前脚本执行脚本而不想启动一个新的shell，你可以使用<span class="emphasis"><em>source</em></span>：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">source <code class="filename">script_name.sh</code></code> 
+                  </p>
+               </div>
+               <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+                  <table border="0" summary="Tip: source = .">
+                     <tr>
+                        <td rowspan="2" align="center" valign="top" width="25"><img alt="[提示]" src="images/tip.png"></td>
+                        <th align="left">source = .</th>
+                     </tr>
+                     <tr>
+                        <td align="left" valign="top">
+                           <p> Bash内建命令 <span><strong class="command">source</strong></span> 是和Bourne shell的 <span><strong class="command">.</strong></span> (dot) 命令具有相同含义
+                           </p>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+               <p>这里脚本不需要可执行权限。命令在当前shell力执行，所以任何对环境的改变，将在脚本结束时同样起作用：</p><pre class="screen">
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">source <code class="filename">script1.sh</code></strong></span>
+--output ommitted--
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">echo <code class="varname">$VALUE</code></strong></span>
+9
+
+<code class="prompt">willy:~/scripts&gt;</code>
+</pre></div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch01s07.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch02s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">1.7.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;2.2.&nbsp;脚本基础</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

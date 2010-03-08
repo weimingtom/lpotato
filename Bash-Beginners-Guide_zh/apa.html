@@ -1,0 +1,251 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>附录&nbsp;A.&nbsp;Shell特性</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch12s04.html" title="12.4.&nbsp;练习">
+      <link rel="next" href="apas02.html" title="A.2.&nbsp;不同的特性">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">附录&nbsp;A.&nbsp;Shell特性</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch12s04.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="apas02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="appendix" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="app3"></a>附录&nbsp;A.&nbsp;Shell特性
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <dl>
+               <dt><span class="sect1"><a href="apa.html#d0e13779">A.1. 普通特性</a></span></dt>
+               <dt><span class="sect1"><a href="apas02.html">A.2. 不同的特性</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>本文档对普通的shell特性（普通shell特性）和不同shell特性（shell特殊特性）做一个整体的描述。</p>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="d0e13779"></a>A.1.&nbsp;普通特性
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               以下特性在每个shell都是标准的。注意stop, suspend, jobs, bg和fg只有在支持作业控制的系统中存在。
+            </p>
+            <div class="table"><a name="d0e13784"></a><p class="title"><b>表&nbsp;A.1.&nbsp;常用shell特性</b></p>
+               <table summary="常用shell特性" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                  <colgroup>
+                     <col width="50%">
+                     <col width="50%">
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">命令</th>
+                        <th style="border-bottom: 0.5pt solid ; " align="left">含义</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">&gt;</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">重定向输出</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">&gt;&gt;</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">追加到文件</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">&lt;</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">重定向输入</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">&lt;&lt;</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">"Here"文档 (重定向输入)</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">|</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">管道输出</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">&amp;</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">在后台运行进程</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">;</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">同一行的分隔符</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">*</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">文件名统配符(多个字符)</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">?</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">文件名统配符(单个字符)</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">[ ]</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">匹配任何包含的字符</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">( )</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">在子shell运行</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">` `</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">代替包含命令的输出</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">" "</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">部分引用(允许变量和命令表达式)Partial quote (allows variable and command expansion)</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">' '</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">全引用 (没有扩展)Full quote (no expansion)</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">引用跟随字符Quote following character</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">$var</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">对变量取值</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">$$</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">进程号</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">$0</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">命令名</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">$n</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">第n个参数 (n从0到9)</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">$*</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">所有参数作为一个词</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="literal">#</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">注释的开始</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">bg</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">后台执行</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">break</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">从循环语句跳出</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">cd</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">更改目录</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">continue</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">继续程序循环</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">echo</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">显示输出</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">eval</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">评估参数(读取变量用于组合新命令)</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">exec</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">执行一个新的shell</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">fg</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">前台执行</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">jobs</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">现实活动作业</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">kill</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">中止运行的作业</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">newgrp</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">更换到一个新组</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">shift</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">Shift positional parameters</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">stop</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">挂起一个后台作业</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">suspend</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">挂起一个前台作业</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">time</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">对命令计时</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">umask</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">设置或列出文件权限</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">unset</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">擦除变量或者函数定义</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; " align="left">wait</td>
+                        <td style="" align="left">等待一个后台程序完成</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch12s04.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="apas02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">12.4.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;A.2.&nbsp;不同的特性</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,29 @@
+#banner {
+	background: url(images/bg/banner_bg.jpg) repeat-x left top;
+	margin-top: 10px;
+	border-bottom: 1px solid #73AFB7;
+	padding-left: 15px;
+}
+#banner p {
+	margin: 0px;
+	background: url(images/bg/banner_flower.jpg) no-repeat right top;
+	height: 85px;
+}
+#mainNav {
+	float: left;
+	width: 175px;
+	margin-top: 20px;
+}
+body {
+	margin: 0px;
+}
+#content {
+	margin-left: 200px;
+	padding-left: 10px;
+	border-left: 1px solid #D6ECAE;
+}
+#footer {
+	clear: both;
+	padding-top: 10px;
+	border-top: 1px solid #294E56;
+}

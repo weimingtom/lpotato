@@ -1,0 +1,122 @@
+<!--
+  This is a build file for Ant 1.5 that builds all Java code used
+  in the examples.
+  To download and learn how to use Ant, see http://ant.apache.org/
+-->
+<project name="JSPBook" default="dist" basedir=".">
+
+  <!-- Set global properties for this build -->
+  <property name="build" value="build" />
+  <property name="javadoc" value="javadoc" />
+  <property name="dist"  value="dist" />
+  <property name="src" value="src" />
+  <property name="tld" value="tld" />
+
+  <property name="libname" value="orataglib_3_0" />
+  <property name="othername" value="oraclasses_3_0" />
+
+<!-- 
+  Adjust the properties below to match the location of these JAR
+  files on your computer. All of these JAR files are needed to
+  compile the example tag library and the servlet example.
+  servlet-api.jar: Bundled with any compliant web container
+  jsp-api.jar: Bundled with any compliant web container
+  jdbc_optional_package.jar: http://java.sun.com/products/jdbc/, 
+                             a copy bundled in ora/WEB-INF/lib
+  jstl.jar: Bundled with the JSTL RI, a copy bundled in ora/WEB-INF/lib
+  jaxp.jar: Bundled with the JSTL RI, a copy bundled in ora/WEB-INF/lib
+  sax.jar: Bundled with the JSTL RI, a copy bundled in ora/WEB-INF/lib
+  jdom.jar: http://jdom.org/, a copy bundled in ora/WEB-INF/lib
+  struts.jar: http://jakarta.apache.org/struts, a copy bundled in 
+              ora/WEB-INF/lib
+-->
+  <property name="servlet-api.jar" 
+    value="/home/hans/bin/jakarta-tomcat-5.0.16/common/lib/servlet-api.jar" />
+  <property name="jsp-api.jar" 
+    value="/home/hans/bin/jakarta-tomcat-5.0.16/common/lib/jsp-api.jar" />
+  <property name="jdbc_otional_package.jar" 
+    value="/home/hans/lib/jdbc20_stdext_classes.jar" />
+  <property name="jstl.jar" value="/home/hans/lib/jstl.jar" />
+  <property name="standard.jar" value="/home/hans/lib/standard.jar" />
+  <property name="jaxp.jar" value="/home/hans/lib/jaxp-api.jar" />
+  <property name="sax.jar" value="/home/hans/lib/sax.jar" />
+  <property name="jdom.jar" value="/home/hans/lib/jdom.jar" />
+  <property name="struts.jar" value="/home/hans/lib/struts.jar" />
+
+  <path id="dependencies">
+    <pathelement location="${servlet-api.jar}" />
+    <pathelement location="${jsp-api.jar}" />
+    <pathelement location="${jdbc_otional_package.jar}" />
+    <pathelement location="${jstl.jar}" />
+    <pathelement location="${standard.jar}" />
+    <pathelement location="${jdom.jar}" />
+    <pathelement location="${jaxp.jar}" />
+    <pathelement location="${sax.jar}" />
+    <pathelement location="${struts.jar}" />
+  </path>
+
+  <target name="compile">
+    <mkdir dir="${build}/lib" />
+    <mkdir dir="${build}/classes" />
+
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${build}/lib" includes="com/**"
+      excludes="com/ora/jsp/servlets/ResourceManagerListener2.java">
+      <classpath refid="dependencies" />
+    </javac>
+    <javac srcdir="${src}" destdir="${build}/classes" excludes="com/**">
+      <classpath refid="dependencies" />
+    </javac>
+    <!-- Remove the com subdirectory in ${build}/classes, created
+         by Ant to hold classes the top level depends on -->
+    <delete dir="${build}/classes/com" />
+  </target>
+
+  <target name="javadoc" depends="compile">
+    <mkdir dir="${javadoc}" />
+
+    <javadoc packagenames="com.ora.jsp.*" sourcepath="${src}"
+      destdir="${javadoc}" private="true" >
+      <classpath refid="dependencies" />
+    </javadoc>
+  </target>
+
+  <target name="dist" depends="javadoc">
+    <!-- Create tag library JAR file -->
+    <copy todir="${build}/taglib" >
+      <fileset dir="${build}/lib">
+        <exclude name="com/ora/jsp/servlets/**" />
+        <exclude name="com/ora/jsp/sql/**" />
+      </fileset>
+    </copy>
+    <copy todir="${build}/taglib/META-INF">
+      <fileset dir="${tld}" />
+    </copy>
+    <mkdir dir="${dist}/lib" />
+    <jar jarfile="${dist}/lib/${libname}.jar" basedir="${build}/taglib" />
+    <delete dir="${build}/taglib" />
+
+    <!-- Create JAR file with all other packaged classes -->
+    <copy todir="${build}/otherlib">
+      <fileset dir="${build}/lib">
+        <include name="com/ora/jsp/servlets/**" />
+        <include name="com/ora/jsp/sql/**" />
+      </fileset>
+    </copy>
+    <jar jarfile="${dist}/lib/${othername}.jar" 
+      basedir="${build}/otherlib" />
+    <delete dir="${webapp}/otherlib" />
+
+    <!-- Create WEB-INF/classes with support classes -->
+    <copy todir="${dist}/classes">
+      <fileset dir="${build}/classes" />
+    </copy>
+  </target>
+
+  <target name="clean">
+    <!-- Delete the build directory trees -->
+    <delete dir="${build}" />
+    <delete dir="${javadoc}" />
+    <delete dir="${dist}" />
+  </target>
+</project>

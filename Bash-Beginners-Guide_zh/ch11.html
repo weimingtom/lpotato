@@ -1,0 +1,254 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;11&nbsp;章&nbsp;函数</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch10s05.html" title="10.5.&nbsp;练习">
+      <link rel="next" href="ch11s02.html" title="11.2.&nbsp;函数在脚本中的例子">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;11&nbsp;章&nbsp;函数</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch10s05.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch11s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_11"></a>第&nbsp;11&nbsp;章&nbsp;函数
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch11.html#sect_11_01">11.1. 介绍</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch11.html#sect_11_01_01">11.1.1. 什么是函数？</a></span></dt>
+                     <dt><span class="sect2"><a href="ch11.html#sect_11_01_02">11.1.2. 函数语法</a></span></dt>
+                     <dt><span class="sect2"><a href="ch11.html#sect_11_01_03">11.1.3. 函数中的位置参数</a></span></dt>
+                     <dt><span class="sect2"><a href="ch11.html#sect_11_01_04">11.1.4. 显示函数</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch11s02.html">11.2. 函数在脚本中的例子</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch11s02.html#sect_11_02_01">11.2.1. 循环利用</a></span></dt>
+                     <dt><span class="sect2"><a href="ch11s02.html#sect_11_02_02">11.2.2. 设置路径</a></span></dt>
+                     <dt><span class="sect2"><a href="ch11s02.html#sect_11_02_03">11.2.3. 远程备份</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch11s03.html">11.3. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch11s04.html">11.4. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>本章，我们将讨论</p>
+            <p>
+               
+               
+            </p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>什么是函数</p>
+                  </li>
+                  <li>
+                     <p>从命令行建立并显示函数</p>
+                  </li>
+                  <li>
+                     <p>脚本中的函数</p>
+                  </li>
+                  <li>
+                     <p>向函数传递参数</p>
+                  </li>
+                  <li>
+                     <p>使用函数的时机</p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+            </p>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_11_01"></a>11.1.&nbsp;介绍
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_11_01_01"></a>11.1.1.&nbsp;什么是函数？
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>shell函数是一种为后续操作组织命令的方法,使用单个名字来命名这些命令组或者 <span class="emphasis"><em>routine</em></span>。在shell或者是脚本当中，这个过程的名字必须是唯一的。所有用来组织函数的命令就像普通命令一样执行。当以一个简单的命令名来调用函数的时候，和该函数相关的命令就被执行。函数在必须声明，然后在shell里执行：没有新的进程会被创建来打断这个命令。
+               </p>
+               <p>特殊的内建命令在命令查找中先于shell函数。特殊的内建命令：<span><strong class="command">break</strong></span>, <span><strong class="command">:</strong></span>, <span><strong class="command">.</strong></span>, <span><strong class="command">continue</strong></span>, <span><strong class="command">eval</strong></span>, <span><strong class="command">exec</strong></span>, <span><strong class="command">exit</strong></span>, <span><strong class="command">export</strong></span>, <span><strong class="command">readonly</strong></span>, <span><strong class="command">return</strong></span>, <span><strong class="command">set</strong></span>, <span><strong class="command">shift</strong></span>, <span><strong class="command">trap</strong></span> 和 <span><strong class="command">unset</strong></span>.
+               </p>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_11_01_02"></a>11.1.2.&nbsp;函数语法
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>函数使用以下2种形式。</p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">function FUNCTION { COMMANDS; }</code> 
+                  </p>
+               </div>
+               <p>或者</p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">FUNCTION () { COMMANDS; }</code> 
+                  </p>
+               </div>
+               <p>两者都定义了一个shell函数 <span><strong class="command">FUNCTION</strong></span> 。内建的 <span><strong class="command">function</strong></span> 命令是可选的；然而，如果不使用，必须在函数名后加上小括号。
+               </p>
+               <p>The commands listed between curly braces make up the body of the function.  These commands are executed whenever <span><strong class="command">FUNCTION</strong></span> is specified as the name of a command.  The exit status is the exit status of the last command executed in the body.
+               </p>
+               <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                  <table border="0" summary="Note: 通常的错误">
+                     <tr>
+                        <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                        <th align="left">通常的错误</th>
+                     </tr>
+                     <tr>
+                        <td align="left" valign="top">
+                           <p>The curly braces must be separated from the body by spaces, otherwise they are interpreted in the wrong way.</p>
+                           <p>函数体必须以分号或者新行结尾。</p>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_11_01_03"></a>11.1.3.&nbsp;函数中的位置参数
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>函数就像是迷你脚本：他们可以接受参数，他们可以使用只有在函数中有效的变量（使用本地内建 <span><strong class="command">local</strong></span> ）并且他们可以向调用者返回参数。
+               </p>
+               <p>一个函数也有解释位置参数的机制，然而传递给函数的参数和传递给命令或者脚本的参数是不一样的。</p>
+               <p>当函数开始执行，在执行期间函数的参数变成位置参数。扩展为位置参数的数量的特别参数 <code class="varname">#</code> 更新来反映这个变化。位置参数 <code class="varname">0</code> 未改变。Bash变量 <code class="varname">FUNCNAME</code> 在函数执行时被设置为函数的名字。
+               </p>
+               <p>如果内建的 <span><strong class="command">return</strong></span> 在函数中执行时，在调用完成后函数完成并且执行下一条命令。当函数完成后，位置参数的值和特别参数 <code class="varname">#</code> 被重置到函数执行前的值。如果一个数字参数被赋予 <span><strong class="command">return</strong></span> ，那个状态就返回了。一个简单的例子：
+               </p><pre class="screen">
+<code class="prompt">[lydia@cointreau ~/test]</code> <span><strong class="command">cat <code class="filename">showparams.sh</code></strong></span>
+#!/bin/bash
+                                                                                
+echo "This script demonstrates function arguments."
+echo
+                                                                                
+echo "Positional parameter 1 for the script is $1."
+echo
+                                                                                
+test ()
+{
+echo "Positional parameter 1 in the function is $1."
+RETURN_VALUE=$?
+echo "The exit code of this function is $RETURN_VALUE."
+}
+                                                                                
+test other_param
+
+<code class="prompt">[lydia@cointreau ~/test]</code> <span><strong class="command">./showparams.sh <em class="parameter"><code>parameter1</code></em></strong></span>
+This script demonstrates function arguments.
+ 
+Positional parameter 1 for the script is parameter1.
+ 
+Positional parameter 1 in the function is other_param.
+The exit code of this function is 0.
+
+<code class="prompt">[lydia@cointreau ~/test]</code>
+</pre><p>注意函数的返回值或者退出代码通常储存在一个变量中，因此在以后也可以探测到。你系统的初始脚本使用一种在条件测试中探测 <code class="varname">RETVAL</code> 值的技巧，像这样：
+               </p><pre class="screen">
+<span><strong class="command">if <em class="parameter"><code>[ $RETVAL -eq 0 ]</code></em>; then
+	&lt;start the daemon&gt;</strong></span>
+</pre><p>或者像来自 <code class="filename">/etc/init.d/amd</code> 使用Bash优化特性使用的例子：
+               </p><pre class="screen">
+<span><strong class="command"><em class="parameter"><code>[ $RETVAL = 0 ]</code></em> &amp;&amp; touch <code class="filename">/var/lock/subsys/amd</code></strong></span>
+</pre><p>在 <span><strong class="command">&amp;&amp;</strong></span> 后的命令只有在测试是真的时候才执行；这是一个简单的代替 <span><strong class="command">if/then/fi</strong></span> 结构的方法。
+               </p>
+               <p>函数的返回值通常被用作整个脚本的退出代码，你将会看到很多初始脚本用 <span><strong class="command">exit <code class="varname">$RETVAL</code></strong></span> 来结束。
+               </p>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_11_01_04"></a>11.1.4.&nbsp;显示函数
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>所有被当前shell所识别的函数可以用 <span><strong class="command">set</strong></span> 显示出来。函数在他们被使用后保留，除非使用后进行 <span><strong class="command">unset</strong></span> 。<span><strong class="command">which</strong></span> 命令也可以显示函数：
+               </p><pre class="screen">
+<code class="prompt">[lydia@cointreau ~]</code> <span><strong class="command">which <code class="filename">zless</code></strong></span>
+zless is a function
+zless ()
+{
+    zcat "$@" | "$PAGER"
+}
+
+<code class="prompt">[lydia@cointreau ~]</code> <span><strong class="command">echo <code class="varname">$PAGER</code></strong></span>
+less
+</pre><p>这是一种典型的配置在用户shell资源配置文件里的函数。函数比起使用别名和提供一个简单且方便的方法来配合用户的环境更灵活。</p>
+               <p>以下是为了方便DOS用户：</p><pre class="screen">
+dir ()
+{
+    ls -F --color=auto -lF --color=always "$@" | less -r
+}
+</pre></div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch10s05.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch11s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">10.5.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;11.2.&nbsp;函数在脚本中的例子</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

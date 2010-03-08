@@ -1,0 +1,37 @@
+<html 
+  xmlns="http://www.w3c.org/1999/xhtml" 
+  xmlns:jsp="http://java.sun.com/JSP/Page" 
+  xml:lang="en" lang="en">
+
+  <jsp:output doctype-root-element="html"
+    doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+    doctype-system="http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
+
+  <jsp:directive.page contentType="text/html" /> 
+ 
+  <head>
+    <title>A JSP Document</title>
+  </head>
+  <body bgcolor="white">
+    <h1>All Request Parameters</h1>
+
+    <ul> 
+      <c:forEach xmlns:c="http://java.sun.com/jsp/jstl/core"
+        items="${paramValues}" var="current"> 
+        <li> 
+          ${current.key}:
+          <c:forEach items="${current.value}" var="parValue">
+            <br/>${parValue} 
+          </c:forEach>
+        </li> 
+      </c:forEach> 
+    </ul> 
+
+    <jsp:element name="${param.element}">
+      <jsp:attribute name="style">${param.style}</jsp:attribute>
+      <jsp:body>${param.body}</jsp:body>
+    </jsp:element>
+
+  </body>
+</html>
+

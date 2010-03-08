@@ -1,0 +1,233 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>4.2.&nbsp;使用grep的例子</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch04.html" title="第&nbsp;4&nbsp;章&nbsp;正则表达式">
+      <link rel="prev" href="ch04.html" title="第&nbsp;4&nbsp;章&nbsp;正则表达式">
+      <link rel="next" href="ch04s03.html" title="4.3.&nbsp;Pattern匹配使用Bash特性">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">4.2.&nbsp;使用grep的例子</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch04.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;4&nbsp;章&nbsp;正则表达式</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch04s03.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_04_02"></a>4.2.&nbsp;使用grep的例子
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_04_02_01"></a>4.2.1.&nbsp;什么是grep？
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p><span><strong class="command">grep</strong></span> 以行为单位搜索那些包含给出模板列表的输入文件。当在一行中找到匹配，默认把该行拷贝到标准输出（默认），或者其他你以选项要求的任何种类的输出。 searches the input files for lines containing a match
+               to a given pattern list.  When it finds a match in a line, it copies the line to standard output (by default), or whatever
+               other sort of output you have requested with options.
+            </p>
+            <p>尽管 <span><strong class="command">grep</strong></span> 希望在基于文本进行匹配，除了现有的内存它对于输入行的长度没有限制，而且它可以匹配某行的任意字符。如果输入文件的最后一个字节不是一个 <span class="emphasis"><em>换行</em></span>，<span><strong class="command">grep</strong></span> 就悄悄增加一个。既然换行也是一个模板列表的分隔符，那么就没有办法在一个文本中匹配一个换行字符。
+            </p>
+            <p>一些例子：</p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <em class="parameter"><code>root</code></em> <code class="filename">/etc/passwd</code></strong></span>
+root:x:0:0:root:/root:/bin/bash
+operator:x:11:0:operator:/root:/sbin/nologin
+
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <code class="option">-n</code> <em class="parameter"><code>root</code></em> <code class="filename">/etc/passwd</code></strong></span>
+1:root:x:0:0:root:/root:/bin/bash
+12:operator:x:11:0:operator:/root:/sbin/nologin
+
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <code class="option">-v</code> <em class="parameter"><code>bash</code></em> <code class="filename">/etc/passwd </code></strong></span>| <span><strong class="command">grep <code class="option">-v</code> <em class="parameter"><code>nologin</code></em></strong></span>
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+news:x:9:13:news:/var/spool/news:
+mailnull:x:47:47::/var/spool/mqueue:/dev/null
+xfs:x:43:43:X Font Server:/etc/X11/fs:/bin/false
+rpc:x:32:32:Portmapper RPC user:/:/bin/false
+nscd:x:28:28:NSCD Daemon:/:/bin/false
+named:x:25:25:Named:/var/named:/bin/false
+squid:x:23:23::/var/spool/squid:/dev/null
+ldap:x:55:55:LDAP User:/var/lib/ldap:/bin/false
+apache:x:48:48:Apache:/var/www:/bin/false
+
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <code class="option">-c</code> <em class="parameter"><code>false</code></em> <code class="filename">/etc/passwd</code></strong></span>
+7
+
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <code class="option">-i</code> <em class="parameter"><code>ps</code></em> <code class="filename">~/.bash*</code></strong></span> | <span><strong class="command">grep <code class="option">-v</code> <em class="parameter"><code>history</code></em></strong></span>
+/home/cathy/.bashrc:PS1="\[\033[1;44m\]$USER is in \w\[\033[0m\] "
+
+</pre><p>第一个例子，用户 <span class="emphasis"><em>cathy</em></span> 把 <code class="filename">/etc/passwd</code> 里面包含 <span class="emphasis"><em>root</em></span>字符串的行显示出来。
+            </p>
+            <p>然后她显示了包含着个搜索字符串的行的号码。</p>
+            <p>用第三个命令她检查了哪个用户没有使用 <span><strong class="command">bash</strong></span>，但是使用 <span><strong class="command">nologin</strong></span> shell的账号不会显示。
+            </p>
+            <p>然后她统计了把 <code class="filename">/bin/false</code> 作为shell的账户的数量。
+            </p>
+            <p>最后的命令显示了在她的home目录中所有包含以 <code class="filename">~/.bash</code> 开头的行的文件，excluding matches containing history, so as to exclude matches from <code class="filename">~/.bash_history</code> which might contain the same string, in upper or lower cases.
+            </p>
+            <p>现在让我们来看看用正则表达式，grep还能做些什么。</p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_04_02_02"></a>4.2.2.&nbsp;Grep与正则表达式
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <table border="0" summary="Note: 如果你不是在使用Linux">
+                  <tr>
+                     <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                     <th align="left">如果你不是在使用Linux</th>
+                  </tr>
+                  <tr>
+                     <td align="left" valign="top">
+                        <p>我们在这些例子中使用支持扩展正则表达式的GNU <span><strong class="command">grep</strong></span>。GNU <span><strong class="command">grep</strong></span> 在Linux系统里是默认的。如果你在专有的系统上工作，那么请使用 <code class="option">-V</code> 选项来检查你在使用哪个版本的grep。GNU <span><strong class="command">grep</strong></span> 也可以从 <a href="http://gnu.org/directory/" target="_top">http://gnu.org/directory/</a> 下载。
+                        </p>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_04_02_02_01"></a>4.2.2.1.&nbsp;锚定行和字
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>从先前的例子中，我们只想显示那些使用字符串 “<span class="quote">root</span>” 开头的行：
+               </p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <em class="parameter"><code>^root</code></em> <code class="filename">/etc/passwd</code></strong></span>
+root:x:0:0:root:/root:/bin/bash
+</pre><p>如果我们想看哪个账号什么shell都没有分配，我们搜索行结束符 “<span class="quote">:</span>”：
+               </p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <em class="parameter"><code>:$</code></em> <code class="filename">/etc/passwd</code></strong></span>
+news:x:9:13:news:/var/spool/news:
+</pre><p>要检查 <code class="varname">PATH</code> 是否在 <code class="filename">~/.bashrc</code> 中导出，首先选择 “<span class="quote">export</span>” 然后搜索以字符串 <code class="varname">PATH</code> 开始的行，这样就不会搜索到MANPATH或者其他可能的路径了：
+               </p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <em class="parameter"><code>export</code></em> <code class="filename">~/.bashrc</code></strong></span> | <span><strong class="command">grep <em class="parameter"><code>'\&lt;PATH'</code></em></strong></span>
+  export PATH="/bin:/usr/lib/mh:/lib:/usr/bin:/usr/local/bin:/usr/ucb:/usr/dbin:$PATH"
+</pre><p>同样地，<span class="emphasis"><em>\&gt;</em></span> 匹配字的结束。
+               </p>
+               <p>如果你想找到是一个分隔的字的字符串（用空格来包围的），最好使用 <code class="option">-w</code>，就像在这个例子中我们现实root分区的信息那样：
+               </p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <code class="option">-w</code> <em class="parameter"><code>/</code></em> <code class="filename">/etc/fstab</code></strong></span>
+LABEL=/                 /                       ext3    defaults        1 1
+</pre><p>如果不使用这个选项，系统表中的所有行都会被显示。</p>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_04_02_02_02"></a>4.2.2.2.&nbsp;字符族Character classes
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p> <span class="emphasis"><em>方括号表达式</em></span> 是一个用 “<span class="quote">[</span>” and “<span class="quote">]</span>” 包含起来的字符列表。它匹配任何在列表中的单个字符；如果列表的第一个字符是 “<span class="quote">^</span>”，那么它匹配任何不在列表中的字符。比如，正则表达式，“<span class="quote">[0123456789]</span>” 匹配任何单个数字。
+               </p>
+               <p>在一个方括号表达式中，<span class="emphasis"><em>范围表达式range expression</em></span> 由2个横线分隔的字符组成。它匹配任何排列在2个字符之间的单个字符，包括，使用场合比较序列和字符集。比如，默认的C场合，“<span class="quote">[a-d]</span>” 等于 “<span class="quote">[abcd]</span>”。许多场合以字典的顺序来对字符进行分类，在这些场合中 “<span class="quote">[a-d]</span>” 通常不等于 “<span class="quote">[abcd]</span>”；可能等于 “<span class="quote">[aBbCcDd]</span>”。比如，为了得到对于方括号表达式的惯用解释，你可以通过设置 <code class="varname">LC_ALL</code> 环境变量的值为 “<span class="quote">C</span>” 来使用C场合。
+               </p>
+               <p>最后，特定的命名的字符族是在括号内事先定义的。参见 <span><strong class="command">grep</strong></span> man 或者 info 页面得到更多关于预定义表达式的信息。
+               </p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <em class="parameter"><code>[yf]</code></em> <code class="filename">/etc/group</code></strong></span>
+sys:x:3:root,bin,adm
+tty:x:5:
+mail:x:12:mail,postfix
+ftp:x:50:
+nobody:x:99:
+floppy:x:19:
+xfs:x:43:
+nfsnobody:x:65534:
+postfix:x:89:
+
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">ls <code class="filename">*[1-9].xml</code></strong></span>
+app1.xml  chap1.xml  chap2.xml  chap3.xml  chap4.xml
+</pre><p>在这个例子中，所有包含一个 “<span class="quote">y</span>” 或者 “<span class="quote">f</span>” 字符的行首先显示，之后是一个 <span><strong class="command">ls</strong></span> 命令使用范围的例子。
+               </p>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_04_02_02_04"></a>4.2.2.3.&nbsp;统配符
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>使用 “<span class="quote">.</span>” 进行一个单字符匹配。如果你想得到一个以 “<span class="quote">c</span>” 开头且以 “<span class="quote">h</span>” 结尾的所有5位字符的英语辞典词条(来解决 crosswords 游戏，就是那个纵横填字游戏)：
+               </p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <em class="parameter"><code>'\&lt;c...h\&gt;'</code></em> <code class="filename">/usr/share/dict/words</code></strong></span>
+catch
+clash
+cloth
+coach
+couch
+cough
+crash
+crush
+</pre><p>如果你想显示包含点字符的行，使用 <code class="option">-F</code> 选项给 <span><strong class="command">grep</strong></span>.
+               </p>
+               <p>要匹配多个字符，使用星号。这个例子从系统的词典中选择了所有以 “<span class="quote">c</span>” 开头且以 “<span class="quote">h</span>” 结尾的单词：
+               </p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <em class="parameter"><code>'\&lt;c.*h\&gt;'</code></em> <code class="filename">/usr/share/dict/words</code></strong></span>
+caliph
+cash
+catch
+cheesecloth
+cheetah
+--output omitted--
+</pre><p>如果你想在一个文件或者输出中找到包含星号字符的行，使用 <span><strong class="command">grep <code class="option">-F</code></strong></span>：
+               </p><pre class="screen">
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <em class="parameter"><code>*</code></em> <code class="filename">/etc/profile</code></strong></span>
+
+<code class="prompt">cathy ~&gt;</code> <span><strong class="command">grep <code class="option">-F</code> <em class="parameter"><code>'*'</code></em> <code class="filename">/etc/profile</code></strong></span>
+for i in /etc/profile.d/*.sh ; do
+</pre></div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch04.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch04.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch04s03.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">第&nbsp;4&nbsp;章&nbsp;正则表达式&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;4.3.&nbsp;Pattern匹配使用Bash特性</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

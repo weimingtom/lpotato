@@ -1,0 +1,25 @@
+body {
+	background-image: url(images/bg.jpg);
+	background-repeat:repeat-x;
+}
+
+h1 {
+	color:red;
+	font-size:2em;
+	font-family: Arial, sans-serif;
+	margin: 0;
+	border-bottom:2px dashed black;
+}
+p {
+	color:#036;
+	font-size:.9em;
+	line-height:150%;
+	margin-top:0;
+	margin-left: 25px;
+}
+h2 {
+	color: #FFC;
+	margin-bottom: 0;
+	padding: 5px 0px 3px 25px;
+	background-color:#999;
+}

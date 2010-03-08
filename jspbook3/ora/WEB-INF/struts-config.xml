@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.0//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_0.dtd">
+
+<struts-config>
+  <global-forwards>
+    <forward name="login" path="/ch19/login.jsp" redirect="true" />
+    <forward name="main" path="/ch19/protected/main.jsp" redirect="true" />
+  </global-forwards>
+
+  <action-mappings>
+    <action path="/ch19/authenticate"
+      type="com.ora.jsp.servlets.AuthenticateAction" />
+    <action path="/ch19/logout"
+      type="com.ora.jsp.servlets.LogoutAction" />
+    <action path="/ch19/protected/storeMsg"
+      type="com.ora.jsp.servlets.StoreMsgAction" />
+    <action path="/ch19/protected/updateProfile"
+      type="com.ora.jsp.servlets.UpdateProfileAction" />
+  </action-mappings>
+</struts-config>

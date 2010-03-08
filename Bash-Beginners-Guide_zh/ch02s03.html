@@ -1,0 +1,231 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>2.3.&nbsp;调试Bash脚本</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch02.html" title="第&nbsp;2&nbsp;章&nbsp;编写和调试脚本">
+      <link rel="prev" href="ch02s02.html" title="2.2.&nbsp;脚本基础">
+      <link rel="next" href="ch02s04.html" title="2.4.&nbsp;总结">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">2.3.&nbsp;调试Bash脚本</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch02s02.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;2&nbsp;章&nbsp;编写和调试脚本</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch02s04.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_02_03"></a>2.3.&nbsp;调试Bash脚本
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_02_03_01"></a>2.3.1.&nbsp;调试整个脚本
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>当一些事情不能按照计划进行，你需要确定到底是什么导致了脚本运行失败。Bash提供了大量的调试特性。最通常的做法是使用 <code class="option">-x</code> 选项来启动子shell，这将让整个脚本在调试模式下进行。每个命令和他附加参数的信息会在执行之前被展开并且送到标准输出打印。
+            </p>
+            <p>以下是脚本 <code class="filename">commented-script1.sh</code> 在调试模式下运行。再次注意在脚本的输出中注释是不可见的。
+            </p><pre class="screen">
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">bash <code class="option">-x</code> <code class="filename">script1.sh</code></strong></span>
++ clear
+
++ echo 'The script starts now.'
+The script starts now.
++ echo 'Hi, willy!'
+Hi, willy!
++ echo
+
++ echo 'I will now fetch you a list of connected users:'
+I will now fetch you a list of connected users:
++ echo
+
++ w
+  4:50pm  up 18 days,  6:49,  4 users,  load average: 0.58, 0.62, 0.40
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU  WHAT
+root     tty2     -                Sat 2pm  5:36m  0.24s  0.05s  -bash
+willy	 :0       -                Sat 2pm   ?     0.00s   ?     -
+willy	 pts/3    -                Sat 2pm 43:13  36.82s 36.82s  BitchX willy ir
+willy    pts/2    -                Sat 2pm 43:13   0.13s  0.06s  /usr/bin/screen
++ echo
+
++ echo 'I'\''m setting two variables now.'
+I'm setting two variables now.
++ COLOUR=black
++ VALUE=9
++ echo 'This is a string: '
+This is a string:
++ echo 'And this is a number: '
+And this is a number:
++ echo
+
++ echo 'I'\''m giving you back your prompt now.'
+I'm giving you back your prompt now.
++ echo
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <table border="0" summary="Note: 未来bash的特性">
+                  <tr>
+                     <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                     <th align="left">未来bash的特性</th>
+                  </tr>
+                  <tr>
+                     <td align="left" valign="top">
+                        <p>现在有一个全新的Bash调式工具出现在<a href="http://bashdb.sourceforge.net" target="_top">SourceForge</a>。然而现在，你需要一个已经打过补丁的Bash-2.05。新的特性可能会在bash-3.0中出现。
+                        </p>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_02_03_02"></a>2.3.2.&nbsp;调试部分脚本
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>使用bash内建命令 <span><strong class="command">set</strong></span> 可以让那些确定没有错误的部分以正常模式运行，而只对有错误的部分显示其debug信息。比如我们不确定在 <code class="filename">commented-script1.sh</code> 里面 <span><strong class="command">w</strong></span> 命令会做些什么，那么我们可以把它象这样包含起来：
+            </p><pre class="screen">
+set -x			# activate debugging from here
+w
+set +x			# stop debugging from here
+</pre><p>输出看来就像这样：</p><pre class="screen">
+<code class="prompt">willy: ~/scripts&gt;</code> <span><strong class="command">script1.sh</strong></span>
+The script starts now.
+Hi, willy!
+
+I will now fetch you a list of connected users:
+
++ w
+  5:00pm  up 18 days,  7:00,  4 users,  load average: 0.79, 0.39, 0.33
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU  WHAT
+root     tty2     -                Sat 2pm  5:47m  0.24s  0.05s  -bash
+willy    :0       -                Sat 2pm   ?     0.00s   ?     -
+willy    pts/3    -                Sat 2pm 54:02  36.88s 36.88s  BitchX willyke
+willy    pts/2    -                Sat 2pm 54:02   0.13s  0.06s  /usr/bin/screen
++ set +x
+
+I'm setting two variables now.
+This is a string:
+And this is a number:
+
+I'm giving you back your prompt now.
+
+<code class="prompt">willy: ~/scripts&gt;</code>
+</pre><p>你可以在同样的脚本里多次打开关闭调试模式。</p>
+            <p>下表给出了其他有用的bash选项概貌：</p>
+            <div class="table"><a name="table_02_01"></a><p class="title"><b>表&nbsp;2.1.&nbsp;设置调试选项概览</b></p>
+               <table summary="设置调试选项概览" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                  <colgroup>
+                     <col width="33%">
+                     <col width="33%">
+                     <col width="34%">
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">短符号</th>
+                        <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">长符号</th>
+                        <th style="border-bottom: 0.5pt solid ; " align="left">结果</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">set -f</td>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">set -o noglob</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">禁止特殊字符用于文件名扩展。</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">set -v</td>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">set -o verbose</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">打印读入shell的输入行。</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; " align="left">set -x</td>
+                        <td style="border-right: 0.5pt solid ; " align="left">set -o xtrace</td>
+                        <td style="" align="left">执行命令之前打印命令。</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p>横线用来激活一个shell选项，再使用一次将解除。不要搞错了！</p>
+            <p>以下例子，我们在命令行里面证明这些选项：</p><pre class="screen">
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">set <code class="option">-v</code></strong></span>
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">ls</strong></span>
+ls 
+commented-scripts.sh	script1.sh
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">set <code class="option">+v</code></strong></span>
+set +v
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">ls <em class="parameter"><code>*</code></em></strong></span>
+commented-scripts.sh    script1.sh
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">set <code class="option">-f</code></strong></span>
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">ls <code class="filename">*</code></strong></span>
+ls: *: No such file or directory
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">touch <code class="filename">*</code></strong></span>
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">ls</strong></span>
+*   commented-scripts.sh    script1.sh
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">rm <code class="filename">*</code></strong></span>
+
+<code class="prompt">willy:~/scripts&gt;</code> <span><strong class="command">ls</strong></span>
+commented-scripts.sh    script1.sh
+</pre><p>或者，这些模式也可以在脚本里面指定，只需在第一行shell的声明中加入需要的选项。选项可以叠加，和通常UNIX命令一样：</p>
+            <div class="cmdsynopsis">
+               <p><code class="command">#!/bin/bash <code class="option">-xv</code></code> 
+               </p>
+            </div>
+            <p>每当你找到脚本中的错误部分，你可以在每个你不确定的命令之前增加 <span><strong class="command">echo</strong></span>语句，这样你就会明确的看到哪里或者为什么脚本没有正常工作。在 <code class="filename">commented-script1.sh</code>例子中，可以这么做，依然假设显示用户这部分出了问题：
+            </p><pre class="screen">
+echo "debug message: now attempting to start w command"; w
+</pre><p>在更高级的脚本中， <span><strong class="command">echo</strong></span> 可以插入到在不同的阶段显示变量表，因此可以检查到错误：
+            </p><pre class="screen">
+echo "Variable VARNAME is now set to $VARNAME."
+</pre></div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch02s02.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch02.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch02s04.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">2.2.&nbsp;脚本基础&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;2.4.&nbsp;总结</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

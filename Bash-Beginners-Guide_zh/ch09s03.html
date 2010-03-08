@@ -1,0 +1,122 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>9.3.&nbsp;until循环</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch09.html" title="第&nbsp;9&nbsp;章&nbsp;重复性任务">
+      <link rel="prev" href="ch09s02.html" title="9.2.&nbsp;while循环">
+      <link rel="next" href="ch09s04.html" title="9.4.&nbsp;I/0 重定向和循环">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">9.3.&nbsp;until循环</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch09s02.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;9&nbsp;章&nbsp;重复性任务</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch09s04.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_09_03"></a>9.3.&nbsp;until循环
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_09_03_01"></a>9.3.1.&nbsp;什么是until循环？
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p> <span><strong class="command">until</strong></span> 循环和 <span><strong class="command">while</strong></span> 循环非常相似， 除了循环执行直到 <span><strong class="command">TEST-COMMAND</strong></span> 执行成功。只要这个命令测试失败，循环就继续。语法和 <span><strong class="command">while</strong></span> 循环一样：
+            </p>
+            <div class="cmdsynopsis">
+               <p><code class="command">until TEST-COMMAND; do CONSEQUENT-COMMANDS; done</code> 
+               </p>
+            </div>
+            <p>返回状态是最后一个在列表 <span><strong class="command">CONSEQUENT-COMMANDS</strong></span> 中执行的命令的退出状态，或者没有执行的话就是零。  <span><strong class="command">TEST-COMMAND</strong></span> 可以，again, 是任何能退出带成功或者失败状态的命令，而 <span><strong class="command">CONSEQUENT-COMMANDS</strong></span> 可以是任何UNIX命令，脚本或者shell结构。
+            </p>
+            <p>和我们先前已经解释的一样，“<span class="quote">;</span>” 出现的地方可以用一个或者更多新行来替代。
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_09_03_02"></a>9.3.2.&nbsp;例子
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>改进的 <code class="filename">picturesort.sh</code> 脚本 (参见 <a href="ch09s02.html#sect_09_02_02_02" title="9.2.2.2.&nbsp;嵌套while循环">第&nbsp;9.2.2.2&nbsp;节 “嵌套while循环”</a>)，测试现存的磁盘空间。如果没有足够的磁盘空间，就删除之前月份的图片：
+            </p><pre class="screen">
+#!/bin/bash
+
+# This script copies files from my homedirectory into the webserver directory.
+# A new directory is created every hour.
+# If the pics are taking up too much space, the oldest are removed.
+
+while true; do 
+	DISKFUL=$(df -h $WEBDIR | grep -v File | awk '{print $5 }' | cut -d "%" -f1 -)
+
+	until [ $DISKFUL -ge "90" ]; do 
+
+        	DATE=`date +%Y%m%d`
+        	HOUR=`date +%H`
+        	mkdir $WEBDIR/"$DATE"
+                                                                                
+        	while [ $HOUR -ne "00" ]; do
+                	DESTDIR=$WEBDIR/"$DATE"/"$HOUR"
+                	mkdir "$DESTDIR"
+                	mv $PICDIR/*.jpg "$DESTDIR"/
+                	sleep 3600
+                	HOUR=`date +%H`
+        	done
+
+	DISKFULL=$(df -h $WEBDIR | grep -v File | awk '{ print $5 }' | cut -d "%" -f1 -)
+	done
+
+	TOREMOVE=$(find $WEBDIR -type d -a -mtime +30)
+	for i in $TOREMOVE; do
+		rm -rf "$i";
+	done
+
+done
+</pre><p>注意 <code class="varname">HOUR</code> 和 <code class="varname">DISKFULL</code> 变量的初始化以及 <span><strong class="command">ls</strong></span> 和 <span><strong class="command">date</strong></span> 带选项用法如何得到正确的 <code class="varname">TOREMOVE</code> 列表。
+            </p>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch09s02.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch09.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch09s04.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">9.2.&nbsp;while循环&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;9.4.&nbsp;I/0 重定向和循环</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

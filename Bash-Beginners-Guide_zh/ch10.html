@@ -1,0 +1,257 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;10&nbsp;章&nbsp;变量进阶</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch09s09.html" title="9.9.&nbsp;练习">
+      <link rel="next" href="ch10s02.html" title="10.2.&nbsp;数组变量">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;10&nbsp;章&nbsp;变量进阶</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch09s09.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch10s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_10"></a>第&nbsp;10&nbsp;章&nbsp;变量进阶
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch10.html#sect_10_01">10.1. 变量的类型</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch10.html#sect_10_01_01">10.1.1. 普通的变量赋值</a></span></dt>
+                     <dt><span class="sect2"><a href="ch10.html#sect_10_01_02">10.1.2. 使用 declare 内建命令built-in</a></span></dt>
+                     <dt><span class="sect2"><a href="ch10.html#sect_10_01_03">10.1.3. 常量</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch10s02.html">10.2. 数组变量</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch10s02.html#sect_10_02_01">10.2.1. 建立数组</a></span></dt>
+                     <dt><span class="sect2"><a href="ch10s02.html#sect_10_02_02">10.2.2. 对数组的变量解引用</a></span></dt>
+                     <dt><span class="sect2"><a href="ch10s02.html#sect_10_02_03">10.2.3. 删除数组变量</a></span></dt>
+                     <dt><span class="sect2"><a href="ch10s02.html#sect_10_02_04">10.2.4. 数组的例子</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch10s03.html">10.3. 变量的操作</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch10s03.html#sect_10_03_01">10.3.1. 变量算术运算</a></span></dt>
+                     <dt><span class="sect2"><a href="ch10s03.html#sect_10_03_02">10.3.2. 变量的长度</a></span></dt>
+                     <dt><span class="sect2"><a href="ch10s03.html#sect_10_03_03">10.3.3. 变量的转化</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch10s04.html">10.4. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch10s05.html">10.5. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>在本章，我们会讨论变量和参数的高级使用。完成之后，你将能够：</p>
+            <p>
+               
+            </p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>声明并使用一个变量的数组</p>
+                  </li>
+                  <li>
+                     <p>指定你想使用的变量的顺序</p>
+                  </li>
+                  <li>
+                     <p>使变量只读</p>
+                  </li>
+                  <li>
+                     <p>使用 <span><strong class="command">set</strong></span> 对一个变量进行赋值
+                     </p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+            </p>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_10_01"></a>10.1.&nbsp;变量的类型
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_10_01_01"></a>10.1.1.&nbsp;普通的变量赋值
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>就像我们已经看到的，Bash理解许多种变量和参数。迄今，我们还没有对进行赋值的变量的种类太操心，所以我们的变量可以存放任何我们赋予的值。一个简单的命令行证明了这个：</p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command"><code class="varname">VARIABLE</code>=<em class="parameter"><code>12</code></em></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">$VARIABLE</code></strong></span>
+12
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command"><code class="varname">VARIABLE</code>=<em class="parameter"><code>string</code></em></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">$VARIABLE</code></strong></span>
+string
+</pre><p>有些情况下我们想防止这种行为的产生，比如需要存放电话号码和其他数字。除了整数和变量，你也可能向指定一个变量为常量。一个常量的值的声明，通常在脚本的开始处。之后，只有指向常量的引用，所以当常量需要改变的时候，只需要做一次。一个变量也可以是一系列任何类型的变量，所谓的变量的
+                  <span class="emphasis"><em>数组</em></span>  (<code class="varname">VAR0</code><code class="varname">VAR1</code>, <code class="varname">VAR2</code>, ... <code class="varname">VARN</code>).
+               </p>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_10_01_02"></a>10.1.2.&nbsp;使用 declare 内建命令built-in
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>使用一个 <span><strong class="command">declare</strong></span> 语句，我们可以限制赋给变量的值。
+               </p>
+               <p>以下是 <span><strong class="command">declare</strong></span> 的语法：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">declare <code class="option">OPTION(s)</code> <code class="varname">VARIABLE</code>=value</code> 
+                  </p>
+               </div>
+               <p>下列选项用来确定变量能存放的数据的类型和分配给它的属性：</p>
+               <div class="table"><a name="tab_10_01"></a><p class="title"><b>表&nbsp;10.1.&nbsp;declare 内建命令的选项</b></p>
+                  <table summary="declare 内建命令的选项" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                     <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">选项</th>
+                           <th style="border-bottom: 0.5pt solid ; " align="left">含义</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">-a</code></td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">变量为数组。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">-f</code></td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">仅使用函数名。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">-i</code></td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">把变量当作整数来对待；变量被赋值之后就进行算术计算(参见 <a href="ch03s04.html#sect_03_04_05" title="3.4.6.&nbsp;算术扩展">第&nbsp;3.4.6&nbsp;节 “算术扩展”</a>)。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">-p</code></td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">显示每个变量的属性和值。当使用 <code class="option">-p</code> 选项，其他选项就被忽略。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">-r</code></td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">使得变量变为只读。这些变量不能被后来的赋值与语句赋值，同样也不可以unset。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left"><code class="option">-t</code></td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">给于每个变量 <span class="emphasis"><em>trace</em></span> 属性。
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; " align="left"><code class="option">-x</code></td>
+                           <td style="" align="left">Mark each variable for export to subsequent commands via the environment.</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>使用 <code class="option">+</code> 代替 <code class="option">-</code> 来关闭属性。当使用在函数中时，<span><strong class="command">declare</strong></span> 建立本地变量。
+               </p>
+               <p>以下例子显示了对一个变量怎样赋于类型来影响它的值。</p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command">declare <code class="option">-i</code> <code class="varname">VARIABLE</code>=<em class="parameter"><code>12</code></em></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command"><code class="varname">VARIABLE</code>=<em class="parameter"><code>string</code></em></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">$VARIABLE</code></strong></span>
+0
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">declare <code class="option">-p</code> <code class="varname">VARIABLE</code></strong></span>
+declare -i VARIABLE="0"
+</pre><p>注意Bash有一个选项来声明一个数字值，但是却没有选项用来声明字符串。这是因为，默认下，如果没有特别指明，变量可以拥有任何类型的数据：</p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command"><code class="varname">OTHERVAR</code>=<em class="parameter"><code>blah</code></em></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">declare <code class="option">-p</code> <code class="varname">OTHERVAR</code></strong></span>
+declare -- OTHERVAR="blah"
+</pre><p>只要你限制了对变量的赋值，那它只能存放那种类型的数据。可能限制是整数，常量或者数组。</p>
+               <p>参见Bash信息页面来获得更多关于返回状态的信息。</p>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_10_01_03"></a>10.1.3.&nbsp;常量
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>在Bash中,常量是通过建立一个只读变量创建的。<span><strong class="command">readonly</strong></span> 内建命令使每个指定的变量成为不能改变的。语法是：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">readonly <code class="option">OPTION</code> <code class="varname">VARIABLE(s)</code></code> 
+                  </p>
+               </div>
+               <p>这些变量的值就不能再被后来的赋值改变了。如果带 <code class="option">-f</code> 选项，每个变量指向一个shell函数；参见 <a href="ch11.html" title="第&nbsp;11&nbsp;章&nbsp;函数">第&nbsp;11&nbsp;章 <i>函数</i></a>。如果指定 <code class="option">-a</code> 选项，每个变量指向一个变量数组。如果没有给出任何参数，或者如果提供 <code class="option">-p</code> 选项，就会显示所有的只读变量的列表。使用 <code class="option">-p</code> 选项，输出能被当作输入重用。
+               </p>
+               <p>除非指定一个非法的选项，其中一个变量或者函数不存在，或者 <code class="option">-f</code> 提供给一个变量名而不是一个函数，否则返回状态就是0。
+               </p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command">readonly <code class="varname">TUX</code>=<em class="parameter"><code>penguinpower</code></em></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command"><code class="varname">TUX</code>=<em class="parameter"><code>Mickeysoft</code></em></strong></span>
+bash: TUX: readonly variable
+</pre></div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch09s09.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch10s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">9.9.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;10.2.&nbsp;数组变量</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,632 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>8.2.&nbsp;捕捉用户输入</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch08.html" title="第&nbsp;8&nbsp;章&nbsp;编写交互脚本">
+      <link rel="prev" href="ch08.html" title="第&nbsp;8&nbsp;章&nbsp;编写交互脚本">
+      <link rel="next" href="ch08s03.html" title="8.3.&nbsp;总结">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">8.2.&nbsp;捕捉用户输入</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch08.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;8&nbsp;章&nbsp;编写交互脚本</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch08s03.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_08_02"></a>8.2.&nbsp;捕捉用户输入
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_08_02_01"></a>8.2.1.&nbsp;使用内建命令read
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>内建命令 <span><strong class="command">read</strong></span>  是 <span><strong class="command">echo</strong></span> 和 <span><strong class="command">printf</strong></span> 命令互补的命令。<span><strong class="command">read</strong></span> 命令的语法如下：
+            </p>
+            <div class="cmdsynopsis">
+               <p><code class="command">read <code class="option">[options]</code> <code class="varname">NAME1 NAME2 ... NAMEN</code></code> 
+               </p>
+            </div>
+            <p>从标准输入或者使用 <code class="option">-u</code> 选项的参数提供的文件描述符读取一行。行的第一个词被赋予第一个名字，<code class="varname">NAME1</code>，第二个词被赋予第二个名字，以此类推， with leftover words and their intervening separators assigned to the last name, <code class="varname">NAMEN</code>.  如果从输入读取的字符比名字要少，那么接下来的名字将被赋予空值。If there are fewer words read from the input stream than there are names, the remaining
+               names are assigned empty values.
+            </p>
+            <p>在 <code class="varname">IFS</code> 变量中的字符用来把输入行分割成字或者段；参见 <a href="ch03s04.html#sect_03_04_07" title="3.4.8.&nbsp;字分割">第&nbsp;3.4.8&nbsp;节 “字分割”</a>。反斜杠字符可以用来去除读入的下一个字符的特殊含义为了行的延续。
+            </p>
+            <p>如果没有提供名字，读入的行就赋给变量 <code class="varname">REPLY</code>。
+            </p>
+            <p> <span><strong class="command">read</strong></span> 命令的返回代码是零，除非遇到一个文件结束（应该是EOF）字符，（要么）如果 <span><strong class="command">read</strong></span> 超时或者一个非法的文件描述符提供给 <code class="option">-u</code> 选项作为参数。
+            </p>
+            <p>以下选项是Bash <span><strong class="command">read</strong></span> 内建命令支持的：
+            </p>
+            <div class="table"><a name="tab_08_02"></a><p class="title"><b>表&nbsp;8.2.&nbsp;read 内建命令的选项</b></p>
+               <table summary="read 内建命令的选项" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                  <colgroup>
+                     <col width="50%">
+                     <col width="50%">
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">选项</th>
+                        <th style="border-bottom: 0.5pt solid ; " align="left">含义</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">-a <code class="varname">ANAME</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">The words are assigned to sequential indexes of the array variable <code class="varname">ANAME</code>, starting at 0.  All elements are removed from <code class="varname">ANAME</code> before the assignment.  Other <code class="varname">NAME</code> arguments are ignored.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">-d <code class="varname">DELIM</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">The first character of <code class="varname">DELIM</code> is used to terminate the input line, rather than newline.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">-e</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left"><span><strong class="command">readline</strong></span> is used to obtain the line.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">-n <code class="varname">NCHARS</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left"><span><strong class="command">read</strong></span> returns after reading <code class="varname">NCHARS</code> characters rather than waiting for a complete line of input.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">-p <code class="varname">PROMPT</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">Display <code class="varname">PROMPT</code>, without a trailing newline, before attempting to read any input.  The prompt is displayed only if input is coming from a
+                           terminal.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">-r</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">If this option is given, backslash does not act as an escape character.  The backslash is considered to be part of the line.
+                            In particular, a backslash-newline pair may not be used as a line continuation.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">-s</td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">Silent mode.  If input is coming from a terminal, characters are not echoed.</td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">-t <code class="varname">TIMEOUT</code></td>
+                        <td style="border-bottom: 0.5pt solid ; " align="left">Cause <span><strong class="command">read</strong></span> to time out and return failure if a complete line of input is not read within <code class="varname">TIMEOUT</code> seconds.  This option has no effect if <span><strong class="command">read</strong></span> is not reading input from the terminal or from a pipe.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="border-right: 0.5pt solid ; " align="left">-u <code class="varname">FD</code></td>
+                        <td style="" align="left">Read input from file descriptor <code class="varname">FD</code>.
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <p>这里有一个很直接的例子，改进了先前章节中的 <code class="filename">leaptest.sh</code> 脚本：
+            </p><pre class="screen">
+<code class="prompt">michel ~/test&gt;</code> <span><strong class="command">cat <code class="filename">leaptest.sh</code></strong></span>
+#!/bin/bash
+# This script will test if you have given a leap year or not.
+
+echo "Type the year that you want to check (4 digits), followed by [ENTER]:"
+
+read year
+
+if (( ("$year" % 400) == "0" )) || (( ("$year" % 4 == "0") &amp;&amp; ("$year" % 100 !=
+"0") )); then
+  echo "$year is a leap year."
+else
+  echo "This is not a leap year."
+fi
+
+<code class="prompt">michel ~/test&gt;</code> <span><strong class="command">leaptest.sh</strong></span>
+Type the year that you want to check (4 digits), followed by [ENTER]:
+2000
+2000 is a leap year.
+</pre></div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_08_02_02"></a>8.2.2.&nbsp;提示用户输入
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>以下的例子向你展示了使用提示来向用户解释应该输入什么。</p><pre class="screen">
+<code class="prompt">michel ~/test&gt;</code> <span><strong class="command">cat <code class="filename">friends.sh</code></strong></span>
+#!/bin/bash
+
+# This is a program that keeps your address book up to date.
+
+friends="/var/tmp/michel/friends"
+
+echo "Hello, "$USER".  This script will register you in Michel's friends database."
+
+echo -n "Enter your name and press [ENTER]: "
+read name
+echo -n "Enter your gender and press [ENTER]: "
+read -n 1 gender
+echo
+
+grep -i "$name" "$friends"
+
+if  [ $? == 0 ]; then
+  echo "You are already registered, quitting."
+  exit 1
+elif [ "$gender" == "m" ]; then
+  echo "You are added to Michel's friends list."
+  exit 1
+else
+  echo -n "How old are you? "
+  read age
+  if [ $age -lt 25 ]; then
+    echo -n "Which colour of hair do you have? "
+    read colour
+    echo "$name $age $colour" &gt;&gt; "$friends" 
+    echo "You are added to Michel's friends list.  Thank you so much!"
+  else
+    echo "You are added to Michel's friends list."
+    exit 1
+  fi
+fi
+
+<code class="prompt">michel ~/test&gt;</code> <span><strong class="command">cp <code class="filename">friends.sh /var/tmp</code>; cd <code class="filename">/var/tmp</code></strong></span>
+
+<code class="prompt">michel ~/test&gt;</code> <span><strong class="command">touch <code class="filename">friends</code>; chmod <code class="option">a+w</code> <code class="filename">friends</code></strong></span>
+
+<code class="prompt">michel ~/test&gt;</code> <span><strong class="command">friends.sh</strong></span>
+Hello, michel.  This script will register you in Michel's friends database.
+Enter your name and press [ENTER]: michel
+Enter your gender and press [ENTER] :m
+You are added to Michel's friends list.
+
+<code class="prompt">michel ~/test&gt;</code> <span><strong class="command">cat <code class="filename">friends</code></strong></span>
+
+</pre><p>注意这里没有省略输出。这个脚本仅仅储存Michel感兴趣的信息，但是除非你已经在里面了，否则将一直提示你已经被加入了列表。</p>
+            <p>其他人现在可以执行这个脚本：</p><pre class="screen">
+<code class="prompt">[anny@octarine tmp]$</code> <span><strong class="command">friends.sh</strong></span>
+Hello, anny.  This script will register you in Michel's friends database.
+Enter your name and press [ENTER]: anny
+Enter your gender and press [ENTER] :f
+How old are you? 22
+Which colour of hair do you have? black
+You are added to Michel's friends list.
+</pre><p>一会之后， <code class="filename">friends</code> 列表开始开上去像这样：
+            </p><pre class="screen">
+tille 24 black
+anny 22 black
+katya 22 blonde
+maria 21 black
+--output omitted--
+</pre><p>当然，这个情况并不是理想的，因为每个人都能编辑（但不是删除）Michel的文件。你可以再这个脚本文件里使用特别的存取模式来解决问题，参见Linux手册的介绍中的 <a href="http://www.tldp.org/LDP/intro-linux/html/sect_04_01.html#sect_04_01_06" target="_top">SUID and SGID</a> 再Linux手册的介绍中见SUID和SGID。
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_08_02_03"></a>8.2.3.&nbsp;重定向和文件描述符
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_08_02_03_01"></a>8.2.3.1.&nbsp;概要
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>就像你知道的在shell的基本用法中，一个命令的输入和输出可以在执行完毕前被重定向，使用一个特殊的符号-重定向操作符-由shell来解释。重定向也可以用来为当前shell执行环境打开和关闭文件。</p>
+               <p>重定向也可以出现在一个脚本中，所以它可以从一个文件收到输入，比如，或者发送输出到一个文件。然后，用户可以回顾这个输出文件，或者可以被另外一个脚本当作输入。</p>
+               <p>文件输入输出由追踪为一个给定的进程所有打开文件的整数句柄来完成。这些数字值就是文件描述符。最为人们所知的文件米描述符是 <span class="emphasis"><em>stdin</em></span>, <span class="emphasis"><em>stdout</em></span> 和 <span class="emphasis"><em>stderr</em></span>，文件描述符的数字分别是0，1和2。这些数字和各自的设备是保留的。Bash可以也可以把网络主机的TCP或者UDP端口也认为是一个文件描述符。 
+               </p>
+               <p>下面的输出展示怎么保留文件描述符指向真实的设备:</p><pre class="screen">
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">ls <code class="option">-l</code> <code class="filename">/dev/std*</code></strong></span>
+lrwxrwxrwx  1 root    root     17 Oct  2 07:46 /dev/stderr -&gt; ../proc/self/fd/2
+lrwxrwxrwx  1 root    root     17 Oct  2 07:46 /dev/stdin -&gt; ../proc/self/fd/0
+lrwxrwxrwx  1 root    root     17 Oct  2 07:46 /dev/stdout -&gt; ../proc/self/fd/1
+
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">ls <code class="option">-l</code> <code class="filename">/proc/self/fd/[0-2]</code></strong></span>
+lrwx------  1 michel  michel   64 Jan 23 12:11 /proc/self/fd/0 -&gt; /dev/pts/6
+lrwx------  1 michel  michel   64 Jan 23 12:11 /proc/self/fd/1 -&gt; /dev/pts/6
+lrwx------  1 michel  michel   64 Jan 23 12:11 /proc/self/fd/2 -&gt; /dev/pts/6
+</pre><p>你可能想检查 <span><strong class="command">info MAKEDEV</strong></span> 和 <span><strong class="command">info proc</strong></span> 来得到更多关于 <code class="filename">/proc</code> 子目录和你的系统为每个运行的进程操纵文件描述符的方法的信息。
+               </p>
+               <p>当你以命令行来运行一个脚本的时候，没有什么太多的改变，因为子shell进程会使用和父进程相同的文件描述符。当没有这个的父进程存在的话，比如你使用 <span class="emphasis"><em>cron</em></span> 工具来运行一个脚本，标准的文件描述符是管道或者其他（临时）文件，除非使用一些形式重定向。在下面的例子中证明，展示了从例子脚本 <span><strong class="command">at</strong></span> 的输出：
+               </p><pre class="screen">
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">date</strong></span>
+Fri Jan 24 11:05:50 CET 2003
+
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">at <em class="parameter"><code>1107</code></em></strong></span>
+warning: commands will be executed using (in order) 
+a) $SHELL b) login shell c)/bin/sh
+<code class="prompt">at&gt;</code> <span><strong class="command">ls <code class="option">-l</code> <code class="filename">/proc/self/fd/</code> &gt; <code class="filename">/var/tmp/fdtest.at</code></strong></span>
+<code class="prompt">at&gt;</code> <span><strong class="command">&lt;EOT&gt;</strong></span>
+job 10 at 2003-01-24 11:07
+
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">cat <code class="filename">/var/tmp/fdtest.at</code></strong></span>
+total 0
+lr-x------    1 michel michel  64 Jan 24 11:07 0 -&gt; /var/spool/at/!0000c010959eb (deleted)
+l-wx------    1 michel michel  64 Jan 24 11:07 1 -&gt; /var/tmp/fdtest.at
+l-wx------    1 michel michel  64 Jan 24 11:07 2 -&gt; /var/spool/at/spool/a0000c010959eb
+lr-x------    1 michel michel  64 Jan 24 11:07 3 -&gt; /proc/21949/fd
+</pre><p>还有一个使用 <span><strong class="command">cron</strong></span>的：
+               </p><pre class="screen">
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">crontab <code class="option">-l</code></strong></span>
+# DO NOT EDIT THIS FILE - edit the master and reinstall.
+# (/tmp/crontab.21968 installed on Fri Jan 24 11:30:41 2003)
+# (Cron version -- $Id$)
+32 11 * * * ls -l /proc/self/fd/ &gt; /var/tmp/fdtest.cron
+
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">cat <code class="filename">/var/tmp/fdtest.cron</code></strong></span>
+total 0
+lr-x------    1 michel michel  64 Jan 24 11:32 0 -&gt; pipe:[124440]
+l-wx------    1 michel michel  64 Jan 24 11:32 1 -&gt; /var/tmp/fdtest.cron
+l-wx------    1 michel michel  64 Jan 24 11:32 2 -&gt; pipe:[124441]
+lr-x------    1 michel michel  64 Jan 24 11:32 3 -&gt; /proc/21974/fd
+</pre></div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_08_02_03_02"></a>8.2.3.2.&nbsp;错误重定向
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>从先前的例子中，很清楚你可以为一个脚本提供输入和输出文件（更多参阅 <a href="ch08s02.html#sect_08_02_04" title="8.2.4.&nbsp;文件输入和输出">第&nbsp;8.2.4&nbsp;节 “文件输入和输出”</a>），但是一些忘记错误重定向的企图-一些之后可以仰赖的输出。同时，如果你幸运的话，错误会mail给你，可能的错误原因会被被揭示出来。但是不幸的话，错误会导致你的脚本失败而且也不会被捕捉或者发送到任何地方，以至于你载调试的同时什么都做不了。
+               </p>
+               <p>当重定向错误的时候，注意优先的顺序是有意义的。比如，这个命令，发生在 <code class="filename">/var/spool</code></p><pre class="screen">
+<span><strong class="command">ls <code class="option">-l</code> <code class="filename">*</code> <em class="parameter"><code>2</code></em> &gt; <code class="filename">/var/tmp/unaccessible-in-spool</code></strong></span>
+</pre><p>将重定向 <span><strong class="command">ls</strong></span> 命令的输出到在 <code class="filename">/var/tmp</code> 中的文件 <code class="filename">unaccessible-in-spool</code>， 这个命令
+               </p><pre class="screen">
+<span><strong class="command">ls <code class="option">-l</code> <code class="filename">*</code> &gt; <code class="filename">/var/tmp/spoollist</code> <em class="parameter"><code>2</code></em> &gt;&amp; <em class="parameter"><code>1</code></em></strong></span>
+</pre><p>将把标准输出和标准错误都定向到文件 <code class="filename">spoollist</code>。这个命令
+               </p><pre class="screen">
+<span><strong class="command">ls <code class="option">-l</code> <code class="filename">*</code> <em class="parameter"><code>2</code></em> &gt;&amp; <em class="parameter"><code>1</code></em> &gt; <code class="filename">/var/tmp/spoollist</code></strong></span>
+</pre><p>仅仅把标准输出定向到目标文件里，因为在标准输出重定向之前标准错误已经拷贝到标准输出。</p>
+               <p>为了方便，如果确定它们将不使用，错误常常重定向到 <code class="filename">/dev/null</code>。可以在你的系统的起始脚本里找到很多例子。
+               </p>
+               <p>Bash允许你使用如下的结构来重定向标准输出和标准错误到名字是 <code class="filename">FILE</code> 扩展的结果的文件：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">&amp;&gt; <code class="filename">FILE</code></code> 
+                  </p>
+               </div>
+               <p>This is the equivalent of <span><strong class="command">&gt; <code class="filename">FILE</code> 2&gt;&amp;1</strong></span>, the construct used in the previous set of examples.  It is also often combined with redirection to <code class="filename">/dev/null</code>, for instance when you just want a command to execute, no matter what output or errors it gives.
+               </p>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_08_02_04"></a>8.2.4.&nbsp;文件输入和输出
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_08_02_04_01"></a>8.2.4.1.&nbsp;使用 /dev/fd
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p> <code class="filename">/dev/fd</code> 目录包含了名为 <code class="filename">0</code>, <code class="filename">1</code>, <code class="filename">2</code>等的入口。打开文件 <code class="filename">/dev/fd/N</code> 等价于复制文件描述符 <span class="emphasis"><em>N</em></span>。如果你的系统提供 <code class="filename">/dev/stdin</code>, <code class="filename">/dev/stdout</code> 和 <code class="filename">/dev/stderr</code> ，你会看到它们分别等于 <code class="filename">/dev/fd/0</code>, <code class="filename">/dev/fd/1</code> 和 <code class="filename">/dev/fd/2</code>。
+               </p>
+               <p> <code class="filename">/dev/fd</code> 的主要使用价值来自于shell。这种机制允许程序以和其他路径名相同的方式使用路径名参数来操纵标准输入和标准输出。如果 <code class="filename">/dev/fd</code> 在系统中不存在，你将不得不找一个办法来迂回解决这个问题。比如可以使用(<span class="emphasis"><em>-</em></span>)来表明程序需要从管道读取就可以达到目的。一个例子： This mechanism allows for programs that use pathname arguments to handle standard input and standard
+                  output in the same way as other pathnames. 
+               </p><pre class="screen">
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">filter <code class="filename">body.txt.gz</code> | cat <code class="filename">header.txt</code> - <code class="filename">footer.txt</code></strong></span>
+This text is printed at the beginning of each print job and thanks the sysadmin
+for setting us up such a great printing infrastructure.
+
+Text to be filtered.
+
+This text is printed at the end of each print job.
+</pre><p> <span><strong class="command">cat</strong></span> 命令首先读取文件 <code class="filename">header.txt</code>，然后他的标准输入是 <span><strong class="command">filter</strong></span> 命令的输出，最后 <code class="filename">footer.txt</code> 。折线的特殊含义作为命令行参数涉及标准输入或者标准输出是一种误解，尽管已经在许多程序中被这么认为。当指定折线作为第一个参数的时候也可能产生问题，也许他会被解释成一个先前命令的选项。使用 <code class="filename">/dev/fd</code> 来允许一致性和防止混淆：
+               </p><pre class="screen">
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">filter <code class="filename">body.txt</code> | cat <code class="filename">header.txt /dev/fd/0 footer.txt</code> | lp</strong></span>
+</pre><p>在这个清晰的例子中，所有的输出被附加管道通过 <span><strong class="command">lp</strong></span> 送往默认的打印机。
+               </p>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_08_02_04_02"></a>8.2.4.2.&nbsp;读取和exec
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <div class="sect4" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h5 class="title"><a name="sect_08_02_04_02_01"></a>8.2.4.2.1.&nbsp;分配给文件以文件描述符
+                           </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <p>另外一种着眼文件描述符的方法是把他们认为是分配给文件一个数值。你可以使用文件描述符值，而不是使用文件名。内建命令 <span><strong class="command">exec</strong></span> 是用来给文件分配一个文件描述符。使用
+                  </p>
+                  <div class="cmdsynopsis">
+                     <p><code class="command">exec fdN&gt; <code class="filename">file</code></code> 
+                     </p>
+                  </div>
+                  <p>分配文件描述符N给 <code class="filename">file</code> 进行输出：
+                  </p>
+                  <div class="cmdsynopsis">
+                     <p><code class="command">exec fdN&lt; <code class="filename">file</code></code> 
+                     </p>
+                  </div>
+                  <p>分配文件描述符N给 <code class="filename">file</code> 进行输入。在文件描述符分配给一个文件后，可以和shell的重定向操作符一起使用，在下面的例子中加以证明：
+                  </p><pre class="screen">
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">exec <code class="filename">4</code> &gt; <code class="filename">result.txt</code></strong></span>
+
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">filter <code class="filename">body.txt</code> | cat <code class="filename">header.txt /dev/fd/0 footer.txt</code> &gt;&amp; <code class="filename">4</code></strong></span>
+
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">cat <code class="filename">result.txt</code></strong></span>
+This text is printed at the beginning of each print job and thanks the sysadmin
+for setting us up such a great printing infrastructure.
+
+Text to be filtered.
+
+This text is printed at the end of each print job.
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                     <table border="0" summary="Note: 文件描述符5">
+                        <tr>
+                           <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                           <th align="left">文件描述符5</th>
+                        </tr>
+                        <tr>
+                           <td align="left" valign="top">
+                              <p>使用这个文件描述符可能导致问题，参见A <a href="http://www.tldp.org/LDP/abs/html/io-redirection.html" target="_top">the Advanced Bash-Scripting Guide</a>第16章。强烈建议不要使用它。
+                              </p>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+               <div class="sect4" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h5 class="title"><a name="sect_08_02_04_02_02"></a>8.2.4.2.2.&nbsp;在脚本中读取
+                           </h5>
+                        </div>
+                     </div>
+                  </div>
+                  <p>以下是一个例子向你展示怎么样在文件输入和命令行输入中进行转换：</p><pre class="screen">
+<code class="prompt">michel ~/testdir&gt;</code> <span><strong class="command">cat <code class="filename">sysnotes.sh</code></strong></span>
+#!/bin/bash
+
+# This script makes an index of important config files, puts them together in
+# a backup file and allows for adding comment for each file.
+
+CONFIG=/var/tmp/sysconfig.out
+rm "$CONFIG" 2&gt;/dev/null
+
+echo "Output will be saved in $CONFIG."
+
+exec 7&lt;&amp;0
+
+exec &lt; /etc/passwd
+
+# Read the first line of /etc/passwd
+read rootpasswd
+
+echo "Saving root account info..."
+echo "Your root account info:" &gt;&gt; "$CONFIG"
+echo $rootpasswd &gt;&gt; "$CONFIG"
+
+exec 0&lt;&amp;7 7&lt;&amp;-
+
+echo -n "Enter comment or [ENTER] for no comment: "
+read comment; echo $comment &gt;&gt; "$CONFIG"
+
+echo "Saving hosts information..."
+
+# first prepare a hosts file not containing any comments
+TEMP="/var/tmp/hosts.tmp"
+cat /etc/hosts | grep -v "^#" &gt; "$TEMP"
+
+exec 7&lt;&amp;0
+exec &lt; "$TEMP"
+
+read ip1 name1 alias1
+read ip2 name2 alias2
+
+echo "Your local host configuration:" &gt;&gt; "$CONFIG"
+
+echo "$ip1 $name1 $alias1" &gt;&gt; "$CONFIG"
+echo "$ip2 $name2 $alias2" &gt;&gt; "$CONFIG"
+
+exec 0&lt;&amp;7 7&lt;&amp;-
+
+echo -n "Enter comment or [ENTER] for no comment: "
+read comment; echo $comment &gt;&gt; "$CONFIG"
+rm "$TEMP"
+
+<code class="prompt">michel ~/testdir&gt;</code> <span><strong class="command">sysnotes.sh</strong></span>
+Output will be saved in /var/tmp/sysconfig.out.
+Saving root account info...
+Enter comment or [ENTER] for no comment: hint for password: blue lagoon
+Saving hosts information...
+Enter comment or [ENTER] for no comment: in central DNS
+
+<code class="prompt">michel ~/testdir&gt;</code> <span><strong class="command">cat <code class="filename">/var/tmp/sysconfig.out</code></strong></span>
+Your root account info:
+root:x:0:0:root:/root:/bin/bash
+hint for password: blue lagoon
+Your local host configuration:
+127.0.0.1 localhost.localdomain localhost
+192.168.42.1 tintagel.kingarthur.com tintagel
+in central DNS
+</pre></div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_08_02_04_03"></a>8.2.4.3.&nbsp;关闭文件描述符
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>既然子进程继承打开文件描述符，那么在不需要文件描述符的时候关闭它将是一个良好的习惯，使用以下语句完成：</p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">exec fd&lt;&amp;-</code> 
+                  </p>
+               </div>
+               <p>上面的例子分配给标准输入的文件描述符7，在每次用户需要读取真实便准输入设备-通常是键盘的时候就关闭。syntax. </p>
+               <p>以下是一个简单的例子只有在向管道提交一个标准错误时的重定向：</p><pre class="screen">
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">cat <code class="filename">listdirs.sh</code></strong></span>
+#!/bin/bash
+
+# This script prints standard output unchanged, while standard error is 
+# redirected for processing by awk.
+
+INPUTDIR="$1"
+
+exec 6&gt;&amp;1
+
+ls "$INPUTDIR"/* 2&gt;&amp;1 &gt;&amp;6 6&gt;&amp;- \
+				# Closes fd 6 for awk, but not for ls.
+
+| awk 'BEGIN { FS=":" } { print "YOU HAVE NO ACCESS TO" $2 }' 6&gt;&amp;-
+
+exec 6&gt;&amp;-
+</pre></div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_08_02_04_04"></a>8.2.4.4.&nbsp;<span class="emphasis"><em>Here</em></span> 文档
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>经常性的，你的脚本可能调用其他程序或者脚本来请求输入。 <span class="emphasis"><em>here</em></span> 文档提供了一种通知shell从当前源读取输入直到找到行仅仅包含搜索字符的方法。(no trailing blanks).  所有读取的行到那个点然后作为一个命令的标准输入。
+               </p>
+               <p>结果是你不需要访问单独的文件；你可以使用shell特殊字符，看上去比 <span><strong class="command">echo</strong></span> 的更好看些：
+               </p><pre class="screen">
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">cat <code class="filename">startsurf.sh</code></strong></span>
+#!/bin/bash
+
+# This script provides an easy way for users to choose between browsers.
+
+echo "These are the web browsers on this system:"
+ 
+# Start here document
+cat &lt;&lt; BROWSERS
+mozilla
+links
+lynx
+konqueror
+opera
+netscape
+BROWSERS
+# End here document
+
+echo -n "Which is your favorite? "
+read browser
+
+echo "Starting $browser, please wait..."
+$browser &amp;
+
+<code class="prompt">michel ~&gt;</code> <span><strong class="command">startsurf.sh</strong></span>
+These are the web browsers on this system:
+mozilla
+links
+lynx
+konqueror
+opera
+netscape
+<code class="prompt">Which is your favorite?</code> <span><strong class="command">opera</strong></span>
+Starting opera, please wait...
+</pre><p>尽管我们讨论 <span class="emphasis"><em>here document</em></span>， it is supposed to be a construct within the same script.  This is an example that installs a package automatically, eventhough
+                  you should normally confirm:
+               </p><pre class="screen">
+#!/bin/bash
+ 
+# This script installs packages automatically, using yum.
+ 
+if [ $# -lt 1 ]; then
+        echo "Usage: $0 package."
+        exit 1
+fi
+ 
+yum install $1 &lt;&lt; CONFIRM
+y
+CONFIRM
+</pre><p>这是脚本是如何运行的。当看到这样的 “<span class="quote">Is this ok [y/N]</span>” 提示字符串，这个脚本会自动回答 “<span class="quote">y</span>”：
+               </p><pre class="screen">
+<code class="prompt">[root@picon bin]#</code> <span><strong class="command">./install.sh <em class="parameter"><code>tuxracer</code></em></strong></span>
+Gathering header information file(s) from server(s)
+Server: Fedora Linux 2 - i386 - core
+Server: Fedora Linux 2 - i386 - freshrpms
+Server: JPackage 1.5 for Fedora Core 2
+Server: JPackage 1.5, generic
+Server: Fedora Linux 2 - i386 - updates
+Finding updated packages
+Downloading needed headers
+Resolving dependencies
+Dependencies resolved
+I will do the following:
+[install: tuxracer 0.61-26.i386]
+<code class="prompt">Is this ok [y/N]:</code> <span><strong class="command"><span><strong class="keycap">Enter</strong></span></strong></span>Downloading Packages
+Running test transaction:
+Test transaction complete, Success!
+tuxracer 100 % done 1/1
+Installed:  tuxracer 0.61-26.i386
+Transaction(s) Complete
+</pre></div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch08.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch08.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch08s03.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">第&nbsp;8&nbsp;章&nbsp;编写交互脚本&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;8.3.&nbsp;总结</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

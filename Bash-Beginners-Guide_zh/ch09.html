@@ -1,0 +1,229 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;9&nbsp;章&nbsp;重复性任务</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch08s04.html" title="8.4.&nbsp;练习">
+      <link rel="next" href="ch09s02.html" title="9.2.&nbsp;while循环">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;9&nbsp;章&nbsp;重复性任务</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch08s04.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch09s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_09"></a>第&nbsp;9&nbsp;章&nbsp;重复性任务
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch09.html#sect_09_01">9.1. for循环</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch09.html#sect_09_01_01">9.1.1. 如何工作？</a></span></dt>
+                     <dt><span class="sect2"><a href="ch09.html#sect_09_01_02">9.1.2. 例子</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch09s02.html">9.2. while循环</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch09s02.html#sect_09_02_01">9.2.1. 什么是while循环？</a></span></dt>
+                     <dt><span class="sect2"><a href="ch09s02.html#sect_09_02_02">9.2.2. 例子</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch09s03.html">9.3. until循环</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch09s03.html#sect_09_03_01">9.3.1. 什么是until循环？</a></span></dt>
+                     <dt><span class="sect2"><a href="ch09s03.html#sect_09_03_02">9.3.2. 例子</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch09s04.html">9.4. I/0 重定向和循环</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch09s04.html#sect_09_04_01">9.4.1. 输入重定向</a></span></dt>
+                     <dt><span class="sect2"><a href="ch09s04.html#sect_09_04_02">9.4.2. 输出重定向</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch09s05.html">9.5. Break 和 continue</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch09s05.html#sect_09_05_01">9.5.1. break 内建命令</a></span></dt>
+                     <dt><span class="sect2"><a href="ch09s05.html#sect_09_05_02">9.5.2. continue 内建命令</a></span></dt>
+                     <dt><span class="sect2"><a href="ch09s05.html#sect_09_05_03">9.5.3. 例子</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch09s06.html">9.6. 使用select内建命令来制作菜单</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch09s06.html#sect_09_06_01">9.6.1. 概要</a></span></dt>
+                     <dt><span class="sect2"><a href="ch09s06.html#sect_09_06_02">9.6.2. 子菜单</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch09s07.html">9.7. shift内建命令</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch09s07.html#sect_09_07_01">9.7.1. What does it do?</a></span></dt>
+                     <dt><span class="sect2"><a href="ch09s07.html#sect_09_07_02">9.7.2. 例子</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch09s08.html">9.8. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch09s09.html">9.9. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>完成本章后，你将能够</p>
+            <p>
+               
+            </p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>使用 <span><strong class="command">for</strong></span>, <span><strong class="command">while</strong></span> 和 <span><strong class="command">until</strong></span> 循环，来决定什么场合使用什么循环
+                     </p>
+                  </li>
+                  <li>
+                     <p>使用Bash内建命令的 <span><strong class="command">break</strong></span> 和 <span><strong class="command">continue</strong></span> 
+                     </p>
+                  </li>
+                  <li>
+                     <p>使用 <span><strong class="command">select</strong></span> 语句来写脚本
+                     </p>
+                  </li>
+                  <li>
+                     <p>编写可变参数数量的脚本</p>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_09_01"></a>9.1.&nbsp;for循环
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_09_01_01"></a>9.1.1.&nbsp;如何工作？
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> <span><strong class="command">for</strong></span> 循环是3个shell循环结构中的第一个。这个循环允许指定一个值的列表。列表中的命令为每个在列表中的值执行。
+               </p>
+               <p>这个循环的语法结构是这样的：</p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">for <code class="varname">NAME</code> [in LIST ]; do COMMANDS; done</code> 
+                  </p>
+               </div>
+               <p>如果 <span><strong class="command">[in LIST]</strong></span> 不存在的话，就使用 <span><strong class="command">in <code class="varname">$@</code></strong></span> 替换且 <span><strong class="command">for</strong></span> 对每个位置参数执行一次 <span><strong class="command">COMMANDS</strong></span> (参见 <a href="ch03s02.html#sect_03_02_05" title="3.2.5.&nbsp;特殊参数">第&nbsp;3.2.5&nbsp;节 “特殊参数”</a> 和 <a href="ch07s02.html#sect_07_02_01_02" title="7.2.1.2.&nbsp;检查命令行参数">第&nbsp;7.2.1.2&nbsp;节 “检查命令行参数”</a>).
+               </p>
+               <p>返回值为最后执行命令的退出状态。如果由于没有 <code class="varname">LIST</code> 中没有任何项目就不执行命令，返回值是零。
+               </p>
+               <p><code class="varname">NAME</code> 可以使任何变量的名字，虽然 <code class="varname">i</code> 的使用非常普遍。 <code class="varname">LIST</code> 可以是任何字的列表，字符串和数字，命令生成。执行的 <span><strong class="command">COMMANDS</strong></span> 也可以是任何操作系统命令，脚本，程序或者shell语句。第一次执行循环的时候，<code class="varname">NAME</code> 设置为<code class="varname">LIST</code> 中的第一个项目。第二次，它的值设置成列表中的第二个项目，以此类推。当 <code class="varname">NAME</code> 得到了在 <code class="varname">LIST</code> 中所有的值之后循环中止。
+               </p>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_09_01_02"></a>9.1.2.&nbsp;例子
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_09_01_02_03"></a>9.1.2.1.&nbsp;为指定的LIST项目使用命令替换
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>第一个是命令行例子，证明 <span><strong class="command">for</strong></span> 循环的使用来为每个 <code class="filename">.xml</code> 文件做备份。执行了这个命令之后，在你的源代码上工作就变得很安全：
+                  </p><pre class="screen">
+<code class="prompt">[carol@octarine ~/articles]</code> <span><strong class="command">ls <code class="filename">*.xml</code></strong></span>
+file1.xml  file2.xml  file3.xml
+
+<code class="prompt">[carol@octarine ~/articles]</code> <span><strong class="command">ls <code class="filename">*.xml</code> &gt; <code class="filename">list</code></strong></span>
+
+<code class="prompt">[carol@octarine ~/articles]</code> <span><strong class="command">for <code class="varname">i</code> in <em class="parameter"><code>`cat list`</code></em>; do cp <code class="filename">"$i" "$i".bak</code> ; done</strong></span>
+
+<code class="prompt">[carol@octarine ~/articles]</code> <span><strong class="command">ls <code class="filename">*.xml*</code></strong></span>
+file1.xml  file1.xml.bak  file2.xml  file2.xml.bak  file3.xml  file3.xml.bak
+</pre><p>这个列出了在 <code class="filename">/sbin</code> 中的正好是纯文本的文件，这是可能的脚本：
+                  </p><pre class="screen">
+<span><strong class="command">for <code class="varname">i</code> in <em class="parameter"><code>`ls /sbin`</code></em>; do file <code class="filename">/sbin/$i</code> | grep <em class="parameter"><code>ASCII</code></em>; done</strong></span>
+</pre></div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_09_01_02_02"></a>9.1.2.2.&nbsp;使用一个变量的内容来指定LIST项目
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>以下是一个特别的应用脚本来转换适应一个特定的schema的HTML文件到PHP文件，转化通过取出最初的25行和最后的21行，用PHP标签替换来提供页眉和页脚来完成的：</p><pre class="screen">
+<code class="prompt">[carol@octarine ~/html]</code> <span><strong class="command">cat <code class="filename">html2php.sh</code></strong></span>
+#!/bin/bash
+# specific conversion script for my html files to php
+LIST="$(ls *.html)"
+for i in "$LIST"; do
+     NEWNAME=$(ls "$i" | sed -e 's/html/php/')
+     cat beginfile &gt; "$NEWNAME"
+     cat "$i" | sed -e '1,25d' | tac | sed -e '1,21d'| tac &gt;&gt; "$NEWNAME"
+     cat endfile &gt;&gt; "$NEWNAME"
+done
+</pre><p>既然这里我们没有做一个行计数，就没有办法知道开始删除的行直到到达的行的行数。这个问题可以用 <span><strong class="command">tac</strong></span>, 它将在文件中保留行。
+                  </p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch08s04.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch09s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">8.4.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;9.2.&nbsp;while循环</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

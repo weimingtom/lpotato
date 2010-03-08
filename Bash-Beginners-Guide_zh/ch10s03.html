@@ -1,0 +1,256 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>10.3.&nbsp;变量的操作</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch10.html" title="第&nbsp;10&nbsp;章&nbsp;变量进阶">
+      <link rel="prev" href="ch10s02.html" title="10.2.&nbsp;数组变量">
+      <link rel="next" href="ch10s04.html" title="10.4.&nbsp;总结">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">10.3.&nbsp;变量的操作</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch10s02.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;10&nbsp;章&nbsp;变量进阶</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch10s04.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_10_03"></a>10.3.&nbsp;变量的操作
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_10_03_01"></a>10.3.1.&nbsp;变量算术运算
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>已经在 <a href="ch03s04.html#sect_03_04_05" title="3.4.6.&nbsp;算术扩展">第&nbsp;3.4.6&nbsp;节 “算术扩展”</a> 讨论过。
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_10_03_02"></a>10.3.2.&nbsp;变量的长度
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>使用 <span><strong class="command">${#<code class="varname">VAR</code>}</strong></span> 语法将计算一个变量当中字符的数量。如果 <code class="varname">VAR</code> is “<span class="quote">*</span>” or “<span class="quote">@</span>”, this value is substituted with the number of positional parameters or number of elements in an array in general.  This
+               is demonstrated in the example below:
+            </p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">$SHELL</code></strong></span>
+/bin/bash
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${#SHELL}</code></strong></span>
+9
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command"><code class="varname">ARRAY</code>=<em class="parameter"><code>(one two three)</code></em></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${#ARRAY}</code></strong></span>
+3
+</pre></div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_10_03_03"></a>10.3.3.&nbsp;变量的转化
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_10_03_03_01"></a>10.3.3.1.&nbsp;替换
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <div class="cmdsynopsis">
+                  <p><code class="command">${<code class="varname">VAR</code>:-<em class="parameter"><code>WORD</code></em>}</code> 
+                  </p>
+               </div>
+               <p>如果 <code class="varname">VAR</code> 没有定义或者是空值，<em class="parameter"><code>WORD</code></em> 的扩展就被替换掉；否则 <code class="varname">VAR</code> 的值被替换掉：
+               </p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${TEST:-test}</code></strong></span>
+test
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">$TEST</code></strong></span>
+ 
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">export <code class="varname">TEST</code>=<em class="parameter"><code>a_string</code></em></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${TEST:-test}</code></strong></span>
+a_string
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${TEST2:-$TEST}</code></strong></span>
+a_string
+</pre><p>这种形式常常使用在条件测试中，比如在这个里面：</p><pre class="screen">
+<span><strong class="command"><em class="parameter"><code>[ -z "${COLUMNS:-}" ]</code></em> &amp;&amp; <code class="varname">COLUMNS</code>=<em class="parameter"><code>80</code></em></strong></span>
+</pre><p>这是以下形式的简化写法：</p><pre class="screen">
+<span><strong class="command">if <em class="parameter"><code>[ -z "${COLUMNS:-}" ]</code></em>; then
+	<code class="varname">COLUMNS</code>=<em class="parameter"><code>80</code></em>
+fi</strong></span>
+</pre><p>参见 <a href="ch07.html#sect_07_01_02_03" title="7.1.2.3.&nbsp;字符串比较">第&nbsp;7.1.2.3&nbsp;节 “字符串比较”</a> 得到更多关于这种类型条件测试的信息。
+               </p>
+               <p>如果 (-) 使用等号(=)替换， the value is assigned to the parameter if it does not exist:</p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">$TEST2</code></strong></span>
+
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${TEST2:=$TEST}</code></strong></span>
+a_string
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">$TEST2</code></strong></span>
+a_string
+</pre><p>以下语法测试一个变量是否存在。如果没有设置，<em class="parameter"><code>WORD</code></em> 的扩展打印到标准输出且非交互shell退出。证明：
+               </p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command">cat <code class="filename">vartest.sh</code></strong></span>
+#!/bin/bash
+ 
+# This script tests whether a variable is set.  If not,
+# it exits printing a message.
+ 
+echo ${TESTVAR:?"There's so much I still wanted to do..."}
+echo "TESTVAR is set, we can proceed."
+
+<code class="prompt">[bob in testdir]</code> <span><strong class="command">./vartest.sh</strong></span>
+./vartest.sh: line 6: TESTVAR: There's so much I still wanted to do...
+
+<code class="prompt">[bob in testdir]</code> <span><strong class="command">export <code class="varname">TESTVAR</code>=<em class="parameter"><code>present</code></em></strong></span>
+
+<code class="prompt">[bob in testdir]</code> <span><strong class="command">./vartest.sh</strong></span>
+present
+TESTVAR is set, we can proceed.
+</pre><p>使用 “<span class="quote">+</span>” 来替代感叹号instead of the exclamation mark sets the variable to the expansion of <em class="parameter"><code>WORD</code></em>; 如果没有设置，什么都不会发生。
+               </p>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_10_03_03_02"></a>10.3.3.2.&nbsp;去除子字符串Removing substrings
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>要从一个变量之中，删除等于 <em class="parameter"><code>OFFSET</code></em> 数量的字符，使用这样的语法：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">${<code class="varname">VAR</code>:<em class="parameter"><code>OFFSET</code></em>:<em class="parameter"><code>LENGTH</code></em>}</code> 
+                  </p>
+               </div>
+               <p> <em class="parameter"><code>LENGTH</code></em> 参数定义了在偏移点offset之后第一个字符开始需要保留多少字符。如果 <em class="parameter"><code>LENGTH</code></em> 省略，就是用剩余的变量的内容。
+               </p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command">export <code class="varname">STRING</code>=<em class="parameter"><code>"thisisaverylongname"</code></em></strong></span>
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${STRING:4}</code></strong></span>
+isaverylongname
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${STRING:6:5}</code></strong></span>
+avery
+</pre><div class="cmdsynopsis">
+                  <p><code class="command">${<code class="varname">VAR</code>#<em class="parameter"><code>WORD</code></em>}</code> 
+                  </p>
+               </div>
+               <p>and</p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">${<code class="varname">VAR</code>##<em class="parameter"><code>WORD</code></em>}</code> 
+                  </p>
+               </div>
+               <p>这个结构用来匹配在 <code class="varname">VAR</code> 包含 <em class="parameter"><code>WORD</code></em>。  <em class="parameter"><code>WORD</code></em> is expanded to produce a pattern just as in file name expansion.  If the pattern matches the beginning of the expanded value
+                  of <code class="varname">VAR</code>, then the result of the expansion is the expanded value of <code class="varname">VAR</code> with the shortest matching pattern (“<span class="quote">#</span>”) or the longest matching pattern (indicated with “<span class="quote">##</span>”).
+               </p>
+               <p>If <code class="varname">VAR</code> is <code class="varname">*</code> or <code class="varname">@</code>, the pattern removal operation is applied to each positional parameter in turn, and the expansion is the resultant list.
+               </p>
+               <p>If <code class="varname">VAR</code> is an array variable subscribed with “<span class="quote">*</span>” or “<span class="quote">@</span>”, the pattern removal operation is applied to each member of the array in turn, and the expansion is the resultant list.
+                   This is shown in the examples below:
+               </p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${ARRAY[*]}</code></strong></span>
+one two one three one four
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${ARRAY[*]#one}</code></strong></span>
+two three four
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${ARRAY[*]#t}</code></strong></span>
+one wo one hree one four
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${ARRAY[*]#t*}</code></strong></span>
+one wo one hree one four
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${ARRAY[*]##t*}</code></strong></span>
+one one one four
+</pre><p>The opposite effect is obtained using “<span class="quote">%</span>” and “<span class="quote">%%</span>”, as in this example below.  <em class="parameter"><code>WORD</code></em> should match a trailing portion of string:
+               </p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">$STRING</code></strong></span>
+thisisaverylongname
+
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${STRING%name}</code></strong></span>
+thisisaverylong
+</pre></div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_10_03_03_03"></a>10.3.3.3.&nbsp;替换部分变量的名字
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>使用</p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">${<code class="varname">VAR</code>/<em class="parameter"><code>PATTERN</code></em>/<em class="parameter"><code>STRING</code></em>}</code> 
+                  </p>
+               </div>
+               <p>or</p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">${<code class="varname">VAR</code>//<em class="parameter"><code>PATTERN</code></em>/<em class="parameter"><code>STRING</code></em>}</code> 
+                  </p>
+               </div>
+               <p>语法。第一种形式仅仅替换第一个匹配的项目，第二个用 <em class="parameter"><code>STRING</code></em> 替换所有匹配 <em class="parameter"><code>PATTERN</code></em> 的项目。
+               </p><pre class="screen">
+<code class="prompt">[bob in ~]</code> <span><strong class="command">echo <code class="varname">${STRING/name/string}</code></strong></span>
+thisisaverylongstring
+</pre><p>更多信息可以在Bash info页面找到。</p>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch10s02.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch10.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch10s04.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">10.2.&nbsp;数组变量&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;10.4.&nbsp;总结</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

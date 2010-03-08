@@ -1,0 +1,479 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;3&nbsp;章&nbsp;Bash环境</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch02s05.html" title="2.5.&nbsp;练习">
+      <link rel="next" href="ch03s02.html" title="3.2.&nbsp;变量">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;3&nbsp;章&nbsp;Bash环境</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch02s05.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch03s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_03"></a>第&nbsp;3&nbsp;章&nbsp;Bash环境
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch03.html#sect_03_01">3.1. Shell初始化文件</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch03.html#sect_03_01_01">3.1.1. 跨系统配置文件</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03.html#sect_03_01_02">3.1.2. 单独用户配置文件</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03.html#sect_03_01_03">3.1.3. 改变shell配置文件</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch03s02.html">3.2. 变量</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_01">3.2.1. 变量的类型</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_02">3.2.2. 建立变量</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_03">3.2.3. 导出变量Exporting variables</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_04">3.2.4. 保留变量</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_05">3.2.5. 特殊参数</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s02.html#sect_03_02_06">3.2.6. 脚本借助变量的循环使用</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch03s03.html">3.3. 引用字符</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_01">3.3.1. Why?</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_02">3.3.2. 转义字符</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_03">3.3.3. 单引号</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_04">3.3.4. 双引号</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_05">3.3.5. ANSI-C引用</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s03.html#sect_03_03_06">3.3.6. 场合</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch03s04.html">3.4. Shell扩展</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_0">3.4.1. 概要</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_01">3.4.2. 括号扩展</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_02">3.4.3. ~扩展</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_03">3.4.4. Shell参数和变量扩展</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_04">3.4.5. 命令替换</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_05">3.4.6. 算术扩展</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_06">3.4.7. 过程替换Process substitution</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_07">3.4.8. 字分割</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s04.html#sect_03_04_08">3.4.9. 文件名扩展</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch03s05.html">3.5. 别名</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch03s05.html#sect_03_05_01">3.5.1. 什么是别名？</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s05.html#sect_03_05_02">3.5.2. 建立和移除别名</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch03s06.html">3.6. 更多 Bash 选项</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch03s06.html#sect_03_06_01">3.6.1. 显示选项</a></span></dt>
+                     <dt><span class="sect2"><a href="ch03s06.html#sect_03_06_02">3.6.2. 改变选项</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch03s07.html">3.7. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch03s08.html">3.8. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>本章我们讨论几种能影响Bash环境的不同方法：</p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>编辑shell初始化文件</p>
+                  </li>
+                  <li>
+                     <p>使用变量</p>
+                  </li>
+                  <li>
+                     <p>使用不同引用风格</p>
+                  </li>
+                  <li>
+                     <p>实现算术运算</p>
+                  </li>
+                  <li>
+                     <p>指派别名</p>
+                  </li>
+                  <li>
+                     <p>使用扩充和替换</p>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_03_01"></a>3.1.&nbsp;Shell初始化文件
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_03_01_01"></a>3.1.1.&nbsp;跨系统配置文件
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_03_01_01_01"></a>3.1.1.1.&nbsp;/etc/profile
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>当用 <code class="option">--login</code> 选项或者以<span><strong class="command">sh</strong></span> 来调用交互模式时，Bash读取 <code class="filename">/etc/profile</code> 的指令。通常是一些设置shell变量 <code class="varname">PATH</code>, <code class="varname">USER</code>, <code class="varname">MAIL</code>, <code class="varname">HOSTNAME</code> 和 <code class="varname">HISTSIZE</code>。
+                  </p>
+                  <p>在某些系统上， <span><strong class="command">umask</strong></span> 的值在 <code class="filename">/etc/profile</code>中配置；其他的一些系统中这个文件包含了指向了其他配置文件的指针：
+                  </p>
+                  <div class="itemizedlist">
+                     <ul type="disc">
+                        <li>
+                           <p><code class="filename">/etc/inputrc</code>, 可以配置命令行响铃风格的跨系统的行读取初始化文件。
+                           </p>
+                        </li>
+                        <li>
+                           <p><code class="filename">/etc/profile.d</code> 包含了配置特别程序的跨系统行为的文件。
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>你想应用到所有用户环境的所有设置都必须在这个文件中，这个文件看上去可能像这样：</p><pre class="screen">
+# /etc/profile
+
+# System wide environment and startup programs, for login setup
+
+PATH=$PATH:/usr/X11R6/bin
+
+# No core files by default
+ulimit -S -c 0 &gt; /dev/null 2&gt;&amp;1
+
+USER="`id -un`"
+LOGNAME=$USER
+MAIL="/var/spool/mail/$USER"
+
+HOSTNAME=`/bin/hostname`
+HISTSIZE=1000
+
+# Keyboard, bell, display style: the readline config file:
+if [ -z "$INPUTRC" -a ! -f "$HOME/.inputrc" ]; then
+    INPUTRC=/etc/inputrc
+fi
+
+PS1="\u@\h \W"
+
+export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE INPUTRC PS1
+
+# Source initialization files for specific programs (ls, vim, less, ...)
+for i in /etc/profile.d/*.sh ; do
+    if [ -r "$i" ]; then
+        . $i
+    fi
+done
+
+# Settings for program initialization
+source /etc/java.conf
+export NPX_PLUGIN_PATH="$JRE_HOME/plugin/ns4plugin/:/usr/lib/netscape/plugins"
+
+PAGER="/usr/bin/less"
+
+unset i
+</pre><p>这个配置文件设置了一些基本shell环境变量和一些用户需要在web浏览器中运行Java 和/或 Java应用程序的一些变量。参见 <a href="ch03s02.html" title="3.2.&nbsp;变量">第&nbsp;3.2&nbsp;节 “变量”</a>.
+                  </p>
+                  <p>参见 <a href="ch07.html" title="第&nbsp;7&nbsp;章&nbsp;条件语句">第&nbsp;7&nbsp;章 <i>条件语句</i></a> 得到更多关于条件 <span><strong class="command">if</strong></span> 如何使用在这些文件中； <a href="ch09.html" title="第&nbsp;9&nbsp;章&nbsp;重复性任务">第&nbsp;9&nbsp;章 <i>重复性任务</i></a> 讨论诸如 <span><strong class="command">for</strong></span> 的循环结构。
+                  </p>
+                  <p>Bash的源代码包含了用于普通和单独使用的 <code class="filename">profile</code> 文件例子。这些和上面这个例子需要做某些改变才能在你的环境中工作！
+                  </p>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_03_01_01_02"></a>3.1.1.2.&nbsp;/etc/bashrc
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>在提供多种类型shell的系统中，因为 <code class="filename">/etc/profile</code> 也会被诸如 Bourne shell的其他shell读取，最好把Bash特殊配置文件放到 <code class="filename">/etc/profile</code> 中。shell产生的错误 Errors generated by shells that don't understand the Bash syntax are prevented by splitting the configuration
+                     files for the different types of shells.  由于这样的情况，用户的 <code class="filename">~/.bashrc</code> 可能指向 <code class="filename">/etc/bashrc</code> 以便于在登陆shell的初始化进程中包含它。
+                  </p>
+                  <p>你也可能发现你系统中的 <code class="filename">/etc/profile</code> 只存放了shell环境和程序启动设置，尽管 <code class="filename">/etc/bashrc</code> 包含了为shell函数和别名的跨系统定义。<code class="filename">/etc/bashrc</code> 文件可能指向 <code class="filename">/etc/profile</code> 或者单用户shell初始化文件。
+                  </p>
+                  <p>源代码包含了 <code class="filename">bashrc</code> 例子文件，或者你可能在 <code class="filename">/usr/share/doc/bash-2.05b/startup-files</code> 找到一份拷贝。这是和Bash文档一起提供的 <code class="filename">bashrc</code> 一个部分：
+                  </p><pre class="screen">
+alias ll='ls -l'
+alias dir='ls -ba'
+alias c='clear'
+alias ls='ls --color'
+
+alias mroe='more'
+alias pdw='pwd'
+alias sl='ls --color'
+
+pskill()
+{
+        local pid
+
+        pid=$(ps -ax | grep $1 | grep -v grep | gawk '{ print $1 }')
+        echo -n "killing $1 (process $pid)..."
+        kill -9 $pid
+        echo "slaughtered."
+}
+
+</pre><p>除了普通的别名之外，它还包含了更有用的别名甚至在你拼写错误的时候仍然能够让它工作。我们会在 <a href="ch03s05.html#sect_03_05_02" title="3.5.2.&nbsp;建立和移除别名">第&nbsp;3.5.2&nbsp;节 “建立和移除别名”</a>讨论别名。这个文件包含了一个函数，<span><strong class="command">pskill</strong></span>；函数会在 <a href="ch11.html" title="第&nbsp;11&nbsp;章&nbsp;函数">第&nbsp;11&nbsp;章 <i>函数</i></a> 中具体学习。
+                  </p>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_03_01_02"></a>3.1.2.&nbsp;单独用户配置文件
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                  <table border="0" summary="Note: 我没有这些文件？！">
+                     <tr>
+                        <td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="images/note.png"></td>
+                        <th align="left">我没有这些文件？！</th>
+                     </tr>
+                     <tr>
+                        <td align="left" valign="top">
+                           <p>默认情况下这些文件可能在你的主目录中，需要的话也可以建立他们。</p>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_03_01_02_01"></a>3.1.2.1.&nbsp;~/.bash_profile
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>这是个别地为配置用户环境的首选的配置文件。在这个文件中，用户可以增加额外的配置选项或者改变默认设置：</p><pre class="screen">
+<code class="prompt">franky~&gt;</code> <span><strong class="command">cat <code class="filename">.bash_profile</code></strong></span>
+#################################################################
+#                                                               #
+#   .bash_profile file                                          #
+#                                                               #
+#   Executed from the bash shell when you log in.               #
+#                                                               #
+#################################################################
+
+source ~/.bashrc
+source ~/.bash_login
+case "$OS" in
+  IRIX)
+    stty sane dec
+    stty erase
+    ;;
+#  SunOS)
+#    stty erase
+#    ;;
+  *)
+    stty sane
+    ;;
+esac
+</pre><p>这个用户配置了登陆到不同操作系统的退格字符。除此之外，读取用户的 <code class="filename">.bashrc</code> 和 <code class="filename">.bash_login</code> 文件。
+                  </p>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_03_01_02_02"></a>3.1.2.2.&nbsp;~/.bash_login
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>这个文件包含了只有在你登陆进系统的才执行的特殊的设置。在这个例子中，我用它来配置 <span><strong class="command">umask</strong></span> 的值来显示一个当前连接的用户列表。该用户也得到了当前月的日历：
+                  </p><pre class="screen">
+#######################################################################
+#                                                                     #
+#   Bash_login file                                                   #
+#                                                                     #
+#   commands to perform from the bash shell at login time             #
+#   (sourced from .bash_profile)                                      #
+#                                                                     #
+#######################################################################
+#   file protection
+umask 002       # all to me, read to group and others
+#   miscellaneous
+w
+cal `date +"%m"` `date +"%Y"`
+</pre><p>在没有 <code class="filename">~/.bash_profile</code>的情况下，这个文件就被读取。
+                  </p>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_03_01_02_03"></a>3.1.2.3.&nbsp;~/.profile
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>在没有 <code class="filename">~/.bash_profile</code> 和 <code class="filename">~/.bash_login</code>文件的情况下，<code class="filename">~/.profile</code> 就被读取。他能保存一些可以被其它的shell访问的配置。注意其他的shell可能不能识别Bash的语法。
+                  </p>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_03_01_02_04"></a>3.1.2.4.&nbsp;~/.bashrc
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>如今，更加普遍的是使用一个非登陆shell，比如使用X终端窗口登陆进图形模式的时候。打开一个这样的窗口之后，用户不需要提供用户名和密码；无需认证。此时Bash会搜索 <code class="filename">~/.bashrc</code> ，所以也指向登陆时读取的文件，同时也意味着你不需要在多个文件中输入相同的设置。
+                  </p>
+                  <p>在这个用户的<code class="filename">.bashrc</code> 里，在读取了跨系统的 <code class="filename">/etc/bashrc</code> 之后定义了一些别名和为特定的程序使用的变量：
+                  </p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">cat <code class="filename">.bashrc</code></strong></span>
+# /home/franky/.bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+       . /etc/bashrc
+
+fi
+
+# shell options
+
+set -o noclobber
+
+# my shell variables
+
+export PS1="\[\033[1;44m\]\u \w\[\033[0m\] "
+export PATH="$PATH:~/bin:~/scripts"
+
+# my aliases
+
+alias cdrecord='cdrecord -dev 0,0,0 -speed=8'
+alias ss='ssh octarine'
+alias ll='ls -la'
+
+# mozilla fix
+
+MOZILLA_FIVE_HOME=/usr/lib/mozilla
+LD_LIBRARY_PATH=/usr/lib/mozilla:/usr/lib/mozilla/plugins
+MOZ_DIST_BIN=/usr/lib/mozilla
+MOZ_PROGRAM=/usr/lib/mozilla/mozilla-bin
+export MOZILLA_FIVE_HOME LD_LIBRARY_PATH MOZ_DIST_BIN MOZ_PROGRAM
+
+# font fix
+alias xt='xterm -bg black -fg white &amp;'
+
+# BitchX settings
+export IRCNAME="frnk"
+
+# THE END
+<code class="prompt">franky ~&gt;</code>
+</pre><p>更多的例子能在bash的包内找到。记住例子可能需要修改才能在你的环境内工作。</p>
+                  <p>别名将在 <a href="ch03s05.html" title="3.5.&nbsp;别名">第&nbsp;3.5&nbsp;节 “别名”</a> 讨论。
+                  </p>
+               </div>
+               <div class="sect3" lang="zh-cn">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="sect_03_01_02_05"></a>3.1.2.5.&nbsp;~/.bash_logout
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>这个文件包含了登出系统时候的特别指令。在这个例子中，终端窗口在登出的时候被清空。在关闭时留下一个干净的窗口对远程连接来说非常有用。</p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">cat <code class="filename">.bash_logout</code></strong></span>
+#######################################################################
+#                                                                     #
+#   Bash_logout file                                                  #
+#                                                                     #
+#   commands to perform from the bash shell at logout time            #
+#                                                                     #
+#######################################################################
+clear
+<code class="prompt">franky ~&gt;</code>
+</pre></div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_03_01_03"></a>3.1.3.&nbsp;改变shell配置文件
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>当对上述文件进行任何修改的时候，用户可以重新连接到系统，或者 <span><strong class="command">source</strong></span> 这个改变的文件来生效。以这样的方式来解释脚本的话，修改就会再当前的shell生效。
+               </p>
+               <div class="figure"><a name="d0e2954"></a><p class="title"><b>图&nbsp;3.1.&nbsp;不同用户的不同提示</b></p>
+                  <div class="mediaobject"><img src="images/prompt.png" alt="Prompt 1 is &#34;franky ~&gt;; prompt is then changed with &#34;export PS1=&#34;\[\033[1;42m\]$USER is in \w\[\033[0m\] &#34; resulting in a green reverse video prompt displaying username and present working directory in humanly readable form.  Prompt for root is set using a similar PS1 configuration to be bright red reverse video."></div>
+               </div>
+               <p>多数shell脚本在一个私有的环境中执行：变量在子进程中不能继承除非他们被父进程export出来。Source一个包含shell命令的文件是对你自己的环境应用修改和在当前shell设置变量的一个方法。</p>
+               <p>这个例子也证明了不同用户设置不用的提示的用法。这样的情况下，红色意味着危险。当你有一个绿色的提示，就不需要担心太多</p>
+               <p>注意 <span><strong class="command">source <code class="filename">resourcefile</code></strong></span> 和使用 <span><strong class="command">. <code class="filename">resourcefile</code></strong></span> 是一样的。
+               </p>
+               <p>你会在所有这些配置文件前不知所措，同时发现自己面对着来源并不很清晰的设置，使用 <span><strong class="command">echo</strong></span> 语句，就像条是脚本那样；参见 <a href="ch02s03.html#sect_02_03_02" title="2.3.2.&nbsp;调试部分脚本">第&nbsp;2.3.2&nbsp;节 “调试部分脚本”</a>。可以像这样加上几行：
+               </p><pre class="screen">
+echo "Now executing .bash_profile.."
+</pre><p>或者像这样：</p><pre class="screen">
+echo "Now setting PS1 in .bashrc:"
+export PS1="[some value]"
+echo "PS1 is now set to $PS1"
+</pre></div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch02s05.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch03s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">2.5.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;3.2.&nbsp;变量</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

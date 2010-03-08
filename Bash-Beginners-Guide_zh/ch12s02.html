@@ -1,0 +1,156 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>12.2.&nbsp;陷阱</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch12.html" title="第&nbsp;12&nbsp;章&nbsp;捕捉信号">
+      <link rel="prev" href="ch12.html" title="第&nbsp;12&nbsp;章&nbsp;捕捉信号">
+      <link rel="next" href="ch12s03.html" title="12.3.&nbsp;总结">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">12.2.&nbsp;陷阱</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch12.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;12&nbsp;章&nbsp;捕捉信号</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch12s03.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_12_02"></a>12.2.&nbsp;陷阱
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_12_02_01"></a>12.2.1.&nbsp;概要
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>可能有这样的情况，你不想使用你的脚本的用户不合时宜地通过键盘来结束进程，比如因为必须提供输入或者必须进行某些清理工作。 <span><strong class="command">trap</strong></span> 语句捕获到这些序列且能够被编制出来在不活这些信号时候执行一系列的命令。
+            </p>
+            <p> <span><strong class="command">trap</strong></span> 语句的语法是这样的：
+            </p>
+            <div class="cmdsynopsis">
+               <p><code class="command">trap [COMMANDS] [SIGNALS]</code> 
+               </p>
+            </div>
+            <p>意味着 <span><strong class="command">trap</strong></span> 命令会捕捉在 <span class="emphasis"><em>SIGNALS</em></span> 列出的可能带有或者没有 <span class="emphasis"><em>SIG</em></span> 前缀的信号，或者信号数字。如果一个信号是 <span class="emphasis"><em>0</em></span> 或者 <span class="emphasis"><em>EXIT</em></span>，那么 <span><strong class="command">COMMANDS</strong></span> 在shell退出时候执行。如果其中一个信号是 <span class="emphasis"><em>DEBUG</em></span>，<span><strong class="command">COMMANDS</strong></span> 列表在每个简单命令后执行。一个信号也可以指定为 <span class="emphasis"><em>ERR</em></span>；这样的情况下 <span><strong class="command">COMMANDS</strong></span> 在每次一个简单命令以非零状态退出时执行。注意这些命令不会在非零退出状态来自一个 <span><strong class="command">if</strong></span> 语句时执行，或者来自一个 <span><strong class="command">while</strong></span> 或者 <span><strong class="command">until</strong></span> 循环。如果一个逻辑 <span class="emphasis"><em>AND</em></span> (&amp;&amp;) 或者 <span class="emphasis"><em>OR</em></span> (||) 出现在非零退出状态中，所有都不会执行，或者当一个命令的退出状态使用 <span class="emphasis"><em>!</em></span> 操作符进行取反。
+            </p>
+            <p>除非遭遇一个非法的信号，否则 <span><strong class="command">trap</strong></span> 命令的返回状态是0。<span><strong class="command">trap</strong></span> 命令带一组选项，在Bash的info页面中有记录。
+            </p>
+            <p>这里有个非常简单的例子，从用户处捕捉 <span><strong class="keycap">Ctrl</strong></span>+<span><strong class="keycap">C</strong></span>， upon which a message is printed. 当你尝试着不指定 <span class="emphasis"><em>KILL</em></span> 信号来杀掉这个程序时，什么都不会发生：
+            </p><pre class="screen">
+#!/bin/bash
+# traptest.sh
+
+trap "echo Booh!" SIGINT SIGTERM
+echo "pid is $$"
+
+while :			# This is the same as "while true".
+do
+        sleep 60	# This script is not really doing anything.
+done
+</pre></div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_12_02_02"></a>12.2.2.&nbsp;Bash怎样解释陷阱
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>每当Bash收到一个预先设置等待命令完成的陷阱的信号，在命令结束之前，陷阱不会执行。当Bash通过内建的命令 <span><strong class="command">wait</strong></span> 来等待一个异步的命令，陷阱已经发送的信号的接受会导致内建的 <span><strong class="command">wait</strong></span> 立即在陷阱执行后返回一个大于128的推出状态。
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_12_02_03"></a>12.2.3.&nbsp;更多例子
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_12_02_03_01"></a>12.2.3.1.&nbsp;检测一个已经使用的变量
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>每当调试较长的脚本的时候，你可能想给于一个变量 <span class="emphasis"><em>trace</em></span> 属性和陷阱的 <span class="emphasis"><em>DEBUG</em></span> 信息。通常你会像这样 <span><strong class="command"><code class="varname">VARIABLE</code>=value</strong></span>来给变量赋值。用下面的几行来代替变量的声明可能会为你脚本的行为提供非常有价值的信息：
+               </p><pre class="screen">
+declare -t VARIABLE=value
+
+trap "echo VARIABLE is being used here." DEBUG
+
+# rest of the script
+</pre></div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_12_02_03_02"></a>12.2.3.2.&nbsp;在退出的时候清理垃圾
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p> <span><strong class="command">whatis</strong></span> 命令依靠由cron执行 <code class="filename">makewhatis.cron</code> 生成的数据库：
+               </p><pre class="screen">
+#!/bin/bash
+
+LOCKFILE=/var/lock/makewhatis.lock
+
+# Previous makewhatis should execute successfully:
+
+[ -f $LOCKFILE ] &amp;&amp; exit 0
+
+# Upon exit, remove lockfile.
+
+trap "{ rm -f $LOCKFILE ; exit 255; }" EXIT
+
+touch $LOCKFILE
+makewhatis -u -w
+exit 0
+</pre></div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch12.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch12.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch12s03.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">第&nbsp;12&nbsp;章&nbsp;捕捉信号&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;12.3.&nbsp;总结</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,245 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>5.2.&nbsp;交互编辑</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch05.html" title="第&nbsp;5&nbsp;章&nbsp;GNU SED流编辑器">
+      <link rel="prev" href="ch05.html" title="第&nbsp;5&nbsp;章&nbsp;GNU SED流编辑器">
+      <link rel="next" href="ch05s03.html" title="5.3.&nbsp;非交互编辑">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">5.2.&nbsp;交互编辑</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch05.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;5&nbsp;章&nbsp;GNU SED流编辑器</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch05s03.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_05_02"></a>5.2.&nbsp;交互编辑
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_05_02_01"></a>5.2.1.&nbsp;打印包含pattern的行
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>你可以用 <span><strong class="command">grep</strong></span> 做不少事情，但是你不能用它来 “<span class="quote">查找和替换</span>” 。让我们开始。
+            </p>
+            <p>这是我们的文本文件例子：</p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">cat <code class="option">-n</code> <code class="filename">example</code></strong></span>
+     1  This is the first line of an example text.
+     2  It is a text with erors.
+     3  Lots of erors.
+     4  So much erors, all these erors are making me sick.
+     5  This is a line not containing any errors.
+     6  This is the last line.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p>我们想让 <span><strong class="command">sed</strong></span> 找到所有 “<span class="quote">erors</span>” 的行，我们使用 <span><strong class="command">p</strong></span> 来得到结果：
+            </p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed  <em class="parameter"><code>'/erors/p'</code></em> <code class="filename">example</code></strong></span>
+This is the first line of an example text.
+It is a text with erors.
+It is a text with erors.
+Lots of erors.
+Lots of erors.
+So much erors, all these erors are making me sick.
+So much erors, all these erors are making me sick.
+This is a line not containing any errors.
+This is the last line.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p>就像你看到的， <span><strong class="command">sed</strong></span> 打印出了整个文件，但是包含搜索字符串的行被打印了2次。这不是我们想要的。为了只符合要求的行，使用 <code class="option">-n</code> 选项：
+            </p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed <code class="option">-n</code> <em class="parameter"><code>'/erors/p'</code></em> <code class="filename">example</code></strong></span>
+It is a text with erors.
+Lots of erors.
+So much erors, all these erors are making me sick.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre></div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_05_02_02"></a>5.2.2.&nbsp;删除包含pattern的输入行
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>我们使用同样的文本文件作为例子。现在我们只想看到那些 <span class="emphasis"><em>not</em></span> 包含所要搜索字符串的行：
+            </p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed <em class="parameter"><code>'/erors/d'</code></em> <code class="filename">example</code></strong></span>
+This is the first line of an example text.
+This is a line not containing any errors.
+This is the last line.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p> <span><strong class="command">d</strong></span> 命令使得被排除的行不显示出来。
+            </p>
+            <p>匹配以第一个模板开头的和第二个模板结尾的行应该写成这样：</p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed <code class="option">-n</code> <em class="parameter"><code>'/^This.*errors.$/p'</code></em> <code class="filename">example</code></strong></span>
+This is a line not containing any errors.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre></div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_05_02_03"></a>5.2.3.&nbsp;行的范围
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>这次我们想单独列出包含错误的行。在例子中它们是第2-4行。使用 <span><strong class="command">d</strong></span> 命令来指定地址的范围：
+            </p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed <em class="parameter"><code>'2,4d'</code></em> <code class="filename">example</code></strong></span>
+This is the first line of an example text.
+This is a line not containing any errors.
+This is the last line.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p>要打印出文件中以特定行开头的直到最后一行的，使用如下的命令：</p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed <em class="parameter"><code>'3,$d'</code></em> <code class="filename">example</code></strong></span>
+This is the first line of an example text.
+It is a text with erors.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p>这个例子中只打印出例子里的头两行。</p>
+            <p>下面的命令打印出饱含 “<span class="quote">a text</span>”的第一次，直到下个包含 “<span class="quote">a line</span>” 的一行：
+            </p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed <code class="option">-n</code> <em class="parameter"><code>'/a text/,/This/p'</code></em> <code class="filename">example</code></strong></span>
+It is a text with erors.
+Lots of erors.
+So much erors, all these erors are making me sick.
+This is a line not containing any errors.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre></div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_05_02_04"></a>5.2.4.&nbsp;用sed来查找替换
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>在例子中，我们会搜索和替换错误来代替只选择（或者不选择）包含需要查找字符串的行。</p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed <em class="parameter"><code>'s/erors/errors/'</code></em> <code class="filename">example</code></strong></span>
+This is the first line of an example text.
+It is a text with errors.
+Lots of errors.
+So much errors, all these erors are making me sick.
+This is a line not containing any errors.
+This is the last line.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p>就像你看到的，这并不完全就是我们想要得：在第4行，只有第一个待搜索字符串被替换了，左面还有一个“eror”没有被替换。使用 <span><strong class="command">g</strong></span> 命令来使 <span><strong class="command">sed</strong></span> 检查所有的行而不在搜索到第一个匹配字符串后就停止：
+            </p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed <em class="parameter"><code>'s/erors/errors/g'</code></em> <code class="filename">example</code></strong></span>
+This is the first line of an example text.
+It is a text with errors.
+Lots of errors.
+So much errors, all these errors are making me sick.
+This is a line not containing any errors.
+This is the last line.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p>要在文件的每一行开始处插入一个字符串，比如引用：</p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed <em class="parameter"><code>'s/^/&gt; /'</code></em> <code class="filename">example</code></strong></span>
+&gt; This is the first line of an example text.
+&gt; It is a text with erors.
+&gt; Lots of erors.
+&gt; So much erors, all these erors are making me sick.
+&gt; This is a line not containing any errors.
+&gt; This is the last line.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p>在每行的尾部插入字符串：</p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed <em class="parameter"><code>'s/$/EOL/'</code></em> <code class="filename">example</code></strong></span>
+This is the first line of an example text.EOL
+It is a text with erors.EOL
+Lots of erors.EOL
+So much erors, all these erors are making me sick.EOL
+This is a line not containing any errors.EOL
+This is the last line.EOL
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p>多个查找替换命令用单独选项 <code class="option">-e</code> 来隔开：
+            </p><pre class="screen">
+<code class="prompt">sandy ~&gt;</code> <span><strong class="command">sed <code class="option">-e</code> <em class="parameter"><code>'s/erors/errors/g'</code></em> <code class="option">-e</code> <em class="parameter"><code>'s/last/final/g'</code></em> <code class="filename">example</code></strong></span>
+This is the first line of an example text.
+It is a text with errors.
+Lots of errors.
+So much errors, all these errors are making me sick.
+This is a line not containing any errors.
+This is the final line.
+
+<code class="prompt">sandy ~&gt;</code>
+</pre><p>记住 <span><strong class="command">sed</strong></span> 默认把结果送到标准输出，比如你的终端窗口。如果你想把输出保存到文件，使用重定向：
+            </p>
+            <div class="cmdsynopsis">
+               <p><code class="command">sed <code class="option">option</code> <code class="function">'some/expression'</code> <code class="filename">file_to_process</code> &gt; <code class="filename">sed_output_in_a_file</code></code> 
+               </p>
+            </div>
+            <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <table border="0" summary="Tip: 更多例子">
+                  <tr>
+                     <td rowspan="2" align="center" valign="top" width="25"><img alt="[提示]" src="images/tip.png"></td>
+                     <th align="left">更多例子</th>
+                  </tr>
+                  <tr>
+                     <td align="left" valign="top">
+                        <p>大量的 <span><strong class="command">sed</strong></span> 例子可以在你机器的启动文件里找到，通常在 <code class="filename">/etc/init.d</code> 或者 <code class="filename">/etc/rc.d/init.d</code>。切换到包含初始化脚本的目录中然后输入日下命令：
+                        </p>
+                        <div class="cmdsynopsis">
+                           <p><code class="command">grep <em class="parameter"><code>sed</code></em> <code class="filename">*</code></code> 
+                           </p>
+                        </div>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch05.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch05.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch05s03.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">第&nbsp;5&nbsp;章&nbsp;GNU SED流编辑器&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;5.3.&nbsp;非交互编辑</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

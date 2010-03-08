@@ -1,0 +1,340 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;8&nbsp;章&nbsp;编写交互脚本</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch07s05.html" title="7.5.&nbsp;练习">
+      <link rel="next" href="ch08s02.html" title="8.2.&nbsp;捕捉用户输入">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;8&nbsp;章&nbsp;编写交互脚本</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch07s05.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch08s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_08"></a>第&nbsp;8&nbsp;章&nbsp;编写交互脚本
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch08.html#sect_08_01">8.1. 显示用户消息</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch08.html#sect_08_01_01">8.1.1. 交互与否？</a></span></dt>
+                     <dt><span class="sect2"><a href="ch08.html#sect_08_01_02">8.1.2. 使用内建命令echo</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch08s02.html">8.2. 捕捉用户输入</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch08s02.html#sect_08_02_01">8.2.1. 使用内建命令read</a></span></dt>
+                     <dt><span class="sect2"><a href="ch08s02.html#sect_08_02_02">8.2.2. 提示用户输入</a></span></dt>
+                     <dt><span class="sect2"><a href="ch08s02.html#sect_08_02_03">8.2.3. 重定向和文件描述符</a></span></dt>
+                     <dt><span class="sect2"><a href="ch08s02.html#sect_08_02_04">8.2.4. 文件输入和输出</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch08s03.html">8.3. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch08s04.html">8.4. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>本章我们将讨论怎么通过脚本来和合用户交流：</p>
+            <p>
+               
+            </p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>打印用户友好的消息和解释</p>
+                  </li>
+                  <li>
+                     <p>捕捉用户的输入</p>
+                  </li>
+                  <li>
+                     <p>提示用户输入</p>
+                  </li>
+                  <li>
+                     <p>使用文件描述符来读取和写入到多个文件</p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+            </p>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_08_01"></a>8.1.&nbsp;显示用户消息
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_08_01_01"></a>8.1.1.&nbsp;交互与否？
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>一些脚本根本不需要来自用户的交互信息。非交互脚本的优势包括：</p>
+               <div class="itemizedlist">
+                  <ul type="disc">
+                     <li>
+                        <p>脚本每次都以可以预测行为运行。</p>
+                     </li>
+                     <li>
+                        <p>脚本可以在后台运行。</p>
+                     </li>
+                  </ul>
+               </div>
+               <p>然而许多脚本，需要来自用户的输入，或者在运行的时候给用户输出信息。交互脚本的优势在于：</p>
+               <div class="itemizedlist">
+                  <ul type="disc">
+                     <li>
+                        <p>可以建立更加灵活的脚本。</p>
+                     </li>
+                     <li>
+                        <p>用户可自定义脚本使得其在运行时产生不同的行为。</p>
+                     </li>
+                     <li>
+                        <p>脚本可以在运行过程中报告状态。</p>
+                     </li>
+                  </ul>
+               </div>
+               <p>当编写交互脚本的时候，不要省略注释。打印适当的信息的脚本能变的更加友好且更加容易调试。一个脚本可能做一件完美的工作，但是如果脚本不通知用户正在进行的工作，你将会得到许多来自用户的帮助请求。所以请把告诉用户等待计算完成的输出的提示信息包含进脚本。如果可能的话，尝试提醒下用户需要等待多长的时间。如果再执行某个特定任务的时候等待通常要持续很长时间，你可能会考虑把一些关于脚本输出进度的指示一起集成到脚本当中去。</p>
+               <p>当提示用户进行输入的时候，同样对输入数据的类型最好给出更多的相关信息。同样在检查参数的时候也采取同样的使用方法信息。</p>
+               <p>Bash有 <span><strong class="command">echo</strong></span> 和 <span><strong class="command">printf</strong></span> 命令提供注释给用户，尽管你现在应该已经熟悉了 <span><strong class="command">echo</strong></span> 的使用方法，但是我们在以下还是会讨论更多的例子。
+               </p>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_08_01_02"></a>8.1.2.&nbsp;使用内建命令echo
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>内建命令 <span><strong class="command">echo</strong></span> 输出他的参数，以空格来分隔，以换行符来结束。返回值总为0。 <span><strong class="command">echo</strong></span> 使用的一些选项：
+               </p>
+               <div class="itemizedlist">
+                  <ul type="disc">
+                     <li>
+                        <p><code class="option">-e</code>：解释反斜杠转义字符。
+                        </p>
+                     </li>
+                     <li>
+                        <p><code class="option">-n</code>：禁止换行。
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>作为添加注释的一个例子，我们将把 <a href="ch07s02.html#sect_07_02_01_02" title="7.2.1.2.&nbsp;检查命令行参数">第&nbsp;7.2.1.2&nbsp;节 “检查命令行参数”</a> 的 <code class="filename">feed.sh</code> 和 <code class="filename">penguin.sh</code> 改的好一点。
+               </p><pre class="screen">
+<code class="prompt">michel ~/test&gt;</code> <span><strong class="command">cat <code class="filename">penguin.sh</code></strong></span>
+#!/bin/bash
+
+# This script lets you present different menus to Tux.  He will only be happy
+# when given a fish.  To make it more fun, we added a couple more animals.
+
+if [ "$menu" == "fish" ]; then
+  if [ "$animal" == "penguin" ]; then
+    echo -e "Hmmmmmm fish... Tux happy!\n"
+  elif [ "$animal" == "dolphin" ]; then
+    echo -e "\a\a\aPweetpeettreetppeterdepweet!\a\a\a\n"
+  else
+    echo -e "*prrrrrrrt*\n"
+  fi
+else
+  if [ "$animal" == "penguin" ]; then
+    echo -e "Tux don't like that.  Tux wants fish!\n"
+    exit 1
+  elif [ "$animal" == "dolphin" ]; then
+    echo -e "\a\a\a\a\a\aPweepwishpeeterdepweet!\a\a\a"
+    exit 2
+  else
+    echo -e "Will you read this sign?!  Don't feed the "$animal"s!\n"
+    exit 3
+  fi
+fi
+
+<code class="prompt">michel ~/test&gt;</code> <span><strong class="command">cat <code class="filename">feed.sh</code></strong></span>
+#!/bin/bash
+# This script acts upon the exit status given by penguin.sh
+
+if [ "$#" != "2" ]; then
+  echo -e "Usage of the feed script:\t$0 food-on-menu animal-name\n"
+  exit 1
+else
+
+  export menu="$1"
+  export animal="$2"
+
+  echo -e "Feeding $menu to $animal...\n"
+
+  feed="/nethome/anny/testdir/penguin.sh"
+
+  $feed $menu $animal
+
+result="$?"
+
+  echo -e "Done feeding.\n"
+
+case "$result" in
+
+  1)
+    echo -e "Guard: \"You'd better give'm a fish, less they get violent...\"\n"
+    ;;
+  2)
+    echo -e "Guard: \"No wonder they flee our planet...\"\n"
+    ;;
+  3)
+    echo -e "Guard: \"Buy the food that the Zoo provides at the entry, you ***\"\n"
+    echo -e "Guard: \"You want to poison them, do you?\"\n"
+    ;;
+  *)
+    echo -e "Guard: \"Don't forget the guide!\"\n"
+    ;;
+  esac
+
+fi
+
+echo "Leaving..."
+echo -e "\a\a\aThanks for visiting the Zoo, hope to see you again soon!\n"
+
+<code class="prompt">michel ~/test&gt;</code> <span><strong class="command">feed.sh <em class="parameter"><code>apple camel</code></em></strong></span>
+Feeding apple to camel...
+
+Will you read this sign?!  Don't feed the camels!
+
+Done feeding.
+
+Guard: "Buy the food that the Zoo provides at the entry, you ***"
+
+Guard: "You want to poison them, do you?"
+
+Leaving...
+Thanks for visiting the Zoo, hope to see you again soon!
+
+<code class="prompt">michel ~/test&gt;</code> <span><strong class="command">feed.sh <em class="parameter"><code>apple</code></em></strong></span>
+Usage of the feed script:       ./feed.sh food-on-menu animal-name
+
+</pre><p>更多关于转义字符可以参考 <a href="ch03s03.html#sect_03_03_02" title="3.3.2.&nbsp;转义字符">第&nbsp;3.3.2&nbsp;节 “转义字符”</a> 。下表给出 <span><strong class="command">echo</strong></span> 命令能识别的顺序总揽：
+               </p>
+               <div class="table"><a name="tab_08_01"></a><p class="title"><b>表&nbsp;8.1.&nbsp;echo命令使用的转义序列</b></p>
+                  <table summary="echo命令使用的转义序列" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                     <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">序列</th>
+                           <th style="border-bottom: 0.5pt solid ; " align="left">意义</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\a</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">响铃。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\b</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">退格。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\c</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">强制换行。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\e</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">退出。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\f</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">清除屏幕Form feed.</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\n</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">换行。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\r</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">回车。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\t</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">水平制表符。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\v</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">垂直制表符。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\\</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">反斜杠。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\ONNN</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">值为八进制值NNN（0到3个八进制数字）的8比特字符。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\NNN</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">值为八进制值NNN（1到3个八进制数字）的8比特字符。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; " align="left">\xHH</td>
+                           <td style="" align="left">值为十六进制值（1或者2个十六进制数字）的8比特字符。</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>要得到更多关于 <span><strong class="command">printf</strong></span> 命令的信息以及允许你格式化输出的方法，请参阅Bash Info页面。
+               </p>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch07s05.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch08s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">7.5.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;8.2.&nbsp;捕捉用户输入</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

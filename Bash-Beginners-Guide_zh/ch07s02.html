@@ -1,0 +1,416 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>7.2.&nbsp;更多if的高级使用方法</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch07.html" title="第&nbsp;7&nbsp;章&nbsp;条件语句">
+      <link rel="prev" href="ch07.html" title="第&nbsp;7&nbsp;章&nbsp;条件语句">
+      <link rel="next" href="ch07s03.html" title="7.3.&nbsp;使用case语句">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">7.2.&nbsp;更多if的高级使用方法</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch07.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;7&nbsp;章&nbsp;条件语句</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch07s03.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_07_02"></a>7.2.&nbsp;更多if的高级使用方法
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_07_02_01"></a>7.2.1.&nbsp;if/then/else结构
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_07_02_01_01"></a>7.2.1.1.&nbsp;虚构的例子
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>这是一个如果 <span><strong class="command">if</strong></span> 命令测试为真，另外一个 <span><strong class="command">if</strong></span> 测试是假而采取的一系列动作的结构。例子：
+               </p><pre class="screen">
+<code class="prompt">freddy scripts&gt;</code> <span><strong class="command"><code class="varname">gender</code>=<em class="parameter"><code>"male"</code></em></strong></span>
+
+<code class="prompt">freddy scripts&gt;</code> <span><strong class="command">if <em class="parameter"><code>[[ "$gender" == "f*" ]]</code></em></strong></span>
+<code class="prompt">More input&gt;</code> <span><strong class="command">then echo <em class="parameter"><code>"Pleasure to meet you, Madame."</code></em></strong></span>
+<code class="prompt">More input&gt;</code> <span><strong class="command">else echo <em class="parameter"><code>"How come the lady hasn't got a drink yet?"</code></em></strong></span>
+<code class="prompt">More input&gt;</code> <span><strong class="command">fi</strong></span>
+How come the lady hasn't got a drink yet?
+
+<code class="prompt">freddy scripts&gt;</code>
+</pre><p>就像 <span><strong class="command">CONSEQUENT-COMMANDS</strong></span> 跟在 <span><strong class="command">then</strong></span> 语句后面一样，<span><strong class="command">ALTERNATE-CONSEQUENT-COMMANDS</strong></span>跟在 <span><strong class="command">else</strong></span> 后面并可以使用任何有返回状态的UNIX风格命令。
+               </p>
+               <p>另外一个例子，从 <a href="ch07.html#sect_07_01_02_01" title="7.1.2.1.&nbsp;测试退出状态">第&nbsp;7.1.2.1&nbsp;节 “测试退出状态”</a> 扩展开来：
+               </p><pre class="screen">
+<code class="prompt">anny ~&gt;</code> <span><strong class="command">su <em class="parameter"><code>-</code></em></strong></span>
+Password:
+<code class="prompt">[root@elegance root]#</code> <span><strong class="command">if <em class="parameter"><code>! grep ^$USER</code></em> <code class="filename">/etc/passwd</code> 1&gt; <code class="filename">/dev/null</code></strong></span>
+<code class="prompt">&gt;</code> <span><strong class="command">then echo <em class="parameter"><code>"your user account is not managed locally"</code></em></strong></span>
+<code class="prompt">&gt;</code> <span><strong class="command">else echo <em class="parameter"><code>"your account is managed from the local /etc/passwd file"</code></em></strong></span>
+<code class="prompt">&gt;</code> <span><strong class="command">fi</strong></span>
+your account is managed from the local /etc/passwd file
+<code class="prompt">[root@elegance root]#</code>
+</pre><p>我们切换到 <span class="emphasis"><em>root</em></span> 账号来证明 <span><strong class="command">else</strong></span> 语句的效果- 你的 <span class="emphasis"><em>root</em></span> 通常是一个本地账号，有时你自己的账号可能被一个特定的中央系统管理着，比如LDAP服务器。
+               </p>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_07_02_01_02"></a>7.2.1.2.&nbsp;检查命令行参数
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>除了设置完参数然后运行脚本之外，通常更好的方法是通过命令行给变量设置值。</p>
+               <p>我们使用位置参数 <code class="varname">$1</code>， <code class="varname">$2</code>,..., <code class="varname">$N</code>来达到此目的。 <code class="varname">$#</code>代表了命令行的参数数量， <code class="varname">$0</code>代表了脚本的名字。
+               </p>
+               <p>以下是一个简单的例子：</p>
+               <div class="figure"><a name="d0e9082"></a><p class="title"><b>图&nbsp;7.1.&nbsp;使用if来测试命令行参数</b></p>
+                  <div class="mediaobject"><img src="images/penguin.sh.png" alt="Simple if/then/else/fi construct: if [ &#34;$1&#34; == fish ]; then echo &#34;Tux likes this&#34;; else echo &#34;Tux wants fish!&#34;; fi"></div>
+               </div>
+               <p>这里是另外一个例子，使用2个参数：</p><pre class="screen">
+<code class="prompt">anny ~&gt;</code> <span><strong class="command">cat <code class="filename">weight.sh</code></strong></span>
+#!/bin/bash
+
+# This script prints a message about your weight if you give it your
+# weight in kilos and hight in centimeters.
+
+weight="$1"
+height="$2"
+idealweight=$[$height - 110]
+
+if [ $weight -le $idealweight ] ; then
+  echo "You should eat a bit more fat."
+else
+  echo "You should eat a bit more fruit."
+fi
+
+<code class="prompt">anny ~&gt;</code> <span><strong class="command">bash <code class="option">-x</code> <code class="filename">weight.sh</code> <em class="parameter"><code>55 169</code></em></strong></span>
++ weight=55
++ height=169
++ idealweight=59
++ '[' 55 -le 59 ']'
++ echo 'You should eat a bit more fat.'
+You should eat a bit more fat.
+</pre></div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_07_02_01_03"></a>7.2.1.3.&nbsp;测试参数的数量
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>以下的例子显示了怎么改变之前的脚本如果参数少于或者多余2个来打印出一条消息：</p><pre class="screen">
+<code class="prompt">anny ~&gt;</code> <span><strong class="command">cat <code class="filename">weight.sh</code></strong></span>
+#!/bin/bash
+
+# This script prints a message about your weight if you give it your
+# weight in kilos and hight in centimeters.
+
+if [ ! $# == 2 ]; then
+  echo "Usage: $0 weight_in_kilos length_in_centimeters"
+  exit
+fi
+
+weight="$1"
+height="$2"
+idealweight=$[$height - 110]
+
+if [ $weight -le $idealweight ] ; then
+  echo "You should eat a bit more fat."
+else
+  echo "You should eat a bit more fruit."
+fi
+
+<code class="prompt">anny ~&gt;</code> <span><strong class="command">weight.sh <em class="parameter"><code>70 150</code></em></strong></span>
+You should eat a bit more fruit.
+
+<code class="prompt">anny ~&gt;</code> <span><strong class="command">weight.sh <em class="parameter"><code>70 150 33</code></em></strong></span>
+Usage: ./weight.sh weight_in_kilos length_in_centimeters
+</pre><p>第一个参数代表$1，第二个参数代表$2，以此类推，参数数量的总数存在$#中。</p>
+               <p>查阅 <a href="ch07s02.html#sect_07_02_05" title="7.2.5.&nbsp;使用exit语句和if">第&nbsp;7.2.5&nbsp;节 “使用exit语句和if”</a> 来得到更好的打印消息的方法。
+               </p>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_07_02_01_04"></a>7.2.1.4.&nbsp;测试一个存在的文件
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>在许多脚本当中这个测试都成功，因为如果你知道某些功能不工作那运行很多程序也是没有用的：</p><pre class="screen">
+#!/bin/bash
+
+# This script gives information about a file.
+
+FILENAME="$1"
+
+echo "Properties for $FILENAME:"
+
+if [ -f $FILENAME ]; then
+  echo "Size is $(ls -lh $FILENAME | awk '{ print $5 }')"
+  echo "Type is $(file $FILENAME | cut -d":" -f2 -)"
+  echo "Inode number is $(ls -i $FILENAME | cut -d" " -f1 -)"
+  echo "$(df -h $FILENAME | grep -v Mounted | awk '{ print "On",$1", \
+which is mounted as the",$6,"partition."}')"
+else
+  echo "File does not exist."
+fi
+</pre><p>注意文件是使用变量来指向的；在这个例子中它是脚本的第一个参数。另外，当没有提供任何参数的时候，文件的存放位置通常存储在脚本开始处的变量里，他们的内容是依赖于使用的那些变量。因此，当你想在一个脚本中改变文件的名字，你只要做一次。</p>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_07_02_02"></a>7.2.2.&nbsp;if/then/elif/else结构
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_07_02_02_01"></a>7.2.2.1.&nbsp;概要
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>这是 <span><strong class="command">if</strong></span> 语句的完全形式：
+               </p>
+               <div class="cmdsynopsis">
+                  <p><code class="command">if TEST-COMMANDS; then</code> 
+                  </p>
+               </div>
+               <div class="cmdsynopsis">
+                  <p><code class="command">CONSEQUENT-COMMANDS;</code> 
+                  </p>
+               </div>
+               <div class="cmdsynopsis">
+                  <p><code class="command">elif MORE-TEST-COMMANDS; then</code> 
+                  </p>
+               </div>
+               <div class="cmdsynopsis">
+                  <p><code class="command">MORE-CONSEQUENT-COMMANDS;</code> 
+                  </p>
+               </div>
+               <div class="cmdsynopsis">
+                  <p><code class="command">else ALTERNATE-CONSEQUENT-COMMANDS;</code> 
+                  </p>
+               </div>
+               <div class="cmdsynopsis">
+                  <p><code class="command">fi</code> 
+                  </p>
+               </div>
+               <p> <span><strong class="command">TEST-COMMANDS</strong></span> 内容执行完后，如果它的返回状态是零，那么就执行 <span><strong class="command">CONSEQUENT-COMMANDS</strong></span> 。如果 <span><strong class="command">TEST-COMMANDS</strong></span> 返回一个非零状态，每个 <span><strong class="command">elif</strong></span> 依次执行，相应的 <span><strong class="command">MORE-CONSEQUENT-COMMANDS</strong></span> 就执行，然后命令结束。如果 <span><strong class="command">else</strong></span> 跟在一个 <span><strong class="command">ALTERNATE-CONSEQUENT-COMMANDS</strong></span> 内容之后，而且在最好的 <span><strong class="command">if</strong></span> 或者 <span><strong class="command">elif</strong></span> 子句的最后命令有一个非零状态，那么 <span><strong class="command">ALTERNATE-CONSEQUENT-COMMANDS</strong></span> 就执行。返回状态就是最后执行的命令的退出状态或者没有条件测试成功就是零。
+               </p>
+            </div>
+            <div class="sect3" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="sect_07_02_02_02"></a>7.2.2.2.&nbsp;例子
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>这是一个你可以把它放到crontab来每天执行的例子：</p><pre class="screen">
+<code class="prompt">anny /etc/cron.daily&gt;</code> <span><strong class="command">cat <code class="filename">disktest.sh</code></strong></span>
+#!/bin/bash
+
+# This script does a very simple test for checking disk space.
+
+space=`df -h | awk '{print $5}' | grep % | grep -v Use | sort -n | tail -1 | cut -d "%" -f1 -`
+alertvalue="80"
+
+if [ "$space" -ge "$alertvalue" ]; then
+  echo "At least one of my disks is nearly full!" | mail -s "daily diskcheck" root
+else
+  echo "Disk space normal" | mail -s "daily diskcheck" root
+fi
+</pre></div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_07_02_03"></a>7.2.3.&nbsp;if嵌套语句
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>在 <span><strong class="command">if</strong></span> 语句里面，你可以使用另外一个 <span><strong class="command">if</strong></span> 语句。只要你能逻辑管理你就可以使用多层嵌套。
+            </p>
+            <p>以下是一个测试闰年的例子：</p><pre class="screen">
+<code class="prompt">anny ~/testdir&gt;</code> <span><strong class="command">cat <code class="filename">testleap.sh</code></strong></span>
+#!/bin/bash
+# This script will test if we're in a leap year or not.
+
+year=`date +%Y`
+
+if [ $[$year % 400] -eq "0" ]; then
+  echo "This is a leap year.  February has 29 days."
+elif [ $[$year % 4] -eq 0 ]; then
+        if [ $[$year % 100] -ne 0 ]; then
+          echo "This is a leap year, February has 29 days."
+        else
+          echo "This is not a leap year.  February has 28 days."
+        fi
+else
+  echo "This is not a leap year.  February has 28 days."
+fi
+
+<code class="prompt">anny ~/testdir&gt;</code> <span><strong class="command">date</strong></span>
+Tue Jan 14 20:37:55 CET 2003
+
+<code class="prompt">anny ~/testdir&gt;</code> <span><strong class="command">testleap.sh</strong></span>
+This is not a leap year.
+</pre></div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_07_02_04"></a>7.2.4.&nbsp;布尔操作
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>以上的脚本可以用布尔操作符 “<span class="quote">AND(&amp;&amp;)</span>”  和 “<span class="quote">OR(||)</span>” 来缩短。
+            </p>
+            <div class="figure"><a name="d0e9287"></a><p class="title"><b>图&nbsp;7.2.&nbsp;使用布尔操作符的例子</b></p>
+               <div class="mediaobject"><img src="images/leaptest.sh.png" alt="year=`date +%Y`; if (( (&#34;$year&#34; % 400) == &#34;0&#34; )) || (( (&#34;$year&#34; % 4 == &#34;0&#34;) &amp;&amp; (&#34;$year&#34; % 100 != &#34;0&#34;) )); then echo &#34;this is a leap year.&#34;; else echo &#34;not a leap year&#34;; fi"></div>
+            </div>
+            <p>我们使用双括号来测试一个数学表达式，见 <a href="ch03s04.html#sect_03_04_05" title="3.4.6.&nbsp;算术扩展">第&nbsp;3.4.6&nbsp;节 “算术扩展”</a>。和使用 <span><strong class="command">let</strong></span> 语句是一样的。如果使用类似 <span><strong class="command">$[$year % 400]</strong></span>，可能你会对尖括号的使用感到迷惑，因为在这里，尖括号它们自己并不代表一个实际的命令。
+            </p>
+            <p>在其他一些编辑器中， <span><strong class="command">gvim</strong></span> 是根据文件格式来进行色彩显示的其中之一；这些编辑器在发现代码中的错误时候非常有用。
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_07_02_05"></a>7.2.5.&nbsp;使用exit语句和if
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>我们已经在 <a href="ch07s02.html#sect_07_02_01_03" title="7.2.1.3.&nbsp;测试参数的数量">第&nbsp;7.2.1.3&nbsp;节 “测试参数的数量”</a> 简要的看到了 <span><strong class="command">exit</strong></span> 语句。它使整个脚本中止运行。最常使用于来自用户输入的不正确请求，比如一条语句没有成功运行或者某些其他错误发生。
+            </p>
+            <p> <span><strong class="command">exit</strong></span> 语句可以带一个可选参数。参数是一个整数退出状态码，储存在 <code class="varname">$?</code> 中的返回给父进程的退出状态码。
+            </p>
+            <p>0参数意味着脚本成功运行完毕。程序员会用其他值来给父进程传递不同的消息，所以根据子进程的成功或者失败，父进程采取不同的动作。如果没有参数给 <span><strong class="command">exit</strong></span> 语句，父shell使用 <code class="varname">$?</code> 变量的现存值。
+            </p>
+            <p>下面是一个和 <code class="filename">penguin.sh</code> 脚本相似的例子，会对 <code class="filename">feed.sh</code> 传回一个退出状态：
+            </p><pre class="screen">
+<code class="prompt">anny ~/testdir&gt;</code> <span><strong class="command">cat <code class="filename">penguin.sh</code></strong></span>
+#!/bin/bash
+                                                                                                 
+# This script lets you present different menus to Tux.  He will only be happy
+# when given a fish.  We've also added a dolphin and (presumably) a camel.
+                                                                                                 
+if [ "$menu" == "fish" ]; then
+  if [ "$animal" == "penguin" ]; then
+    echo "Hmmmmmm fish... Tux happy!"
+  elif [ "$animal" == "dolphin" ]; then
+    echo "Pweetpeettreetppeterdepweet!"
+  else
+    echo "*prrrrrrrt*"
+  fi
+else
+  if [ "$animal" == "penguin" ]; then
+    echo "Tux don't like that.  Tux wants fish!"
+    exit 1
+  elif [ "$animal" == "dolphin" ]; then
+    echo "Pweepwishpeeterdepweet!"
+    exit 2
+  else
+    echo "Will you read this sign?!"
+    exit 3
+  fi
+fi
+</pre><p>这个脚本被下面那个输出变量 <code class="varname">menu</code> 和 <code class="varname">animal</code> 的脚本调用：
+            </p><pre class="screen">
+<code class="prompt">anny ~/testdir&gt;</code> <span><strong class="command">cat <code class="filename">feed.sh</code></strong></span>
+#!/bin/bash
+# This script acts upon the exit status given by penguin.sh
+                                                                                                 
+export menu="$1"
+export animal="$2"
+                                                                                                 
+feed="/nethome/anny/testdir/penguin.sh"
+                                                                                                 
+$feed $menu $animal
+                                                                                                 
+case $? in
+                                                                                                 
+1)
+  echo "Guard: You'd better give'm a fish, less they get violent..."
+  ;;
+2)
+  echo "Guard: It's because of people like you that they are leaving earth all the time..."
+  ;;
+3)
+  echo "Guard: Buy the food that the Zoo provides for the animals, you ***, how
+do you think we survive?"
+  ;;
+*)
+  echo "Guard: Don't forget the guide!"
+  ;;
+esac
+                                                                                                 
+<code class="prompt">anny ~/testdir&gt;</code> <span><strong class="command">./feed.sh <em class="parameter"><code>apple penguin</code></em></strong></span>
+Tux don't like that.  Tux wants fish!
+Guard: You'd better give'm a fish, less they get violent...
+</pre><p>就像你看到的，退出状态码可以自由选择。退出命令通常有一系列预定义码；请见程序员手册得到每个命令的更多信息。</p>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch07.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch07.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch07s03.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">第&nbsp;7&nbsp;章&nbsp;条件语句&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;7.3.&nbsp;使用case语句</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

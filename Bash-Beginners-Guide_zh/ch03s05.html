@@ -1,0 +1,164 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>3.5.&nbsp;别名</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch03.html" title="第&nbsp;3&nbsp;章&nbsp;Bash环境">
+      <link rel="prev" href="ch03s04.html" title="3.4.&nbsp;Shell扩展">
+      <link rel="next" href="ch03s06.html" title="3.6.&nbsp;更多 Bash 选项">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">3.5.&nbsp;别名</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch03s04.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;3&nbsp;章&nbsp;Bash环境</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch03s06.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_03_05"></a>3.5.&nbsp;别名
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_05_01"></a>3.5.1.&nbsp;什么是别名？
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>一个别名允许使用一个字符串来代替一个字当它作为一个简单命令的第一个字时候。shell维护一个可以用 <span><strong class="command">alias</strong></span> 和 <span><strong class="command">unalias</strong></span> 内建命令来设置或者取消的别名列表。用 <span><strong class="command">alias</strong></span> 命令而不带选项的时候可以显示当前shell所知的别名列表。
+            </p><pre class="screen">
+<code class="prompt">franky: ~&gt;</code> <span><strong class="command">alias</strong></span>
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias PAGER='less -r'
+alias Txterm='export TERM=xterm'
+alias XARGS='xargs -r'
+alias cdrecord='cdrecord -dev 0,0,0 -speed=8'
+alias e='vi'
+alias egrep='grep -E'
+alias ewformat='fdformat -n /dev/fd0u1743; ewfsck'
+alias fgrep='grep -F'
+alias ftp='ncftp -d15'
+alias h='history 10'
+alias fformat='fdformat /dev/fd0H1440'
+alias j='jobs -l'
+alias ksane='setterm -reset'
+alias ls='ls -F --color=auto'
+alias m='less'
+alias md='mkdir'
+alias od='od -Ax -ta -txC'
+alias p='pstree -p'
+alias ping='ping -vc1'
+alias sb='ssh blubber'
+alias sl='ls'
+alias ss='ssh octarine'
+alias sss='ssh -C server1.us.xalasys.com'
+alias sssu='ssh -C -l root server1.us.xalasys.com'
+alias tar='gtar'
+alias tmp='cd /tmp'
+alias unaliasall='unalias -a'
+alias vi='eval `resize`;vi'
+alias vt100='export TERM=vt100'
+alias which='type'
+alias xt='xterm -bg black -fg white &amp;'
+
+<code class="prompt">franky ~&gt;</code>
+</pre><p>每个简单命令的第一个字，如果被引用的话就进行是否有设置别名的检查。如果存在，这个字就被别名的文本替换。别名的名字和替换的文本可能包含任何错误的shell输入，包括shell特殊字符，例外的是别名的名字不可以包含 “<span class="quote">=</span>”。 替换的文本的第一个字进行别名的测试，但是对同一个别名已经扩展的字不进行第二次扩展。这样意味着 <span><strong class="command">ls</strong></span> 可以成为 <span><strong class="command">ls <code class="option">-F</code></strong></span>，而且Bash不会尝试递归扩展替换的文本。如果别名值的最后一个字符是一个空格或者制表符（TAB），那么跟随在别名之后的下一个命令会进行别名扩展的检查。
+            </p>
+            <p>别名在需要把某个在你系统上存在多个版本的命令指定为默认版本的时候非常有用，或者为命令指定一个默认的选项。别名的另外一个用途是纠正不正确的拼写。</p>
+            <p>在shell不是交互的时候，别名不会进行扩展，除非 <code class="option">expand_aliases</code> 选项设置成使用 <span><strong class="command">shopt</strong></span> shell内建命令。
+            </p>
+         </div>
+         <div class="sect2" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="sect_03_05_02"></a>3.5.2.&nbsp;建立和移除别名
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>别名使用 <span><strong class="command">alias</strong></span> shell 内建命令来建立。为了能够一直使用，在你shell的某个初始化文件中输入 <span><strong class="command">alias</strong></span>；如果你只是在命令行输入alias，那么它将只能在当前shell被识别。
+            </p><pre class="screen">
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">alias <em class="parameter"><code>dh='df -h'</code></em></strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">dh</strong></span>
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/hda7             1.3G  272M 1018M  22% /
+/dev/hda1             121M  9.4M  105M   9% /boot
+/dev/hda2              13G  8.7G  3.7G  70% /home
+/dev/hda3              13G  5.3G  7.1G  43% /opt
+none                  243M     0  243M   0% /dev/shm
+/dev/hda6             3.9G  3.2G  572M  85% /usr
+/dev/hda5             5.2G  4.3G  725M  86% /var
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">unalias <em class="parameter"><code>dh</code></em></strong></span>
+
+<code class="prompt">franky ~&gt;</code> <span><strong class="command">dh</strong></span>
+bash: dh: command not found
+
+<code class="prompt">franky ~&gt;</code>
+</pre><p>Bash总是在执行某行的命令之前至少读取该完整的输入行。在一个命令读取完成之后别名才进行扩展，而不是在命令执行的时候。因此，一个别名定义Therefore, an alias definition appearing on the same line
+               as another command does not take effect until the next line of input is read.  The commands following the alias definition
+               on that line are not affected by the new alias.  This behavior is also an issue when functions are executed. Aliases are expanded
+               when a function definition is read, not when the function is executed, because a function definition is itself a compound
+               command.  As a consequence, aliases defined in a function are not available until after that function is executed.  To be
+               safe, always put alias definitions on a separate line, and do not use <span><strong class="command">alias</strong></span> in compound commands.
+            </p>
+            <p>别名不能够被子进程继承。Bourne shell (<span><strong class="command">sh</strong></span>) 不能识别别名。
+            </p>
+            <p>关于函数的更多在 <a href="ch11.html" title="第&nbsp;11&nbsp;章&nbsp;函数">第&nbsp;11&nbsp;章 <i>函数</i></a>。
+            </p>
+            <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <table border="0" summary="Tip: 函数更为快速Functions are faster">
+                  <tr>
+                     <td rowspan="2" align="center" valign="top" width="25"><img alt="[提示]" src="images/tip.png"></td>
+                     <th align="left">函数更为快速Functions are faster</th>
+                  </tr>
+                  <tr>
+                     <td align="left" valign="top">
+                        <p>别名在函数之后进行查找因此解析比较慢。虽然别名非常容易理解，但是在多数的场合下函数仍然是首选的。</p>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch03s04.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch03.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch03s06.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">3.4.&nbsp;Shell扩展&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;3.6.&nbsp;更多 Bash 选项</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,128 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>8.4.&nbsp;练习</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="ch08.html" title="第&nbsp;8&nbsp;章&nbsp;编写交互脚本">
+      <link rel="prev" href="ch08s03.html" title="8.3.&nbsp;总结">
+      <link rel="next" href="ch09.html" title="第&nbsp;9&nbsp;章&nbsp;重复性任务">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">8.4.&nbsp;练习</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch08s03.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">第&nbsp;8&nbsp;章&nbsp;编写交互脚本</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch09.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="sect1" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="sect_08_04"></a>8.4.&nbsp;练习
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <p>这些练习时本章讨论的结构的实际应用。在编写脚本的时候，你可以用一个包含少量数据的测试目录来进行测试。编写每一步，然后测试那部分代码，而不要把所有的东西一下写出来。</p>
+         <div class="orderedlist">
+            <ol type="1">
+               <li>
+                  <p>写一个询问用户年龄的脚本。如果等于或者大于16，打印一条消息显示用户可以喝酒。如果用户的年龄在16以下，打印一条信息告诉用户还需要等待多少年他或者她才能合法地饮用酒精饮料。</p>
+                  <p>额外地，计算一个18岁以上的用户饮用了多少啤酒（100升/年）并为该用户打印该信息。</p>
+               </li>
+               <li>
+                  <p>编写一个把一个文件作为参数的脚本。使用一个 <span class="emphasis"><em>here</em></span> 文档来介绍给出用户压缩文件的一系列选项。可能的选项可能是 <span><strong class="command">gzip</strong></span>, <span><strong class="command">bzip2</strong></span>, <span><strong class="command">compress</strong></span> 和 <span><strong class="command">zip</strong></span>。
+                  </p>
+               </li>
+               <li>
+                  <p>编写一个叫做 <code class="filename">homebackup</code> 的脚本来自动执行 <span><strong class="command">tar</strong></span>，这样他执行脚本的时候总能使用需要的选项 (<code class="option">cvp</code>) 和备份他或她的主目录的目标目录 (<code class="filename">/var/backups</code>)。 实现以下功能：
+                  </p>
+                  <div class="itemizedlist">
+                     <ul type="disc">
+                        <li>
+                           <p>测试参数的个数。脚本应该无参数运行。如果提供了任何参数，在退出后打印一条使用方法消息。</p>
+                        </li>
+                        <li>
+                           <p>测试 <code class="filename">backups</code> 目录是否有足够的空间存放备份。
+                           </p>
+                        </li>
+                        <li>
+                           <p>询问用户想要执行完全备份还是增量备份。如果用户还没有完全备份文件，打印一条消息通知用户将进行完全备份。如果是增量备份，只在完全备份是近一个星期时候才执行。</p>
+                        </li>
+                        <li>
+                           <p>使用压缩工具对备份进行压缩。通知用户脚本正在执行此任务，因为这将耗费一些时间而用户会因为没有在屏幕上看到输出而担心。</p>
+                        </li>
+                        <li>
+                           <p>打印一条消息通知用户有关压缩备份的大小。</p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>参见 <span><strong class="command">info tar</strong></span> 或者 <a href="http://tille.xalasys.com/training/tldp/c4540.html#sect_09_01_01" target="_top">Introduction to Linux</a>，第九章：“<span class="quote">Preparing your data</span>” for background information.
+                  </p>
+               </li>
+               <li>
+                  <p>编写一个叫做 <code class="filename">simple-useradd.sh</code> 脚本来把一个本地用户加入到系统。这个脚本应该：
+                  </p>
+                  <div class="itemizedlist">
+                     <ul type="disc">
+                        <li>
+                           <p>只使用一个参数，其他情况在退出后打印一条使用信息。</p>
+                        </li>
+                        <li>
+                           <p>检查 <code class="filename">/etc/passwd</code> 来对第一个自由的用户ID做出决定。打印一条包含这个ID的消息。
+                           </p>
+                        </li>
+                        <li>
+                           <p>为这个用户建立一个私有组，检查 <code class="filename">/etc/group</code> 文件。打印一条包含组ID的讯息。
+                           </p>
+                        </li>
+                        <li>
+                           <p>从操作用户那里采集信息：描述用户的注释，shell列表的选择（测试可接受性，否则退出打印消息），这个账户的过期日期，这个新用户所在的额外的组。</p>
+                        </li>
+                        <li>
+                           <p>使用得到的信息，在 <code class="filename">/etc/passwd</code>，<code class="filename">/etc/group</code> 和 <code class="filename">/etc/shadow</code> 加入一行；创建这个用户的主目录（使用正确的权限！）；把用户加入到希望的第二个组。
+                           </p>
+                        </li>
+                        <li>
+                           <p>把这个用户的密码设置成一个默认的已知字符串。</p>
+                        </li>
+                     </ul>
+                  </div>
+               </li>
+               <li>
+                  <p>重写 <a href="ch07s02.html#sect_07_02_01_04" title="7.2.1.4.&nbsp;测试一个存在的文件">第&nbsp;7.2.1.4&nbsp;节 “测试一个存在的文件”</a> 的脚本来从用户这里读取输入而不是从第一个参数。
+                  </p>
+               </li>
+            </ol>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch08s03.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="ch08.html">上一级</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch09.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">8.3.&nbsp;总结&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;第&nbsp;9&nbsp;章&nbsp;重复性任务</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

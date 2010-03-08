@@ -1,0 +1,230 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>第&nbsp;4&nbsp;章&nbsp;正则表达式</title>
+      <link rel="stylesheet" href="docbook.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.69.1">
+      <meta name="keywords" content="Linux, Scripts, linux, Bash, guide, Guide, Exercises, exercises, bash, scripting, Scripting, awk, sed, variables, functions, loops, conditionals">
+      <link rel="start" href="index.html" title="Bash新手指南">
+      <link rel="up" href="index.html" title="Bash新手指南">
+      <link rel="prev" href="ch03s08.html" title="3.8.&nbsp;练习">
+      <link rel="next" href="ch04s02.html" title="4.2.&nbsp;使用grep的例子">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">第&nbsp;4&nbsp;章&nbsp;正则表达式</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch03s08.html">上一页</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch04s02.html">下一页</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="zh-cn">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="chap_04"></a>第&nbsp;4&nbsp;章&nbsp;正则表达式
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="toc">
+            <p><b>目录</b></p>
+            <dl>
+               <dt><span class="sect1"><a href="ch04.html#sect_04_01">4.1. 正则表达式</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch04.html#sect_04_01_01">4.1.1. 什么是正则表达式？</a></span></dt>
+                     <dt><span class="sect2"><a href="ch04.html#sect_04_01_02">4.1.2. 正则表达式特殊字符</a></span></dt>
+                     <dt><span class="sect2"><a href="ch04.html#sect_04_01_03">4.1.3. 基本和扩展正则表达式</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch04s02.html">4.2. 使用grep的例子</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch04s02.html#sect_04_02_01">4.2.1. 什么是grep？</a></span></dt>
+                     <dt><span class="sect2"><a href="ch04s02.html#sect_04_02_02">4.2.2. Grep与正则表达式</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch04s03.html">4.3. Pattern匹配使用Bash特性</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="sect2"><a href="ch04s03.html#sect_04_03_01">4.3.1. 字符范围</a></span></dt>
+                     <dt><span class="sect2"><a href="ch04s03.html#sect_04_03_02">4.3.2. 字符族</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="sect1"><a href="ch04s04.html">4.4. 总结</a></span></dt>
+               <dt><span class="sect1"><a href="ch04s05.html">4.5. 练习</a></span></dt>
+            </dl>
+         </div>
+         <div class="abstract">
+            <p class="title"><b>摘要</b></p>
+            <p>本章我们讨论：</p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>使用正则表达式</p>
+                  </li>
+                  <li>
+                     <p>正则表达式统配符</p>
+                  </li>
+                  <li>
+                     <p>文件和输出中的找寻模板</p>
+                  </li>
+                  <li>
+                     <p>Bash中字符的范围和分类</p>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="sect1" lang="zh-cn">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="sect_04_01"></a>4.1.&nbsp;正则表达式
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_04_01_01"></a>4.1.1.&nbsp;什么是正则表达式？
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> <span class="emphasis"><em>正则表达式</em></span> 是一个描述一组字符串的模板。正则表达式是使用多种操作符来组合更小的表达式构建类似算术表达式。
+               </p>
+               <p>建立块的基本原则是正则表达式匹配一个单字符。多数字符，包括所有的字幕和数字，都是匹配它们自己的正则表达式。任何带有特殊含义的字符可以以反斜杠开头来进行引用。</p>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_04_01_02"></a>4.1.2.&nbsp;正则表达式特殊字符
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>正则表达式可以跟随几个重复操作符（统配符）：</p>
+               <div class="table"><a name="table_04_01"></a><p class="title"><b>表&nbsp;4.1.&nbsp;正则表达式操作符</b></p>
+                  <table summary="正则表达式操作符" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; ">
+                     <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">操作符</th>
+                           <th style="border-bottom: 0.5pt solid ; " align="left">效果</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">.</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">匹配任何单个字符。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">?</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">之前的项目是可选的，匹配最多一次。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">*</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">匹配出现零次或者多次的先前项目。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">+</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">匹配一次或者多次先前项目。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">{N}</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">精确匹配N次先前的项目。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">{N,}</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">先前的项目匹配N或者更多次。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">{N,M}</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">先前的项目匹配至少N次，但是不多于M次。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">-</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">表示范围如果不是列表中最先或者最后或者一个范围的结束点。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">^</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">匹配行开始的空字符串；也表示不在列表范围内的字符。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">$</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">匹配行末的空字符串。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\b</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">匹配词两边的空字符串。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\B</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">匹配提供的空字符串Matches the empty string provided it's not at the edge of a word.</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left">\&lt;</td>
+                           <td style="border-bottom: 0.5pt solid ; " align="left">匹配任何词开头的空字符串。</td>
+                        </tr>
+                        <tr>
+                           <td style="border-right: 0.5pt solid ; " align="left">\&gt;</td>
+                           <td style="" align="left">匹配任何词结尾的空字符串。</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <p>2个正则表达式可以连接起来；结果正则表达式匹配任何字符串。the resulting regular expression matches any string formed by concatenating two substrings that
+                  respectively match the concatenated subexpressions.
+               </p>
+               <p>2个正则表达式可以用中缀操作符 “<span class="quote">|</span>” 连接起来；作为结果的正则表达式匹配任何匹配字表达式的字符串。
+               </p>
+               <p>循环任务优先于串联，轮流接管优先级。整个子表达式可以放入括号中来忽略这些优先级规则。</p>
+            </div>
+            <div class="sect2" lang="zh-cn">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sect_04_01_03"></a>4.1.3.&nbsp;基本和扩展正则表达式
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>在基本正则表达式中统配符 “<span class="quote">?</span>”, “<span class="quote">+</span>”, “<span class="quote">{</span>”, “<span class="quote">|</span>”, “<span class="quote">(</span>”, 和 “<span class="quote">)</span>” 失去了它们的特殊含义；取而代之的是斜杠版本 “<span class="quote">\?</span>”, “<span class="quote">\+</span>”, “<span class="quote">\{</span>”, “<span class="quote">\|</span>”, “<span class="quote">\(</span>”, 和 “<span class="quote">\)</span>”.
+               </p>
+               <p>检查你的系统文档确定使用正则表达式的命令是否支持扩展表达式。</p>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch03s08.html">上一页</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch04s02.html">下一页</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">3.8.&nbsp;练习&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">起始页</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;4.2.&nbsp;使用grep的例子</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>
