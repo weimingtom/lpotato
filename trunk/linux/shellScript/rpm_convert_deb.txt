@@ -1,0 +1,7 @@
+方法是：
+
+1、先安装 alien ： sudo apt-get install alie 。
+
+2、转换 RPM 安装包：sudo alien -k name-of-rpm-file.rpm
+
+3、这才开始安装：sudo dpkg -i name-of-rpm-file.deb。

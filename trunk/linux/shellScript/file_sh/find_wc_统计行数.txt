@@ -1,0 +1,12 @@
+Ref: http://www.javaeye.com/topic/186968
+你这样也忒麻烦了，我一行shell命令就搞定了：
+
+Java代码  
+
+find . -type f -iname "*.java" -exec cat {} \; | wc -l 
+
+
+
+像你那么兴师动众写一大陀Java代码真是画蛇添足。
+
+BTW: wc *.java是不行滴，要加 -l 参数，还不能遍历子目录 

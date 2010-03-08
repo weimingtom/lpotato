@@ -1,0 +1,8 @@
+du -sh [dirname|filename]
+　　如：
+　　当前目录的大小：
+　　du -sh .
+　　当前目录下个文件或目录的大小：
+　　du -sh *
+　　显示前10个占用空间最大的文件或目录：
+　　du -s * | sort -nr | head 
