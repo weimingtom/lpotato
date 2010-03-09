@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="example.css"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.jmpopups-0.5.1.js"></script>
+<script type="text/javascript" src="example.js"></script>
+<title>jmpopups - example page</title>
+</head>
+<body>
+<div id="general">
+<h1>jmpopups - example page</h1>
+<p>This is a page with a usage example of the library jmpopups. <br />
+For more details access <a href="http://jmpopups.googlecode.com" title="jmpopups" target="_blank">http://jmpopups.googlecode.com</a></p>
+<code> <pre>
+$.openPopupLayer({
+	name: "mySecondPopup",
+	width: 550,
+	target: "myHiddenDiv"
+});
+				</pre> </code>
+<p><a href="javascript:;" onclick="openStaticPopup()" title="Static example">Open a popup using a html content
+from a hidden element.</a></p>
+<p>Did you find some bug? Please contact me! <a href="http://otavioavila.com" title="Otávio Avila's website">http://otavioavila.com</a>
+or <a href="mailto:otavioavila@gmail.com" title="Otávio Avila">otavioavila@gmail.com</a></p>
+</div>
+<div id="myHiddenDiv">
+<div class="popup">
+<div class="popup-header">
+<h2>Now an ajax example</h2>
+<a href="javascript:;" onclick="window.top.$.closePopupLayer('myStaticPopup')" title="Close" class="close-link">Close</a> <br
+	clear="all" />
+</div>
+<div class="popup-body"><code> <pre>
+$.openPopupLayer({
+	name: "mySecondPopup",
+	width: 300,
+	url: "ajax_example.html"
+});
+						</pre> </code>
+<p><a href="javascript:;" onclick="openAjaxPopup()" title="Ajax example">Open a popup using ajax</a></p>
+<p><a href="javascript:;" onclick="openAjaxIframePopup()" title="Ajax example">Open a popup iframe using ajax</a></p>
+</div>
+</div>
+</div>
+</body>
+</html>
