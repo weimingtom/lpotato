@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="example.css"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.jmpopups-0.5.1.js"></script>
+<script type="text/javascript" src="example.js"></script>
+<title>jmpopups - example page</title>
+<style>
+<!--
+html {
+	height: 100%
+}
+-->
+</style>
+</head>
+<body>
+<h3>iframe</h3>
+<iframe id="mainiframe" name="mainiframe" class="autoHeight" height="400px" width="100%" frameborder="0"
+	marginwidth="0" marginheight="0" scrolling="auto" src="example.html"></iframe>
+<div id="myHiddenDiv">
+<div class="popup">
+<div class="popup-header">
+<h2>Now an ajax example</h2>
+<a href="javascript:;" onclick="window.top.$.closePopupLayer('myStaticPopup')" title="Close" class="close-link">Close</a>
+<br clear="all" />
+</div>
+<div class="popup-body"><code> <pre>
+$.openPopupLayer({
+	name: "mySecondPopup",
+	width: 300,
+	url: "ajax_example.html"
+});
+						</pre> </code>
+<p><a href="javascript:;" onclick="openAjaxPopup()" title="Ajax example">Open a popup using ajax</a></p>
+</div>
+</div>
+</div>
+<div id="ft">ft</div>
+</body>
+</html>

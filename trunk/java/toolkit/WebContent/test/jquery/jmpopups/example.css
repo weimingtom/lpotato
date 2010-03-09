@@ -1,0 +1,79 @@
+body {
+	margin: 0;
+	font-family: "Trebuchet MS";
+	line-height: 120%;
+	color: #333;
+}
+
+h1 {
+	margin-bottom: 50px;
+	font-size: 40px;
+	font-weight: normal;
+}
+
+p {
+	margin: 0;
+	padding: 0 0 30px;
+	font-size: 12px;
+}
+
+pre {
+	font-size: 12px;
+	font-family: "Consolas", "Monaco", "Bitstream Vera Sans Mono", "Courier New", "Courier";
+	line-height: 120%;
+	background: #F4F4F4;
+	padding: 10px;
+}
+
+#general {
+	margin: 30px;
+}
+
+#myHiddenDiv {
+	display: none;
+}
+
+.popup {
+	background: #FFF;
+	border: 1px solid #333;
+	padding: 1px;
+}
+
+.popup-header {
+	height: 24px;
+	padding: 7px;
+	background: url("bgr_popup_header.jpg") repeat-x;
+}
+
+.popup-header h2 {
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	float: left;
+}
+
+.popup-header .close-link {
+	float: right;
+	font-size: 11px;
+}
+
+.popup-body {
+	padding: 10px;
+}
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+form * {
+	font-size: 12px;
+}
+
+input {
+	margin-bottom: 12px;
+}
+
+label {
+	display: block;
+}
