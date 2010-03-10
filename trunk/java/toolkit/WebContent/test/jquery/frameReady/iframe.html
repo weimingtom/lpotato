@@ -2,11 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="example.css"/>
+<title>jmpopups - example page</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="jQuery.frameReady.js"></script>
-
-<title>jmpopups - example page</title>
 <style>
 <!--
 html {
@@ -17,28 +15,53 @@ html {
 </head>
 <body>
 <h3>iframe</h3>
-<iframe id="mainiframe" name="mainiframe" class="autoHeight" height="400px" width="100%" frameborder="0"
+<iframe id="mainiframe" name="mainiframe" class="autoHeight" height="100%" width="100%" frameborder="0"
 	marginwidth="0" marginheight="0" scrolling="auto" src="index.html"></iframe>
+<p id="ibd"></p>
 <script type="text/javascript" language="javascript">
-// <![CDATA[
-$(document).ready(function(){
-	$.frameReady( function() {
-	    $("body").html('hello');
-	  },
-	  "mainiframe"
-	);
-	//$("#mainiframe").load(function(){
-		//$("#mainiframe").contents().find('body').html("hello");
-	//});
-//	$('#mainiframe').attr('src', 'index.html');
-	
-			
-	//var ifr = $(this).contents();
-	//var ifrc = ifr.context;
-	//ifrc.document.write("hello world.");
-});
+	// <![CDATA[
+	$(document).ready(function() {
+		window.name = "root";
+		var iframeDoc = function(id) {
+			var elem = document.getElementById(id);
+			return elem.contentDocument || elem.contentWindow.document;
+		};
+		var ibd = function() {
+			$("#ibd").html("ibd");
+		};
 
-// ]]>
+		var frameReady = function(id, callback){
+			var iframe = document.getElementById(id);
+			if (iframe.attachEvent){
+			    iframe.attachEvent("onload", function(){
+			    	isFrameReady(callback);
+			    });
+			} else {
+			    iframe.onload = function(){
+			    	isFrameReady(callback);
+			    };
+			}
+			var timer = setInterval(function(){isFrameReady(callback); },13);
+			var isFrameReady = function(callback){
+				clearInterval(timer);	
+				timer = null;
+				var iframeDocument = iframeDoc(id);
+				callback(iframeDocument);
+			};
+		};
+		var count = 0;
+
+		var iframeDocument = iframeDoc("mainiframe");
+		$.frameReady(function(){
+			$("#bd", iframeDocument).html('hello' + count++);
+			$("#form-submit", iframeDocument).click(function() {
+				$(this, iframeDocument).attr("disabled","disabled");
+				$("body", iframeDocument).find("#bd").html("click, change parent" + count++);
+				ibd();
+			});
+		}, "mainiframe", { remote : false});
+	});
+	// ]]>
 </script>
 </body>
 </html>

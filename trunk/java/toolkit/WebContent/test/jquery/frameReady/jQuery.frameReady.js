@@ -1,3 +1,4 @@
+/****
  *
  * frameReady: Remote function calling for jQuery
  *
@@ -80,12 +81,12 @@ if (typeof $daemach == "undefined") {
 		} else { 
 			top.window.console.log([].join.call(arguments,'')); 
 		}
-	};
+	}
 }
 
 if (typeof $daemach["frameReady"] == "undefined") { 
 	$daemach["frameReady"] = {}; 
-};
+}
  
 jQuery.frameReady = function(f,t,r,j) {
 	
@@ -166,7 +167,7 @@ jQuery.frameReady = function(f,t,r,j) {
 		if (typeof addEvent !== "undefined"){ addEvent(window,"load",function(){ jQuery.isFrameReady(fn); }); };
 		fr.timer = setInterval(function(){ jQuery.isFrameReady(fn); },13);
 	}
-};
+}
 
 jQuery.isFrameReady = function(fn){
 	var u = "undefined";	
@@ -212,7 +213,7 @@ jQuery.isFrameReady = function(fn){
 									fd.getElementsByTagName("body")[0].appendChild(ele);
 									void(ele);
 									frs.loadInit[i] = true;
-									break;
+									break
 								case "stylesheet" :
 									$d.log(fn, ": Loading stylesheet "+ i + " (" + s.src + ")");
 									var ele=fd.createElement('link');
@@ -223,7 +224,7 @@ jQuery.isFrameReady = function(fn){
 									fd.getElementsByTagName("body")[0].appendChild(ele);
 									void(ele);
 									frs.loadInit[i] = true;
-								break;
+								break
 								default :
 									$d.log(fn, ": Script "+i+" has a bad or missing type attribute..." );
 							}
@@ -235,15 +236,16 @@ jQuery.isFrameReady = function(fn){
 				clearInterval(fr.timer);	
 				fr.timer = null;
 
-				fr.ready.push(function(){ window.frameReadyUnload = function(root, fn){ $(window).bind("unload",function(){ root.jQuery.frameReady.unload(fn); }); }; });
+				fr.ready.push(function(){ window.frameReadyUnload = function(root, fn){ $(window).bind("unload",function(){ root.jQuery.frameReady.unload(fn); }); } });
 				
 				$d.log(fn, ": Processing function stack:");
 				for (var i=0; i<fr.ready.length;i++){
 					(frs.remote) ? fx.eval("(" + fr.ready[i].toString() + ")()") : fr.ready[i]();
 				}
 				
-				fx.frameReadyUnload(window,fn);
-				
+				if(fx.frameReadyUnload)
+				fx.frameReadyUnload(window,fn);		
+
 				$d.log(fn, ": Function stack processing complete.");
 				
 				// we're done here.  let's have a beer.
@@ -259,12 +261,11 @@ jQuery.isFrameReady = function(fn){
 	} 
 
 	$d.log(fn, ":");
-};
+}
 
 jQuery.frameReady.unload = function(fn){
-	$daemach.log("Frame " + fn + " is unloading.  Resetting state.");
+	$daemach.log("Frame " + fn + " is unloading.  Resetting state.")
 	$daemach["frameReady"][fn].done = false;
 	$daemach["frameReady"][fn]["settings"].bLoaded = false;
 	$daemach["frameReady"][fn]["settings"].loadInit = [];
-};
-
+}
