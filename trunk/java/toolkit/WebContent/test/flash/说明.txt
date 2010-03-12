@@ -1,0 +1,31 @@
+扩展资料:
+本项目flash源代码:
+	Flash Map: http://www.ericfeminella.com/blog/2006/12/05/as3-hashmap-for-flex/
+				http://code.ericfeminella.com/classes/as3/HashMapEntry.as.html
+				http://code.ericfeminella.com/classes/as3/IHashMapEntry.as.html
+				http://code.ericfeminella.com/classes/as3/HashMap.as.html
+				http://code.ericfeminella.com/classes/as3/IMap.as.html
+	Flash ByteArray & Socket:
+		http://livedocs.adobe.com/flash/9.0_cn/ActionScriptLangRefV3/flash/utils/ByteArray.html
+		http://livedocs.adobe.com/flash/9.0_cn/ActionScriptLangRefV3/flash/net/Socket.html
+		
+flash的跨域请求安全限制:
+	关于socket跨域访问时请求策略文件问题 : http://blog.csdn.net/lulustray/archive/2008/08/28/2843791.aspx
+	[转]Flash socket通讯中的安全策略问题详解 : http://www.cnblogs.com/asbeforelong/archive/2009/03/02/1401284.html
+	as3:贱到极点的跨域访问安全沙箱 : http://as3.blogbus.com/logs/11495934.html
+	javascript和swf在网页中交互的一些总结 : http://www.y7l8.com/2009/04/02/javascript%E5%92%8Cswf%E5%9C%A8%E7%BD%91%E9%A1%B5%E4%B8%AD%E4%BA%A4%E4%BA%92%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93.html
+	as3 跨域socket连接 : http://www.machinetown.cn/?p=258
+
+flash与socket:
+	flash.net.Socket 中文api : http://livedocs.adobe.com/flash/9.0_cn/ActionScriptLangRefV3/flash/net/Socket.html#connected
+	从头开始构建一个web即时通讯系统 - 客户端 - flash socket : http://blog.csdn.net/huazhihao/archive/2009/06/18/4279544.aspx
+	从头开始构建一个web即时通讯系统 - 客户端 - javascript和flash互操作 : http://blog.csdn.net/huazhihao/archive/2009/06/18/4279938.aspx
+	
+flash与js:
+	flash8与javascript集成 : http://www.blueidea.com/tech/multimedia/2006/3424.asp
+	
+flash编译:
+	ActionScript深入不止一点点(程序员篇) http://koda.javaeye.com/blog/221460
+	Linux上用ActionScript 3(Adobe FLEX 3.0 SDK)开发Adobe Flash应用 http://blog.minidx.com/2008/05/17/853.html
+	Linux下ActionScript 3的调试(Debug)方法 http://blog.minidx.com/2008/05/27/875.html
+	Flash development on Linux http://netpatia.blogspot.com/2009/09/flash-development-on-linux.html
