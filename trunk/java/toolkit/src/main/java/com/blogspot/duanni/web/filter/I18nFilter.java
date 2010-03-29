@@ -71,7 +71,7 @@ public class I18nFilter implements Filter {
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
 		customResourceSuffix = (String) fConfig.getServletContext().getAttribute(
-				InitGxtListener.APPLICATION_CUSTOM_RESOURCE_SUFFIX);
+				InitProjListener.APPLICATION_CUSTOM_RESOURCE_SUFFIX);
 		LOG.debug("filter init : customResourceSuffix => {}", customResourceSuffix);
 	}
 
