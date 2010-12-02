@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.blogspot.duanni.web.ProjectContextHolder;
+import com.blogspot.duanni.web.util.StringUtils;
+
 /**
  * 国际化及资源国际化. Servlet Filter implementation class I18nFilter
  */

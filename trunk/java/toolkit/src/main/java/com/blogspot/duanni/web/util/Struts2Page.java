@@ -249,9 +249,10 @@ public class Struts2Page<T> extends Page<T> {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	private Map getRequestParameterMap() {
-		return ServletActionContext.getRequest().getParameterMap();// HttpServletRequest parametersMap
+		return ServletActionContext.getRequest().getParameterMap();// HttpServletRequest
+																	// parametersMap
 	}
 
 	/**
@@ -266,11 +267,9 @@ public class Struts2Page<T> extends Page<T> {
 		return uri;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * org.apache.struts2.dispatcher.mapper.DefaultActionMapper#getUriFromActionMapping(org.apache.struts2
-	 * .dispatcher .mapper.ActionMapping)
+	/**
+	 * @see org.apache.struts2.dispatcher.mapper.DefaultActionMapper#getUriFromActionMapping(org.apache.struts2
+	 *      .dispatcher .mapper.ActionMapping)
 	 */
 	private String getUriFromActionMapping(ActionMapping mapping) {
 		StringBuilder uri = new StringBuilder();
@@ -320,7 +319,7 @@ public class Struts2Page<T> extends Page<T> {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	private String getRequestURIAndParam() {
 		if (requestURIcache != null)
 			return requestURIcache;

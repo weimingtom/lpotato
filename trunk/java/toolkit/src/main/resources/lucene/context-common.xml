@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<!-- 数据源 -->
+	<!-- 配置c3p0数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+		p:driverClass="${jdbc.driver.class}" p:jdbcUrl="${jdbc.url}" p:user="${jdbc.username}" p:password="${jdbc.password}"
+		p:minPoolSize="2" p:maxPoolSize="10" p:initialPoolSize="2" p:acquireIncrement="3"
+		p:acquireRetryAttempts="30" p:acquireRetryDelay="1000" p:autoCommitOnClose="false"
+		p:breakAfterAcquireFailure="false" p:checkoutTimeout="0" p:maxIdleTime="60" p:maxStatements="100" />
+
+	<!-- 事务管理 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource" />
+	<!-- 支持注释的事务声明 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- Spring iBatis Template -->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"
+		p:configLocation="classpath:sql-map-config.xml" p:dataSource-ref="dataSource" />
+
+	<!-- dataService -->
+	<bean id="logsDataService" class="com.blogspot.duanni.lucene.ds.DefaultLogsDataService"
+		p:sqlMapClient-ref="sqlMapClient"></bean>
+	<!--=================== 通用配置 ======================== -->
+	<!-- 替换规则列表 -->
+	<bean id="propReplace" class="com.blogspot.duanni.lucene.replace.PropReplace" p:propInfoResource-ref="propInfoResource" />
+
+	<util:list id="replaceList" list-class="java.util.concurrent.CopyOnWriteArrayList">
+		<ref bean="propReplace" />
+	</util:list>
+
+	<!-- 全局配置 -->
+	<bean id="projectConfig" class="com.blogspot.duanni.lucene.ProjectConfigImpl" p:replaceList-ref="replaceList" />
+
+	<!-- 日志文件编码 -->
+	<bean id="fileDecoder" class="java.lang.String">
+		<constructor-arg value="UTF-8" />
+	</bean>
+
+	<!-- 服务 -->
+	<bean id="cleanUpLogsService" class="com.blogspot.duanni.lucene.service.DefaultCleanUpLogsService"
+		init-method="init">
+		<property name="backupPath" value="${context.common.logs.backup.path}" />
+		<property name="logsClientDirectoryPath" value="${logger.client.path.prefix}"></property>
+		<property name="logsDataService" ref="logsDataService"></property>
+	</bean>
+	<!--=================== Action ======================== -->
+	<!-- web action -->
+	<bean id="searchAction" class=" com.blogspot.duanni.lucene.web.SearchAction">
+		<property name="searchService" ref="searchService"></property>
+		<property name="indexService" ref="indexService"></property>
+		<property name="projectConfig" ref="projectConfig"></property>
+	</bean>
+	<!--======================== lucene配置 ================================= -->
+	<bean id="indexFactory" class="com.blogspot.duanni.lucene.service.DefaultIndexFactory" init-method="init"
+		destroy-method="destroy">
+		<property name="indexPath" value="${context.lucene.index.path}" />
+		<property name="ramBufferSizeMB" value="${context.lucene.ramBufferSizeMB}"></property>
+		<property name="optimizeBeforeClose" value="${context.lucene.optimizeBeforeClose}"></property>
+	</bean>
+
+	<bean id="indexService" class="com.blogspot.duanni.lucene.service.DefaultIndexService">
+		<property name="indexFactory" ref="indexFactory"></property>
+		<property name="projectConfig" ref="projectConfig"></property>
+		<property name="fileDecoder" ref="fileDecoder"></property>
+	</bean>
+
+	<bean id="searchService" class="com.blogspot.duanni.lucene.service.DefaultSearchService">
+		<property name="indexFactory" ref="indexFactory"></property>
+	</bean>
+
+	<!-- 调度器 -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref local="indexOptimizeScheduled" />
+				<ref local="addDocumentScheduled" />
+				<ref local="cleanUpLogsScheduled" />
+			</list>
+		</property>
+		<property name="autoStartup" value="true" />
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+				<prop key="org.quartz.threadPool.threadCount">2</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 优化索引调度器 -->
+	<bean id="indexOptimizeScheduled" class="org.springframework.scheduling.quartz.CronTriggerBean"
+		p:jobDetail-ref="indexOptimizeTask" p:cronExpression="${context.trigger.lucene.optimize.exp}" />
+
+	<bean id="indexOptimizeTask" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.blogspot.duanni.lucene.task.IndexOptimizeTask" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="indexService" value-ref="indexService" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 增量索引调度器 -->
+	<bean id="addDocumentScheduled" class="org.springframework.scheduling.quartz.CronTriggerBean"
+		p:jobDetail-ref="addDocumentTask" p:cronExpression="${context.trigger.lucene.index.exp}" />
+
+	<bean id="addDocumentTask" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.blogspot.duanni.lucene.task.AddDocumentTask" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="logsDataService" value-ref="logsDataService" />
+				<entry key="indexService" value-ref="indexService" />
+				<entry key="cleanUpLogsService" value-ref="cleanUpLogsService" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 整理日志文件调度器 -->
+	<bean id="cleanUpLogsScheduled" class="org.springframework.scheduling.quartz.CronTriggerBean"
+		p:jobDetail-ref="cleanUpLogsTask" p:cronExpression="${context.trigger.logs.clean.up.exp}" />
+
+	<bean id="cleanUpLogsTask" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.blogspot.duanni.lucene.task.CleanUpLogsTask" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="cleanUpLogsService" value-ref="cleanUpLogsService" />
+			</map>
+		</property>
+	</bean>
+
+</beans>

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
- * @author duanni (lch)
+ * @author duanni
  * @author Last changed by: $Author$
  * @version $Revision$ $Date$
  * @since <t-version>

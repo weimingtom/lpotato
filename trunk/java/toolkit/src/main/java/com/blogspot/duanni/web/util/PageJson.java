@@ -23,7 +23,7 @@ public class PageJson {
 	 * @param page
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public static String toJSON(Page page) {
 		logger.info("开始转换为json.");
 		JSONObject jsonObj = PageJson.toJSONObject(page);
@@ -32,7 +32,7 @@ public class PageJson {
 		return json;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public static JSONObject toJSONObject(Page page) {
 		JSONObject json = JSONObject.fromObject(page, getPageJsonConfig());
 		return json;
