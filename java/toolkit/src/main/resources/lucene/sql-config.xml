@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Logs">
+	<cacheModel type="MEMORY" id="logsCache">
+		<flushInterval hours="24" />
+		<flushOnExecute statement="Logs.addLogsFile" />
+		<flushOnExecute statement="Logs.indexedLogs" />
+		<property name="reference-type" value="WEAK" />
+	</cacheModel>
+
+	<select id="queryLogs" resultClass="java.util.HashMap" parameterClass="Integer" cacheModel="logsCache">
+		<![CDATA[ 
+		select id, file, backup_file as backupFile, state from client_logs where state = #state#
+		]]>
+	</select>
+
+	<insert id="addLogsFile" parameterClass="java.util.HashMap">
+		<![CDATA[
+			insert into client_logs	(file, state) values (#file#, #state#)
+		]]>
+	</insert>
+
+	<update id="indexedLogs" parameterClass="java.util.Map">
+		<![CDATA[
+			update client_logs set backup_file = #backupFile#, state = #state# where id = #id#
+		]]>
+	</update>
+
+</sqlMap>

@@ -20,7 +20,7 @@ import com.blogspot.duanni.spring.SpringTxTestCase;
 
 /**
  * 
- * @author duanni (lch)
+ * @author duanni
  * @author Last changed by: $Author$
  * @version $Revision$ $Date$
  * @since <t-version>

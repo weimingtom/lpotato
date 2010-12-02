@@ -5,23 +5,19 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import junit.framework.Assert;
+
+import org.junit.Test;
 
 /**
  * 日期时间
  * 
- * @author duanni (lch)
+ * @author duanni
  * @author Last changed by: $Author$
  * @version $Revision$ $Date$
  * @since <t-version>
  */
 public class DateUtilsTest {
-
-	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Test
 	public void stringToDate() throws Exception {
