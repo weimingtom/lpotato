@@ -1,0 +1,5 @@
+按用户名过滤svn日志
+
+Filter SVN Log by Username
+
+svn log | sed -n '/username/,/-----$/ p'
